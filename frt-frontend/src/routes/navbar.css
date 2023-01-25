@@ -1,0 +1,36 @@
+nav {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    font-size: 22px;
+    backdrop-filter: blur(30px) brightness(0.1);
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 5px 45px;
+    overflow: hidden;
+}
+
+nav li.left {
+    float: left;
+}
+
+nav li.right {
+    float: right;
+}
+
+nav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+nav li a:hover {
+    filter: brightness(.7);
+}

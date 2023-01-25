@@ -1,0 +1,149 @@
+@import '@fontsource/fira-mono';
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	margin: 0;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.fullscreen {
+	position: relative;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+}
+
+.bg-dark {
+	background-color: #292f3b;
+}
+
+.bg-purple {
+	background-color: #3b3d94;
+}
+
+.transition {
+	transition: all 0.5s ease;
+}
+
+.text-white {
+	color: #fff;
+}
+
+.text-black {
+	color: #000;
+}
+
+.content h1 {
+	font-size: 54px;
+}
+
+.content h2 {
+	font-size: 36px;
+}
+
+.content h3 {
+	font-size: 24px;
+}
+
+.content h4 {
+	font-size: 20px;
+}
+
+.content p {
+	font-size: 18px;
+}
+
+.content h1,
+.content h3,
+.content h4,
+.content p {
+	margin: 10px 0;
+	text-align: center;
+}
+
+.flex {
+	display: flex;
+}
+
+.flex.column {
+	flex-direction: column;
+}
+
+.flex.row {
+	flex-direction: row;
+}
+
+.flex-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.align-left {
+	align-items: flex-start;
+}
+
+.align-right {
+	align-items: flex-end;
+}
+
+.mg-2 {
+	margin: 2rem !important;
+}
+
+.mg-3 {
+	margin: 3rem !important;
+}
+
+.mg-6 {
+	margin: 6rem !important;
+}
+
+.btn {
+	display: inline-block;
+	padding: 10px 20px;
+	margin: 0 10px;
+	border-radius: 5px;
+	background-color: #fff;
+	color: #000;
+	font-size: 18px;
+	font-weight: 500;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.btn-primary {
+	background-color: #3b3d94;
+	color: #fff;
+}
+
+.btn-secondary {
+	background-color: rgb(48, 104, 207);
+	color: #fff;
+}
+
+.btn-warning {
+	background-color: rgb(219, 130, 13);
+	color: #fff;
+}
+
+.btn-success {
+	background-color: rgb(0, 128, 0);
+	color: #fff;
+}
+
+.btn:hover {
+	filter: brightness(0.8);
+}
+
+.text-left {
+	text-align: left !important;
+}
+
+.text-right {
+	text-align: right !important;
+}

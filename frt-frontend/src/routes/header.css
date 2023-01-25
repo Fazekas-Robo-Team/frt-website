@@ -1,0 +1,9 @@
+header {
+    background-image: url("header_bg_2.png");
+    background-size: auto;
+    background-position: center;
+    backdrop-filter: blur(30px) brightness(0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
