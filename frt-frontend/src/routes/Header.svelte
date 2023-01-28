@@ -1,8 +1,17 @@
-<script>
-	//import { page } from '$app/stores';
-	//import logo from '$lib/images/svelte-logo.svg';
-	//import github from '$lib/images/github.svg';
+<script lang="ts">
+// @ts-nocheck
+
 	import './header.css';
+	import { onMount } from 'svelte';
+
+	// while scrolling down, scale the header background image
+	onMount(() => {
+		window.addEventListener('scroll', () => {
+			let header = document.querySelector('header');
+			let scale = 1 + window.scrollY / window.innerHeight;
+			header.style.backgroundSize = `${(scale * 100) + 30}%`;
+		});
+	});
 </script>
 
 <header class="fullscreen">

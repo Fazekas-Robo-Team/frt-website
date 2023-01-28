@@ -1,6 +1,6 @@
 header {
     background-image: url("$lib/images/header_bg.png");
-    background-size: auto;
+    background-size: 130%;
     background-position: center;
     backdrop-filter: blur(30px) brightness(0.9);
     display: flex;
