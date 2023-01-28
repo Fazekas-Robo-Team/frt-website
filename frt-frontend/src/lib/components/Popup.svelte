@@ -1,7 +1,6 @@
 <script lang="ts">
-	import './popup.css';
 	import Card from './Card.svelte';
-	import { popup_shown } from './stores';
+	import { popup_shown } from '../../routes/stores';
 	import type { Card_data, Social } from './About.svelte';
 	import { onMount } from 'svelte';
 
@@ -49,3 +48,37 @@
 		</div>
 	</div>
 </div>
+
+<style lang="scss">
+	.popup {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, 0.5);
+		z-index: 100;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		.card-wrapper {
+			flex-wrap: wrap;
+		}
+	}
+
+	.popup-content {
+		overflow-y: scroll;
+		width: 75%;
+		height: 75%;
+		background: #fff;
+		border-radius: 5px;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	}
+
+	.popup-content-wrapper {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+</style>

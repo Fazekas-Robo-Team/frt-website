@@ -1,10 +1,10 @@
 <script>
-	import BlogHomepage from './Blog_homepage.svelte';
-	import Current from './Current.svelte';
-	import Footer from './Footer.svelte';
-	import Header from './Header.svelte';
-	import Navbar from './Navbar.svelte';
-	import About from './About.svelte';
+	import BlogHomepage from '../lib/components/Blog_homepage.svelte';
+	import Current from '../lib/components/Current.svelte';
+	import Footer from '../lib/components/Footer.svelte';
+	import Header from '../lib/components/Header.svelte';
+	import Navbar from '../lib/components/Navbar.svelte';
+	import About from '../lib/components/About.svelte';
 	import './styles.css';
 </script>
 
