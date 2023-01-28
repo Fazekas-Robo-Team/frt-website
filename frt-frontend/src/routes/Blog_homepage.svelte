@@ -30,5 +30,5 @@
             
         </div>
     </div>
-    <p><a href="" class="btn btn-secondary">Összes cikk</a></p>
+    <p><a href="" class="btn btn-secondary transition">Összes cikk</a></p>
 </div>

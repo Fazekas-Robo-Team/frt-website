@@ -1,4 +1,4 @@
-.card-wrapper {
+#current .card-wrapper {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -7,7 +7,7 @@
     height: 50%;
 }
 
-.card.wide {
+#current .card.wide {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -21,14 +21,14 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.card.wide img {
+#current .card.wide img {
     width: 60%;
     height: 100%;
     object-fit: cover;
     border-radius: 5px;
 }
 
-.card.wide .content {
+#current .card.wide .content {
     width: 40%;
     height: 100%;
     margin-right: 20px;

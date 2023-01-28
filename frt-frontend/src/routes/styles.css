@@ -1,5 +1,24 @@
 @import '@fontsource/fira-mono';
 
+/* scrollbar */
+::-webkit-scrollbar {
+	width: 0px;
+}
+
+::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #555;
+}
+
+/* scroll-behavior */
+
 html {
 	scroll-behavior: smooth;
 }
@@ -25,6 +44,14 @@ body {
 	background-color: #3b3d94;
 }
 
+.bg-transparent {
+	background-color: transparent;
+}
+
+.bg-low {
+	background-color: #2d2255cc;
+}
+
 .transition {
 	transition: all 0.5s ease;
 }
@@ -35,6 +62,10 @@ body {
 
 .text-black {
 	color: #000;
+}
+
+.bold {
+	font-weight: bold;
 }
 
 .content h1 {
@@ -83,12 +114,20 @@ body {
 	align-items: center;
 }
 
+.flex.justify-center {
+	justify-content: center;
+}
+
 .align-left {
 	align-items: flex-start;
 }
 
 .align-right {
 	align-items: flex-end;
+}
+
+.mg-1 {
+	margin: 1rem !important;
 }
 
 .mg-2 {
@@ -146,4 +185,8 @@ body {
 
 .text-right {
 	text-align: right !important;
+}
+
+.hidden {
+	display: none;
 }

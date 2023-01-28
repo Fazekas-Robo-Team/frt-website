@@ -6,6 +6,6 @@
 
 <svelte:head>
 	<title>Fazekas RoboTeam</title>
-	<meta name="description" content="Svelte demo app" />
+	<meta name="description" content="Fazekas RoboTeam" />
 </svelte:head>
 
