@@ -13,7 +13,7 @@
 </svelte:head>
 
 {#each data.posts as post}
-<div class="article">
+<a href="{post.path}"><div class="article">
 	<img src="{post.meta.index_image_url}" alt="article" />
 	<h1>{post.meta.title}</h1>
 	<p>{post.meta.description}</p>
@@ -24,10 +24,15 @@
 	<div class="flex align-center">
 		<img class="icon" src={Pfp} alt=""/><p class="bold">{post.meta.author}</p>
 	</div>
-</div>
+</div></a>
 {/each}
 
 <style lang="scss">
+	a {
+		text-decoration: none;
+		color: black;
+	}
+	
 	.article {
 		height: 500px;
 		width: 300px;
