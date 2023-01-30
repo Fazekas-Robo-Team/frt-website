@@ -1,27 +1,8 @@
 <script>
-	import { onMount } from 'svelte';
-
-	export let autoTransparent = false;
-
-	let isMenuTransparent = true;
-
-	onMount(() => {
-		if (autoTransparent) {
-			window.addEventListener('scroll', () => {
-				// if scrolled down 100vh then change menu background color
-				if (window.scrollY > window.innerHeight * 0.8) {
-					isMenuTransparent = false;
-				} else {
-					isMenuTransparent = true;
-				}
-			});
-		} else {
-			isMenuTransparent = false;
-		}
-	});
+	
 </script>
 
-<nav class="{isMenuTransparent ? 'bg-transparent' : 'bg-low'}">
+<nav class="bg-low">
 	<ul>
 		<li class="left"><a class="bold" href="/">FRT</a></li>
 		<li class="right"><a href="/#about">Rólunk</a></li>

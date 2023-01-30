@@ -118,6 +118,14 @@ body {
 	justify-content: center;
 }
 
+.flex.align-center {
+	align-items: center;
+}
+
+.flex.justify-end {
+	justify-content: end;
+}
+
 .align-left {
 	align-items: flex-start;
 }
