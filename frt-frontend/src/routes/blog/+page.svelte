@@ -1,7 +1,10 @@
-<script>
+<script lang="ts">
 	import Navbar from '$lib/components/Navbar.svelte';
 	import Date from '$lib/images/date.svg';
 	import Pfp from '$lib/images/pfp.svg';
+
+	export let data: any;
+	console.log(data);
 </script>
 
 <svelte:head>
@@ -9,54 +12,20 @@
 	<meta name="description" content="FRT Blog" />
 </svelte:head>
 
+{#each data.posts as post}
 <div class="article">
-	<img src="https://picsum.photos/500/500" alt="article" />
-	<h1>Hello World</h1>
-	<p>Lorem ipsum dolor sit amet</p>
+	<img src="{post.meta.index_image_url}" alt="article" />
+	<h1>{post.meta.title}</h1>
+	<p>{post.meta.description}</p>
 	<div class="flex align-center">
 		<img class="icon" src={Date} alt="" />
-		<p class="bold">2023. 01. 29.</p>
+		<p class="bold">{post.meta.date}</p>
 	</div>
 	<div class="flex align-center">
-		<img class="icon" src={Pfp} alt=""/><p class="bold">Daniel Gergely</p>
+		<img class="icon" src={Pfp} alt=""/><p class="bold">{post.meta.author}</p>
 	</div>
 </div>
-<div class="article">
-	<img src="https://picsum.photos/500/500" alt="article" />
-	<h1>Hello World</h1>
-	<p>Lorem ipsum dolor sit amet</p>
-	<div class="flex align-center">
-		<img class="icon" src={Date} alt="" />
-		<p class="bold">2023. 01. 29.</p>
-	</div>
-	<div class="flex align-center">
-		<img class="icon" src={Pfp} alt=""/><p class="bold">Daniel Gergely</p>
-	</div>
-</div>
-<div class="article">
-	<img src="https://picsum.photos/500/500" alt="article" />
-	<h1>Hello World</h1>
-	<p>Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.</p>
-	<div class="flex align-center">
-		<img class="icon" src={Date} alt="" />
-		<p class="bold">2023. 01. 29.</p>
-	</div>
-	<div class="flex align-center">
-		<img class="icon" src={Pfp} alt=""/><p class="bold">Daniel Gergely</p>
-	</div>
-</div>
-<div class="article">
-	<img src="https://picsum.photos/500/500" alt="article" />
-	<h1>Hello World</h1>
-	<p>Lorem ipsum dolor sit amet</p>
-	<div class="flex align-center">
-		<img class="icon" src={Date} alt="" />
-		<p class="bold">2023. 01. 29.</p>
-	</div>
-	<div class="flex align-center">
-		<img class="icon" src={Pfp} alt=""/><p class="bold">Daniel Gergely</p>
-	</div>
-</div>
+{/each}
 
 <style lang="scss">
 	.article {
