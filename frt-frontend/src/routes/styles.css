@@ -165,17 +165,17 @@ body {
 
 .btn-primary {
 	background-color: #3b3d94;
-	color: #fff;
+	color: #fff !important;
 }
 
 .btn-secondary {
 	background-color: rgb(48, 104, 207);
-	color: #fff;
+	color: #fff !important;
 }
 
 .btn-warning {
 	background-color: rgb(219, 130, 13);
-	color: #fff;
+	color: #fff !important;
 }
 
 .btn-success {
