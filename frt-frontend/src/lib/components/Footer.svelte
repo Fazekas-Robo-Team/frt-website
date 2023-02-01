@@ -1,5 +1,5 @@
 <footer class="bg-dark flex flex-center">
-    <div class="content flex row text-white mg-3">
-        <h4>© Fazekas RoboTeam - Minden jog fenntartva</h4>
+    <div class="content flex row text-white mg-1">
+        <h5>© 2023 - Fazekas RoboTeam</h5>
     </div>
 </footer>

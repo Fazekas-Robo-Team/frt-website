@@ -84,13 +84,4 @@
 		}
 		
 	}
-
-	.card.long {
-		height: 350px;
-
-		.card-header {
-			height: 50%;
-			width: 100%;
-		}
-	}
 </style>

@@ -54,4 +54,44 @@
 			margin-right: 20px;
 		}
 	}
+
+	@media only screen and (max-width: 1199px) {
+		.card {
+			width: 85%;
+		}
+	}
+
+	@media only screen and (max-width: 1200px) {
+		.card {
+			img {
+				width: 50%;
+			}
+			
+			.content {
+				width: 50%;
+			}
+		}
+	}
+
+	@media only screen and (max-width: 992px) {
+		.card-wrapper {
+			height: fit-content;
+		}
+		.card {
+			flex-direction: column-reverse;
+			align-items: center;
+			justify-content: center;
+			height:	fit-content;
+			img {
+				width: 100%;
+				height: 50%;
+			}
+			.content {
+				width: 100%;
+				margin-right: 0;
+			}
+		}
+	}
+
+
 </style>

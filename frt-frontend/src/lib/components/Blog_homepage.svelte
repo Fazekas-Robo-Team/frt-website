@@ -33,7 +33,7 @@
 				<img class="icon" src={Pfp} alt=""/><p class="bold">{data.posts[1].meta.author}</p>
 			</div>
 		</div></a>
-		<a href="{data.posts[0].path}"><div class="article">
+		<a href="{data.posts[0].path}"><div class="article last">
 			<img src="{data.posts[2].meta.index_image_url}" alt="article" />
 			<h1>{data.posts[2].meta.title}</h1>
 			<p>{data.posts[2].meta.description}</p>
@@ -64,7 +64,7 @@
 		width: 300px;
 		background-color: white;
 		padding: 1.5rem;
-		margin: 2rem;
+		margin: 1.5rem;
 		border-radius: .5rem;
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 	}
@@ -91,5 +91,30 @@
 	a {
 		text-decoration: none;
 		color: inherit;
+	}
+
+	@media screen and (max-width: 1200px) {
+		.article {
+			margin: 1rem;
+		}
+
+		.last {
+			display: none;
+		}
+	}
+
+	@media screen and (max-width: 992px) {
+		#blog {
+			height: fit-content;
+		}
+
+		.cards-wrapper {
+			flex-direction: column;
+			height: fit-content;
+		}
+
+		.last {
+			display: block;
+		}
 	}
 </style>

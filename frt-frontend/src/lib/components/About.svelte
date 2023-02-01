@@ -124,7 +124,7 @@
 			szakkörökön elsősorban legórobotokkal és a REV Robotics készlettel foglalkozunk, emellett
 			közösségként segítjük és támogatjuk egymást az informatika más területein is.
 		</h3>
-		<div class="flex row flex-center">
+		<div class="flex row flex-center mobile-hide">
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<p class="btn btn-primary transition mg-1" on:click={active_members_open}>Aktív tagok</p>
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
