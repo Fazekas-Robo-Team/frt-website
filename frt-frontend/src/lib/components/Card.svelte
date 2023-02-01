@@ -4,34 +4,36 @@
 	export let title: string = '';
 	export let roles: string[] = [];
 	export let img: string = 'https://avatars.githubusercontent.com/u/44097962?v=4';
-	export let description: string = '';
 </script>
 
-<div class="about card {description ? 'long' : ''}">
-	<div class="card-header">
-		<img src={img} alt="robot" />
+<div class="card">
+	<div class="flex-1">
+		<div class="card-header">
+			<img src={img} alt="robot" />
+		</div>
+		<div class="content flex column">
+			<div>
+				<h3>{title}</h3>
+				<h4>
+					{#each roles as role}
+						<span class="role">{role}</span>
+					{/each}
+				</h4>
+			</div>
+		</div>
 	</div>
-	<div class="content">
-		<h3>{title}</h3>
-		{#if description}<p>{description}</p>{/if}
-		<h4>
-			{#each roles as role}
-				<span class="role">{role}</span>
-			{/each}
-		</h4>
-	</div>
+	
+	<p class="flex-1">Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.</p>
 </div>
 
 <style lang="scss">
 	.card {
 		display: flex;
-		flex: 1 0 20%;
-		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		max-width: 20%;
 		height: fit-content;
-		margin: 20px;
+		width: 100%;
+		margin: 12px 50px;
 		padding: 20px;
 		border-radius: 10px;
 		background-color: #fff;
@@ -47,7 +49,7 @@
 		}
 
 		img {
-			width: 100%;
+			width: 50%;
 			height: 100%;
 			object-fit: cover;
 			object-position: center;
@@ -80,6 +82,7 @@
 				margin: 0 3px;
 			}
 		}
+		
 	}
 
 	.card.long {

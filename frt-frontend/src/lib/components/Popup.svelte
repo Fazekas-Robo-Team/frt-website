@@ -40,7 +40,6 @@
 							title={card.title}
 							img={card.image}
 							roles={card.roles}
-							description={card.description}
 						/>
 					{/each}
 				</div>
@@ -69,7 +68,7 @@
 
 	.popup-content {
 		overflow-y: scroll;
-		width: 75%;
+		width: 50%;
 		height: 75%;
 		background: #fff;
 		border-radius: 5px;
