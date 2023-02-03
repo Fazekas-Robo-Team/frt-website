@@ -36,7 +36,9 @@
 <!-- Desktop navbar -->
 <nav class="desktop transition {isMenuTransparent ? 'bg-transparent' : 'bg-low'}">
 	<ul>
-		<li class="left"><a class="bold" href="/">FRT</a></li>
+		<li class="left">
+			<a class="bold logo" href="/">Fazekas<span class="purple">RoboTeam</span></a>
+		</li>
 		<li class="right"><a href="/#about">Rólunk</a></li>
 		<li class="right"><a href="/#blog">Blog</a></li>
 		<li class="right"><a href="/#current">Aktuális</a></li>
@@ -49,11 +51,14 @@
 	<ul>
 		<li>
 			<div class="left">
-				<a class="bold" href="/">FRT</a>
+				<a class="bold" href="/">Fazekas<span class="purple">RoboTeam</span></a>
 			</div>
 		</li>
 		<li>
-			<div class="right hamburger-wrapper {isMobileMenuOpen ? "close" : "open"}" on:click={toggleMenu}>
+			<div
+				class="right hamburger-wrapper {isMobileMenuOpen ? 'close' : 'open'}"
+				on:click={toggleMenu}
+			>
 				<div class="hamburger">
 					<div class="line" />
 					<div class="line" />
@@ -61,12 +66,10 @@
 				</div>
 			</div>
 		</li>
-		
 	</ul>
-	
 </nav>
 
-<div class="mobile menu {isMobileMenuOpen ? "" : "closed"} bg-low">
+<div class="mobile menu {isMobileMenuOpen ? '' : 'closed'} bg-low">
 	<ul>
 		<li><a on:click={toggleMenu} href="/#current">Aktuális</a></li>
 		<li><a on:click={toggleMenu} href="/#blog">Blog</a></li>
@@ -82,25 +85,44 @@
 		left: 0;
 		z-index: 100;
 		font-size: 22px;
-		backdrop-filter: blur(30px);
+		background-color: white;
 
 		ul {
 			list-style-type: none;
 			margin: 0;
-			padding: 5px 45px;
+			padding: 5px 5rem;
 			overflow: hidden;
 
 			li {
 				a {
 					display: block;
-					color: white;
+					color: black;
 					text-align: center;
 					padding: 14px 16px;
 					text-decoration: none;
 					transition: 0.3s;
 
+					&:not(.logo) {
+							&:after {
+								content: '';
+								display: block;
+								width: 0;
+								height: 2px;
+								background: #000000;
+								transition: width 0.3s;
+							}
+						}
+
 					&:hover {
-						filter: brightness(0.7);
+						&:not(.logo) {
+							&:after {
+								width: 100%;
+							}
+						}
+					}
+
+					.purple {
+						color: #9461ff;
 					}
 				}
 			}
@@ -215,7 +237,6 @@
 	.menu.closed {
 		top: 200vh;
 	}
-	
 
 	/* media queries */
 
