@@ -15,7 +15,6 @@
 </svelte:head>
 <Navbar autoTransparent={true} />
 <Header />
-<Current />
 <BlogHomepage data={data}/>
 <About />
 <Footer />
