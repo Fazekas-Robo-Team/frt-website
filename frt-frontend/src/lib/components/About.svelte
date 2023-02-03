@@ -1,139 +1,42 @@
-<script lang="ts" context="module">
-	export interface Social {
-		url: string;
-		icon: string;
-	}
-
-	export interface Card_data {
-		title: string;
-		image: string;
-		roles: string[];
-		socials: string[];
-		description?: string;
-	}
-</script>
-
 <script lang="ts">
 	import Card from './Card.svelte';
-	import Popup from './Popup.svelte';
 	import { popup_shown } from '../../routes/stores';
+	import Logo from '$lib/images/logo.jpg';
 
-	let title: string;
-	let cards: Card_data[] = [];
-
-	function active_members_open() {
-		popup_shown.set(true);
-		title = 'Aktív tagok';
-		cards = [
-			{
-				title: 'Kovács Bence',
-				image: 'https://avatars.githubusercontent.com/u/44097962?v=4',
-				roles: ['Mentor', 'Webfejlesztő'],
-				socials: [],
-				description: ''
-			},
-			{
-				title: 'Kovács Bence',
-				image: 'https://avatars.githubusercontent.com/u/44097962?v=4',
-				roles: ['Mentor', 'Webfejlesztő'],
-				socials: [],
-				description: ''
-			},
-			{
-				title: 'Kovács Bence',
-				image: 'https://avatars.githubusercontent.com/u/44097962?v=4',
-				roles: ['Mentor', 'Webfejlesztő'],
-				socials: [],
-				description: ''
-			},
-			{
-				title: 'Kovács Bence',
-				image: 'https://avatars.githubusercontent.com/u/44097962?v=4',
-				roles: ['Mentor', 'Webfejlesztő'],
-				socials: [],
-				description: ''
-			},
-			{
-				title: 'Kovács Bence',
-				image: 'https://avatars.githubusercontent.com/u/44097962?v=4',
-				roles: ['Mentor', 'Webfejlesztő'],
-				socials: [],
-				description: ''
-			},
-			{
-				title: 'Kovács Bence',
-				image: 'https://avatars.githubusercontent.com/u/44097962?v=4',
-				roles: ['Mentor', 'Webfejlesztő'],
-				socials: [],
-				description: ''
-			}
-		];
-	}
-
-	function workstuff_open() {
-		popup_shown.set(true);
-		title = 'Mikkel dolgozunk?';
-		cards = [
-			{
-				title: 'LEGO Mindstorms EV3',
-				image: 'https://upload.wikimedia.org/wikipedia/commons/7/77/Lego-mindstorms-ev3.jpg',
-				roles: [],
-				socials: [],
-				description: 'A legó robotokat a legó mindstorms EV3-ak keltik életre.'
-			},
-			{
-				title: 'LEGO Mindstorms NXT',
-				image: 'https://upload.wikimedia.org/wikipedia/commons/7/77/Lego-mindstorms-ev3.jpg',
-				roles: [],
-				socials: [],
-				description: 'Bár a legó mindstorms NXT már nem gyártott, alkalmanként még használjuk.'
-			},
-			{
-				title: 'REV Robotics',
-				image: 'https://upload.wikimedia.org/wikipedia/commons/7/77/Lego-mindstorms-ev3.jpg',
-				roles: [],
-				socials: [],
-				description:
-					'A REV Robotics készletet a legó technikai elemek helyett alumínium elemeket használó robotok építésére használjuk.'
-			},
-			{
-				title: 'Lenovo ThinkPad L15',
-				image: 'https://upload.wikimedia.org/wikipedia/commons/7/77/Lego-mindstorms-ev3.jpg',
-				roles: [],
-				socials: [],
-				description:
-					'A muhelyünkben jelenleg Lenovo ThinkPad L15 laptopokat használunk, Arch Linux operációs rendszerrel.'
-			},
-			{
-				title: 'Acer Aspire 5',
-				image: 'https://upload.wikimedia.org/wikipedia/commons/7/77/Lego-mindstorms-ev3.jpg',
-				roles: [],
-				socials: [],
-				description:
-					'A Lenovo ThinkPad L15-os laptopok mellett 3 Acer Aspire 5 laptopok is vannak a muhelyunkben, szintén Arch Linux operációs rendszerrel.'
-			}
-		];
-	}
+	//TODO: replace with better image
+	import Muhely from '$lib/images/muhely.png';
 </script>
 
-<div class="fullscreen flex flex-center" id="about">
-	<div class="content mg-6">
-		<h1>Bemutatkozunk</h1>
-		<h3>
-			A Fazekas RoboTeam egy 2003-ban indult robotika szakkör a Fazekas Mihály Gimnáziumban. A
-			szakkörökön elsősorban legórobotokkal és a REV Robotics készlettel foglalkozunk, emellett
-			közösségként segítjük és támogatjuk egymást az informatika más területein is.
-		</h3>
-		<div class="flex row flex-center mobile-hide">
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<p class="btn btn-primary transition mg-1" on:click={active_members_open}>Aktív tagok</p>
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<p class="btn btn-secondary transition mg-1" on:click={workstuff_open}>Mikkel dolgozunk?</p>
-		</div>
+<div class="w-screen h-fit md:h-screen bg-light-purple border-y-2 border-black flex flex-col items-center px-4 py-24" id="about">
+	<div class="bg-medium-purple px-3 pb-4 h-2 mt-4 mb-8 ml-4"><h1 class="text-black text-4xl font-semibold -mt-6 -ml-2">Rólunk</h1></div>
+	<div class="w-full h-full flex flex-col md:flex-row justify-between items-center md:px-20">
+		<p class="w-full md:w-1/2 text-2xl font-semibold">
+			A Fazekas RoboTeam egy 2003-ban indult robotika szakkör a Fazekas Mihály Gimnáziumban. A szakkörökön elsősorban legórobotokkal és a REV Robotics
+			készlettel foglalkozunk, emellett közösségként segítjük és támogatjuk egymást az informatika más területein is.
+		</p>
+		<img class="w-2/3 md:w-2/5 lg:1/3 border-black border-2 drop-shadow-xl-black-br mt-8" src={Logo} alt="" />
 	</div>
-	<Popup {title} {cards} />
 </div>
-
-<style lang="scss">
-	
-</style>
+<div class="w-screen h-fit md:h-screen bg-light-orange border-y-2 border-black flex flex-col items-center px-4 py-24" id="about">
+	<div class="bg-medium-orange px-3 pb-4 h-2 mt-4 mb-8 ml-4"><h1 class="text-black text-4xl font-semibold -mt-6 -ml-2">Műhely</h1></div>
+	<div class="w-full h-full flex flex-col-reverse md:flex-row justify-between items-center md:px-10">
+		<img class="w-3/5 md:w-1/2 lg:w-2/5 border-black border-2 drop-shadow-xl-black-br mt-8" src={Muhely} alt="" />
+		<p class="w-full md:w-2/5 text-2xl font-semibold italic">
+			A Fazekas aulájának hátuljában húzodik meg a 115/A terem, amely már évek óta a FRT főhadibázisaként operál. Az évek alatt sikerült egy rendkívül
+			fejlett infrastruktúrát kialakítani modern laptopokkal és eszközökkel, de persze mindig van hely az olyan klasszikusoknak, mint amilyen például
+			a Mindstorm RCX.
+		</p>
+	</div>
+	<div class="flex flex-row mt-8">
+		<a
+			href="/"
+			class="bg-green py-4 px-6 border-black border-2 drop-shadow-xl-black-br mx-5 font-semibold text-lg hover:drop-shadow-md-black-br hover:translate-x-5px hover:translate-y-5px"
+			>Aktív tagok</a
+		>
+		<a
+			href="/"
+			class="bg-teal py-4 px-6 border-black border-2 drop-shadow-xl-black-br mx-5 font-semibold text-lg hover:drop-shadow-md-black-br hover:translate-x-5px hover:translate-y-5px"
+			>Mikkel dolgozunk?</a
+		>
+	</div>
+</div>

@@ -1,7 +1,3 @@
-<script>
-	
-</script>
-
 <nav class="bg-low">
 	<ul>
 		<li class="left"><a class="bold" href="/">FRT</a></li>
