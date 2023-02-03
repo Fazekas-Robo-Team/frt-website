@@ -7,41 +7,20 @@
 
 	let isMobileMenuOpen = false;
 
-	onMount(() => {
-		if (window.scrollY > window.innerHeight * 0.8) {
-			isMenuTransparent = false;
-		} else {
-			isMenuTransparent = true;
-		}
-
-		if (autoTransparent) {
-			window.addEventListener('scroll', () => {
-				// if scrolled down 100vh then change menu background color
-				if (window.scrollY > window.innerHeight * 0.8) {
-					isMenuTransparent = false;
-				} else {
-					isMenuTransparent = true;
-				}
-			});
-		} else {
-			isMenuTransparent = false;
-		}
-	});
-
 	function toggleMenu() {
 		isMobileMenuOpen = !isMobileMenuOpen;
 	}
 </script>
 
 <!-- Desktop navbar -->
-<nav class="desktop transition {isMenuTransparent ? 'bg-transparent' : 'bg-low'}">
+<nav class="desktop border-b-2 border-b-black">
 	<ul>
-		<li class="left">
-			<a class="bold logo" href="/">Fazekas<span class="purple">RoboTeam</span></a>
+		<li class="float-left">
+			<a class="font-bold logo" href="/">Fazekas<span class="purple">RoboTeam</span></a>
 		</li>
-		<li class="right"><a href="/#about">Rólunk</a></li>
-		<li class="right"><a href="/#blog">Blog</a></li>
-		<li class="right"><a href="/#current">Aktuális</a></li>
+		<li class="float-right"><a href="/#about">Rólunk</a></li>
+		<li class="float-right"><a href="/#blog">Blog</a></li>
+		<li class="float-right"><a href="/#current">Aktuális</a></li>
 	</ul>
 </nav>
 
@@ -126,14 +105,6 @@
 					}
 				}
 			}
-		}
-
-		.left {
-			float: left;
-		}
-
-		.right {
-			float: right;
 		}
 	}
 

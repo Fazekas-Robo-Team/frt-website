@@ -2,55 +2,22 @@
 	// @ts-nocheck
 	import { onMount } from 'svelte';
 
-	// while scrolling down, scale the header background image
-	onMount(() => {
-		window.addEventListener('scroll', () => {
-			let header = document.querySelector('header');
-			let scale = 1 + window.scrollY / window.innerHeight;
-			if (window.innerWidth > 1200) {
-				header.style.backgroundSize = `${scale * 100 + 50}%`;
-			} else {
-				header.style.backgroundSize = `${scale * 100 + 140}%`;
-			}
-		});
-
-		window.addEventListener('resize', () => {
-			let header = document.querySelector('header');
-			let scale = 1 + window.scrollY / window.innerHeight;
-			if (window.innerWidth > 1200) {
-				header.style.backgroundSize = `${scale * 100 + 50}%`;
-			} else {
-				header.style.backgroundSize = `${scale * 100 + 140}%`;
-			}
-		});
-	});
+	import current_article_index_pic from '$lib/images/robot.jpg';
 </script>
 
-<header class="fullscreen">
-	<div>
-		<div class="content text-white">
-			<h1>Fazekas RoboTeam</h1>
-			<h3>Robotika 2003 óta</h3>
+<header class="w-screen h-screen border-b-black border-b-2 bg-light-blue flex flex-row justify-between items-center px-20 mb-64">
+	<div class="text-gray h-fit w-2/5 text-3xl font-medium mx-4">
+		<h3 class="leading-10">
+			A <span class="bg-white border-2 border-black drop-shadow-md-purple-tr text-black font-bold px-1">Fazekas RoboTeam</span> egy 2003-ban indult robotika szakkör <strong>a Fazekas Mihály Gimnáziumban.</strong>
+		</h3>
+	</div>
+	<div class="mx-4 w-3/6 flex items-center flex-col">
+		<div class="bg-white w-3/5 text-2xl font-semibold border-black border-2 -mb-4 z-10 p-2 -mr-24">Indul a WRO 2023-as szezonja!</div>
+		<div class="border-black border-2 bg-white flex justify-center items-center drop-shadow-xl-purple-br">
+			<img class="m-10 w-4/5 border-black border-2" src={current_article_index_pic} alt="" />
 		</div>
 	</div>
 </header>
 
 <style lang="scss">
-	header {
-		background-color: black;
-		background-image: url('$lib/images/header_bg.png');
-		background-size: 150%;
-		background-position: center;
-		background-repeat: no-repeat;
-		backdrop-filter: blur(30px) brightness(0.9);
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-
-	@media only screen and (max-width: 1200px) {
-		header {
-			background-size: 240%;
-		}
-	}
 </style>

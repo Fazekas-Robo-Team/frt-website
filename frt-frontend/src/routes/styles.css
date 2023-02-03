@@ -65,10 +65,6 @@ body {
 	color: #000;
 }
 
-.bold {
-	font-weight: bold;
-}
-
 .content h1 {
 	font-size: 54px;
 }
@@ -95,48 +91,6 @@ body {
 .content p {
 	margin: 10px 0;
 	text-align: center;
-}
-
-.flex {
-	display: flex;
-}
-
-.flex-1 {
-	flex: 1;
-}
-
-.flex.column {
-	flex-direction: column;
-}
-
-.flex.row {
-	flex-direction: row;
-}
-
-.flex-center {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.flex.justify-center {
-	justify-content: center;
-}
-
-.flex.align-center {
-	align-items: center;
-}
-
-.flex.justify-end {
-	justify-content: end;
-}
-
-.align-left {
-	align-items: flex-start;
-}
-
-.align-right {
-	align-items: flex-end;
 }
 
 .mg-1 {
