@@ -20,7 +20,7 @@
 		</li>
 		<li class="float-right"><a href="/#about">Rólunk</a></li>
 		<li class="float-right"><a href="/#blog">Blog</a></li>
-		<li class="float-right"><a href="/#current">Aktuális</a></li>
+		<li class="float-right"><a href="/">Aktuális</a></li>
 	</ul>
 </nav>
 
