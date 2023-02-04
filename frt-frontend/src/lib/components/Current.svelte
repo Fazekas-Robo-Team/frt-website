@@ -1,7 +1,3 @@
-<script>
-	import robot from '$lib/images/robot.jpg';
-</script>
-
 <div class="fullscreen flex flex-center column" id="current">
 	<h1>Aktuális</h1>
 	<div class="card-wrapper">
@@ -15,7 +11,7 @@
 				</p>
 				<p><a href="" class="btn btn-success mg-2 transition">Olvass tovább</a></p>
 			</div>
-			<img class="align-right" src={robot} alt="" />
+			<img class="align-right" src="/blog_images/robot.jpg" alt="" />
 		</div>
 	</div>
 </div>

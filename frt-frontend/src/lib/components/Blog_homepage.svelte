@@ -1,8 +1,4 @@
 <script lang="ts">
-	import robot from '$lib/images/robot.jpg';
-	import Date from '$lib/images/date.svg';
-	import Pfp from '$lib/images/pfp.svg';
-
 	import ArticleCard from './Article_card.svelte';
 
 	export let data: any;
