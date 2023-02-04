@@ -1,10 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
-
-	export let autoTransparent = false;
-
-	let isMenuTransparent = true;
-
+	
 	let isMobileMenuOpen = false;
 
 	function toggleMenu() {

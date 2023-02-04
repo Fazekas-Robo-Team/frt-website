@@ -27,16 +27,21 @@
 			a Mindstorm RCX.
 		</p>
 	</div>
-	<div class="flex flex-row mt-8">
+	<div class="flex flex-col md:flex-row mt-8">
 		<a
 			href="/"
-			class="bg-green py-4 px-6 border-black border-2 drop-shadow-xl-black-br mx-5 font-semibold text-lg hover:drop-shadow-md-black-br hover:translate-x-5px hover:translate-y-5px"
+			class="text-center bg-green py-4 px-6 border-black border-2 drop-shadow-xl-black-br mx-5 my-5 md:my-0 font-semibold text-lg hover:drop-shadow-md-black-br hover:translate-x-5px hover:translate-y-5px"
 			>Aktív tagok</a
 		>
 		<a
 			href="/"
-			class="bg-teal py-4 px-6 border-black border-2 drop-shadow-xl-black-br mx-5 font-semibold text-lg hover:drop-shadow-md-black-br hover:translate-x-5px hover:translate-y-5px"
-			>Mikkel dolgozunk?</a
+			class="text-center bg-teal py-4 px-6 border-black border-2 drop-shadow-xl-black-br mx-5 my-5 md:my-0 font-semibold text-lg hover:drop-shadow-md-black-br hover:translate-x-5px hover:translate-y-5px"
+			>Eszközpark</a
+		>
+		<a
+			href="/"
+			class="text-center bg-medium-blue py-4 px-6 border-black border-2 drop-shadow-xl-black-br mx-5 my-5 md:my-0 font-semibold text-lg hover:drop-shadow-md-black-br hover:translate-x-5px hover:translate-y-5px"
+			>Eredmények</a
 		>
 	</div>
 </div>
