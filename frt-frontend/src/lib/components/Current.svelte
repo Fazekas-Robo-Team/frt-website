@@ -1,4 +1,4 @@
-<div class="fullscreen flex flex-center column" id="current">
+<div class="fullscreen flex flex-center column" id="aktualis">
 	<h1>Aktuális</h1>
 	<div class="card-wrapper">
 		<div class="card">

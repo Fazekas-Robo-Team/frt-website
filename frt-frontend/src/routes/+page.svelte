@@ -4,6 +4,7 @@
 	import Current from '../lib/components/Current.svelte';
 	import Header from '../lib/components/Header.svelte';
 	import About from '../lib/components/About.svelte';
+	import Muhely from '$lib/components/Muhely.svelte';
 
 	export let data: any;
 </script>
@@ -14,4 +15,5 @@
 </svelte:head>
 <Header />
 <BlogHomepage data={data}/>
+<Muhely />
 <About />

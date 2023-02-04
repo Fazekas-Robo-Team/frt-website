@@ -10,6 +10,7 @@ module.exports = {
         'md-purple-br': '5px 5px 0px #9461FF',
         'md-black-br': '5px 5px 0px #000000',
         'md-purple-tr': '5px -5px 0px #9461FF',
+        'sm-purple-tr': '3px -3px 0px #9461FF',
 
       },
       translate: {
@@ -35,5 +36,10 @@ module.exports = {
       'white': '#FFFFFF',
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addVariant }) {
+        addVariant('child', '& > *');
+        addVariant('child-hover', '& > *:hover');
+    }
+],
 }

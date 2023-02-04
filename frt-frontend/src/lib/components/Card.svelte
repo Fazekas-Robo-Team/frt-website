@@ -6,82 +6,21 @@
 	export let img: string = 'https://avatars.githubusercontent.com/u/44097962?v=4';
 </script>
 
-<div class="card">
-	<div class="flex-1">
-		<div class="card-header">
-			<img src={img} alt="robot" />
-		</div>
-		<div class="content flex column">
-			<div>
-				<h3>{title}</h3>
-				<h4>
-					{#each roles as role}
-						<span class="role">{role}</span>
-					{/each}
-				</h4>
-			</div>
+<div class="w-full h-fit flex flex-col md:flex-row my-8 bg-white border-black border-2 drop-shadow-xl-black-br">
+	<div class="md:w-1/3 md:mb-4 flex flex-col justify-center items-center">
+		<img class="w-2/5 md:w-4/5 xl:w-3/5 mt-4 border-black border-2" src={img} alt="robot" />
+		<div class="flex flex-col items-center justify-center m-2">
+			<p class="font-semibold text-2xl mb-2">{title}</p>
+			<h4>
+				{#each roles as role}
+					<span class="border-black bg-white border-2 m-2 p-1 drop-shadow-md-purple-br">{role}</span>
+				{/each}
+			</h4>
 		</div>
 	</div>
-	
-	<p class="flex-1">Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.</p>
+	<p class="m-4 md:w-2/3">
+		Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem
+		ipsum dolor sit amet.Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet. Lorem ipsum
+		dolor sit amet. Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.
+	</p>
 </div>
-
-<style lang="scss">
-	.card {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		height: fit-content;
-		width: 100%;
-		margin: 12px 50px;
-		padding: 20px;
-		border-radius: 10px;
-		background-color: #fff;
-		box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-		cursor: pointer;
-
-		.card-header {
-			width: 100%;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: space-between;
-		}
-
-		img {
-			width: 50%;
-			height: 100%;
-			object-fit: cover;
-			object-position: center;
-			border-radius: 5px;
-		}
-
-		.content {
-			width: 100%;
-			height: 50%;
-			text-align: center;
-            
-			.content h3 {
-				font-size: 1.3rem;
-				font-weight: 700;
-				margin: 5px 0;
-			}
-
-			.content h4 {
-				font-size: 1.2rem;
-				font-weight: 500;
-				margin: 0;
-			}
-
-			.role {
-				font-size: 0.8rem;
-				background-color: rgb(90, 66, 179);
-				color: #fff;
-				border-radius: 5px;
-				padding: 5px;
-				margin: 0 3px;
-			}
-		}
-		
-	}
-</style>

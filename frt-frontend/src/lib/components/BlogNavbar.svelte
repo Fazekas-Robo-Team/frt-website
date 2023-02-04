@@ -1,9 +1,9 @@
 <nav class="bg-low">
 	<ul>
 		<li class="left"><a class="bold" href="/">FRT</a></li>
-		<li class="right"><a href="/#about">Rólunk</a></li>
+		<li class="right"><a href="/#rolunk">Rólunk</a></li>
 		<li class="right"><a href="/#blog">Blog</a></li>
-		<li class="right"><a href="/#current">Aktuális</a></li>
+		<li class="right"><a href="/#aktualis">Aktuális</a></li>
 	</ul>
 </nav>
 

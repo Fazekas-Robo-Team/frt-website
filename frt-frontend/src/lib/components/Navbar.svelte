@@ -14,7 +14,8 @@
 		<li class="float-left">
 			<a class="font-bold logo" href="/">Fazekas<span class="purple">RoboTeam</span></a>
 		</li>
-		<li class="float-right"><a href="/#about">Rólunk</a></li>
+		<li class="float-right"><a href="/#rolunk">Rólunk</a></li>
+		<li class="float-right"><a href="/#muhely">Műhely</a></li>
 		<li class="float-right"><a href="/#blog">Blog</a></li>
 		<li class="float-right"><a href="/">Aktuális</a></li>
 	</ul>
@@ -39,7 +40,8 @@
 	<ul>
 		<li><a on:click={toggleMenu} href="/">Aktuális</a></li>
 		<li><a on:click={toggleMenu} href="/#blog">Blog</a></li>
-		<li><a on:click={toggleMenu} href="/#about">Rólunk</a></li>
+		<li><a on:click={toggleMenu} href="/#muhely">Műhely</a></li>
+		<li><a on:click={toggleMenu} href="/#rolunk">Rólunk</a></li>
 	</ul>
 </div>
 
