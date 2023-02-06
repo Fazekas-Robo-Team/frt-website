@@ -3,7 +3,7 @@
     import { writable } from "svelte/store";
     import { cookie } from "../../routes/stores";
 
-    let cookie_accepted: boolean, cookie_rejected: boolean;
+    let cookie_accepted: boolean = true, cookie_rejected: boolean = true;
 
     onMount(() => {
         cookie_accepted = localStorage.getItem("cookie_accepted") === "true";
