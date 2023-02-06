@@ -1,0 +1,1 @@
+<span class="bg-white border-2 border-black drop-shadow-sm-purple-tr text-black font-bold px-1 mr-2 whitespace-nowrap"><slot></slot></span>
