@@ -29,7 +29,7 @@
 
 </script>
 
-<div class="{cookie_accepted ? "hidden": ""} fixed bottom-4 right-4 bg-white border-black border-2 w-80 h-96 flex justify-center items-center">
+<div class="{cookie_accepted ? "hidden": ""} fixed bottom-4 right-4 bg-white border-black border-2 w-80 h-96 flex justify-center items-center z-50">
     <div class="w-5/6 h-5/6 flex flex-col justify-between">
         <div class="flex flex-col">
             <h1 class="text-2xl font-semibold">Ez az oldal is cookie-kat használ</h1>
