@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Card from './Card.svelte';
-	import { popup_shown } from '../../routes/stores';
 	import Logo from '$lib/images/logo.jpg';
 
 	//TODO: replace with better image
