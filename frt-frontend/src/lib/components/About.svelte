@@ -14,7 +14,7 @@
 			A Fazekas RoboTeam egy 2003-ban indult robotika szakkör a Fazekas Mihály Gimnáziumban. A szakkörökön elsősorban legórobotokkal és a REV Robotics
 			készlettel foglalkozunk, emellett közösségként segítjük és támogatjuk egymást az informatika más területein is.
 		</p>
-		<img class="w-2/3 md:w-1/3 lg:1/4 border-black border-2 drop-shadow-xl-black-br mt-8" src={Logo} alt="" />
+		<img class="w-2/3 md:w-1/4 lg:1/5 border-black border-2 drop-shadow-xl-black-br mt-8" src={Logo} alt="" />
 	</div>
 	<div class="flex flex-col md:flex-row mt-8">
 		<a
