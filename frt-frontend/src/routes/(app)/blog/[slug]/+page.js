@@ -1,14 +1,9 @@
 // @ts-ignore
-export async function load({ params }) {
-	const post = await import(`../../blog_posts/${params.slug}.md`);
-	const { title, date, description, author } = post.metadata;
-	const content = post.default;
+export async function load({ data }) {
+	const component = await import(`../../../../../posts/${data.post.slug}/index.md`);
 
 	return {
-		content,
-		title,
-		date,
-		description,
-		author
+		post: data.post,
+		component: component.default
 	};
 }

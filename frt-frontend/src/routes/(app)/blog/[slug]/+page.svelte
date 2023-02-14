@@ -10,19 +10,19 @@
         author: string;
     }
 
-    export let data: Article;
+    export let data: any;
 </script>
 
 <svelte:head>
-    <title>{data.title} - FRT Blog</title>
-    <meta name="description" content={data.description} />
+    <title>{data.post.title} - FRT Blog</title>
+    <meta name="description" content={data.post.description} />
 </svelte:head>
 
 <article class="mt-24 mx-4 md:w-2/3 lg:w-1/2 md:mx-auto min-h-screen">
-    <h1 class="font-semibold text-3xl mb-2">{data.title}</h1>
+    <h1 class="font-semibold text-3xl mb-2">{data.post.title}</h1>
     <div class="flex align-center flex-col mb-8">
-		<p>{data.date}</p>
-		<p class="font-semibold">{data.author}</p>
+		<p>{data.post.date}</p>
+		<p class="font-semibold">{data.post.author}</p>
 	</div>
-    <svelte:component this={data.content} />
+    <svelte:component this={data.component} />
 </article>
