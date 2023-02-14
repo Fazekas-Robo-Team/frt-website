@@ -17,7 +17,7 @@
         localStorage.setItem("cookie_accepted", "false");
         cookie_accepted = localStorage.getItem("cookie_accepted") === "true";
         // take the user to the rickroll video
-        window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+        window.location.href = "https://www.youtube.com/watch?v=a3Z7zEc7AXQ";
     }
 
     function acceptCookies() {
