@@ -5,6 +5,7 @@ import authRoutes from './routes/authRoutes';
 import userRoutes from './routes/userRoutes';
 import sequelize from './config/sequelize';
 import authMiddleware from './middleware/authMiddleware';
+import { exec } from 'child_process';
 
 dotenv.config();
 
@@ -17,6 +18,17 @@ app.use(authMiddleware);
 
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
+exec('cd .. && cd frt-frontend && npm run dev', (err, stdout, stderr) => {
+  if (err) {
+    console.error(err);
+    return;
+  }
+  if (stderr) {
+    console.error(stderr);
+    return;
+  }
+  console.log(stdout);
+});
 
 sequelize
   .authenticate()
@@ -29,3 +41,4 @@ sequelize
   .catch((err) => {
     console.error('Unable to connect to the database:', err);
   });
+
