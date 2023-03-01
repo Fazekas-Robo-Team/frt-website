@@ -8,19 +8,57 @@ import blogRoutes from "./routes/blogRoutes";
 import sequelize from "./config/sequelize";
 import authMiddleware from "./middleware/authMiddleware";
 import { exec } from "child_process";
+import winston, { format } from "winston";
+import colors from "colors";
 
 dotenv.config();
+
+const logLevelColors: { [key: string]: string } = {
+    error: "bgRed",
+    warn: "bgYellow",
+    info: "bgMagenta",
+    http: "bgBlue",
+    debug: "bgCyan",
+    silly: "bgGreen"
+};
+
+const logFormat = format.printf(({ level, message, timestamp }) => {
+    const color: string = logLevelColors[level as keyof typeof logLevelColors] || "bgWhite";
+    // @ts-ignore
+    const coloredLevel = colors.white.bold[color](` ${level.toUpperCase()} `);
+    return `${timestamp} ${coloredLevel} ${message}`;
+});
+
+const jsonFormat = format.printf(({ level, message, timestamp }) => {
+    return JSON.stringify({ level, message, timestamp });
+});
+
+export const logger = winston.createLogger({
+    level: "debug",
+    format: format.combine(
+        format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
+        format.padLevels(),
+        logFormat
+    ),
+    transports: [
+        new winston.transports.Console(),
+        new winston.transports.File({ filename: "error.log", level: "error", format: jsonFormat }),
+        new winston.transports.File({ filename: "combined.log", format: jsonFormat }),
+    ],
+});
+
+logger.info("Server starting");
 
 sequelize
     .sync()
     .then(() => {
-        console.log("Connected to the database");
+        logger.info("Connected to the database");
         app.listen(port, () => {
-            console.log(`Server listening on port ${port}`);
+            logger.info(`Server listening on port ${port}`);
         });
     })
     .catch((err) => {
-        console.error("Unable to connect to the database:", err);
+        logger.error("Unable to connect to the database:", err);
     });
 
 const app = express();
@@ -36,24 +74,6 @@ app.use(authMiddleware);
 app.use("/users", userRoutes);
 app.use("/blog", blogRoutes);
 
-// publish changes
-app.post("/publish", (req, res) => {
-    frontend_process.kill();
-    let publish_process = exec("cd .. && cd frt-frontend && npm run build", (err, stdout, stderr) => {
-        if (err) {
-            console.error(err);
-            return;
-        }
-        if (stderr) {
-            console.error(stderr);
-            return;
-        }
-        // Create a new process and run the frontend.
-        frontend_process = runFrontend();
-        res.status(200).json({ message: "Published" });
-    });
-});
-
 // auth check
 app.post("/auth/check", (req, res) => {
     res.status(200).json({ message: "Authenticated" });
@@ -61,12 +81,27 @@ app.post("/auth/check", (req, res) => {
 
 let frontend_process = runFrontend();
 
-function runFrontend() {
+export function runFrontend() {
     let frontend_process = exec("cd .. && cd frt-frontend && node server.js", (err, stdout, stderr) => {
         if (stderr) {
-            console.error(stderr);
             return;
         }
     });
+    logger.debug("Frontend server started")
     return frontend_process;
+}
+
+export function buildFrontend() {
+    frontend_process.kill();
+    logger.debug("Frontend server killed")
+    let build_process = exec("cd .. && cd frt-frontend && npm run build", (err, stdout, stderr) => {
+        if (err) {
+            return;
+        }
+        if (stderr) {
+            return;
+        }
+
+        frontend_process = runFrontend();
+    });
 }

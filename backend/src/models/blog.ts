@@ -13,6 +13,7 @@ class Post extends Model {
     public category!: string;
     public date!: string;
     public slug!: string;
+    public published!: boolean;
 }
 
 Post.init(
@@ -48,6 +49,11 @@ Post.init(
         },
         slug: {
             type: DataTypes.STRING,
+            allowNull: false,
+        },
+        published: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
             allowNull: false,
         },
     },
