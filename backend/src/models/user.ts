@@ -9,6 +9,7 @@ class User extends Model {
     public email!: string;
     public password!: string;
     public roles!: string;
+    public fullname!: string;
 }
 
 User.init(
@@ -34,6 +35,10 @@ User.init(
         },
         roles: {
             type: DataTypes.ARRAY(DataTypes.STRING),
+            allowNull: true,
+        },
+        fullname: {
+            type: DataTypes.STRING,
             allowNull: true,
         },
     },

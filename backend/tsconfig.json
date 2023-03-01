@@ -1,4 +1,8 @@
 {
+  "files": [
+    "src/app.ts",
+    "custom.d.ts"
+  ],
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig to read more about this file */
 
@@ -104,4 +108,7 @@
     "src/**/*.ts",
     "custom.d.ts"
   ],
+  "ts-node": {
+    "files": true
+  }
 }
