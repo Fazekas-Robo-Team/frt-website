@@ -16,19 +16,7 @@ function authMiddleware(req: Request, res: Response, next: NextFunction) {
     return res.status(401).json({ error: 'No token provided' });
   }
 
-  const parts = authHeader.split(' ');
-
-  if (parts.length !== 2) {
-    return res.status(401).json({ error: 'Token error' });
-  }
-
-  const [scheme, token] = parts;
-
-  if (!/^Bearer$/i.test(scheme)) {
-    return res.status(401).json({ error: 'Token malformatted' });
-  }
-
-  jwt.verify(token, secret, (err, decoded) => {
+  jwt.verify(authHeader, secret, (err, decoded) => {
     if (err) {
       return res.status(401).json({ error: 'Token invalid' });
     }

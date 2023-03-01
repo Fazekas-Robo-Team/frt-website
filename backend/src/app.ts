@@ -47,3 +47,8 @@ sequelize
     console.error('Unable to connect to the database:', err);
   });
 
+// auth check
+
+app.post('/auth/check', (req, res) => {
+  res.status(200).json({ message: 'Authenticated' });
+});
