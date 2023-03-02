@@ -13,6 +13,8 @@
 
 <script lang="ts">
 	export let article: any;
+	
+	const index_image_url = `/blog_images/${article.slug}/${article.index_image_url}`;
 </script>
 
 <a class="mx-2 md:h-full xl:mx-8 mb-8 lg:mb-0" href="/blog/{article.slug}"
@@ -20,7 +22,7 @@
 		class="bg-white w-full h-full p-8 flex flex-col justify-between border-black border-2 drop-shadow-xl-black-br hover:drop-shadow-md-black-br hover:translate-x-5px hover:translate-y-5px"
 	>
 		<div class="h-fit lg:h-4/5">
-			<img class="w-full h-64 lg:h-1/2 object-cover object-center border-black border-2" src={article.index_image_url} alt="article" />
+			<img class="w-full h-64 lg:h-1/2 object-cover object-center border-black border-2" src={index_image_url} alt="article" />
 			<h1 class="font-semibold text-2xl my-2">{article.title}</h1>
 			<p class="text-md">{article.description}</p>
 		</div>

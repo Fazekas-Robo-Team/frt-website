@@ -1,6 +1,7 @@
 <script lang="ts">
     import Date from '$lib/images/date.svg';
 	import Pfp from '$lib/images/pfp.svg';
+	import { onMount } from 'svelte';
 
     interface Article {
         title: string;

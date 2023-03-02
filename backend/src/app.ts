@@ -10,6 +10,8 @@ import authMiddleware from "./middleware/authMiddleware";
 import { exec } from "child_process";
 import winston, { format } from "winston";
 import colors from "colors";
+import session from "express-session";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 
@@ -64,7 +66,26 @@ sequelize
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(cors());
+app.use(
+    session({
+        secret: process.env.JWT_SECRET!,
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            secure: false,
+            maxAge: 1000 * 60 * 60 * 24,
+            httpOnly: false,
+        },
+        store: new session.MemoryStore(),
+    })
+)
+app.use(cookieParser()); 
+app.use(cors(
+    {
+        origin: ["http://localhost:5173", "http://localhost:3000"],
+        credentials: true,
+    }
+));
 app.use(express.json());
 
 app.use("/auth", authRoutes);
@@ -76,7 +97,7 @@ app.use("/blog", blogRoutes);
 
 // auth check
 app.post("/auth/check", (req, res) => {
-    res.status(200).json({ message: "Authenticated" });
+    res.status(200).json({ authorized: true });
 });
 
 let frontend_process = runFrontend();

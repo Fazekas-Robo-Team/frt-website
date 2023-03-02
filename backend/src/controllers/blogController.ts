@@ -86,7 +86,7 @@ category: ${category}
                     }
                 });
 
-                // copy index_image from uploads/posts_temp/slug to ../frt-frontend/posts/slug
+                // copy index_image from uploads/posts_temp/slug to ../frt-frontend/static/blog_images/slug
                 // find out the extension of the image
 
                 const image = fs.readdirSync(`uploads/posts_temp/${slug}`);
@@ -94,7 +94,7 @@ category: ${category}
 
                 fs.copyFile(
                     `uploads/posts_temp/${slug}/index_image.${image_extension}`,
-                    `../frt-frontend/posts/${slug}/index_image.${image_extension}`,
+                    `../frt-frontend/static/blog_images/${slug}/index_image.${image_extension}`,
                     (err) => {
                         if (err) {
                             console.error(err);

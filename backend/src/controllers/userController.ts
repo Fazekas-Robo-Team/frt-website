@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import session from 'express-session';
 import User from '../models/user';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -19,6 +20,7 @@ class UserController {
             });
             res.json({ success: true, data: user });
         } catch (error) {
+            console.log(error);
             res.status(500).json({ success: false, message: "Failed to register user :(" });
         }
     }
@@ -28,20 +30,26 @@ class UserController {
             const { username, password } = req.body;
             const user = await User.findOne({ where: { username } });
             if (!user) {
-                res.status(401).json({ success: false, message: "Incorrect email or password" });
+                res.status(401).json({ success: false, error: "Incorrect email or password" });
                 return;
             }
             const isPasswordCorrect = await bcrypt.compare(password, user.password);
             if (!isPasswordCorrect) {
-                res.status(401).json({ success: false, message: "Incorrect email or password" });
+                res.status(401).json({ success: false, error: "Incorrect email or password" });
                 return;
             }
 
             const token = jwt.sign({ userId: user.id }, secret, { expiresIn: '1d' });
 
-            res.json({ token });
+            const cookieOptions = {
+                expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+                httpOnly: false,
+            };
+            
+            res.cookie('token', token, cookieOptions);
+            res.json({ success: true});
         } catch (error) {
-            res.status(500).json({ success: false, message: "Failed to login user :(" });
+            res.status(500).json({ success: false, error: "Failed to login user :(" });
         }
     }
 }

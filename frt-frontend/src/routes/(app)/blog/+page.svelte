@@ -1,7 +1,4 @@
 <script lang="ts">
-	import Navbar from '$lib/components/Navbar.svelte';
-	import Date from '$lib/images/date.svg';
-	import Pfp from '$lib/images/pfp.svg';
 	import ArticleCard from '$lib/components/Article_card_blogpage.svelte';
 
 	export let data: any;

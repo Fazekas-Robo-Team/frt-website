@@ -10,13 +10,13 @@ interface TokenPayload {
 }
 
 function authMiddleware(req: Request, res: Response, next: NextFunction) {
-  const authHeader = req.headers.authorization;
+  const authToken = req.cookies.token;
 
-  if (!authHeader) {
+  if (!authToken) {
     return res.status(401).json({ error: 'No token provided' });
   }
 
-  jwt.verify(authHeader, secret, (err, decoded) => {
+  jwt.verify(authToken, secret, (err: any, decoded: any) => {
     if (err) {
       return res.status(401).json({ error: 'Token invalid' });
     }
