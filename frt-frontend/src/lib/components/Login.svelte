@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { backend_url } from '../../routes/stores';
+	import { PUBLIC_BACKEND_URL } from '$env/static/public';
 	import { get, writable } from 'svelte/store';
 
 	onMount(() => {
@@ -11,7 +11,7 @@
 	let password: string;
 
 	function login() {
-		fetch(`${get(backend_url)}/api/auth/login`, {
+		fetch(`${PUBLIC_BACKEND_URL}/api/auth/login`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'

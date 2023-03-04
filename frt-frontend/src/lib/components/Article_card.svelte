@@ -6,7 +6,7 @@
 			description: string;
 			date: string;
 			author: string;
-			index_image_url: string;
+			index_image: string;
 		};
 	}
 </script>
@@ -14,10 +14,10 @@
 <script lang="ts">
 	export let article: any;
 
-	const index_image_url = `/blog_images/${article.slug}/${article.index_image_url}`;
+	const index_image_url = `/blog_images/${article.slug}/${article.index_image}`;
 </script>
 
-<a class="w-full lg:w-1/3 h-fit lg:h-full mx-2 lg:mx-4 xl:mx-8 mb-8 lg:mb-0" href={article.path}
+<a class="w-full lg:w-1/3 h-fit lg:h-full mx-2 lg:mx-4 xl:mx-8 mb-8 lg:mb-0" href="/blog/{article.slug}"
 	><div
 		class="bg-white w-full h-full p-8 flex flex-col justify-between border-black border-2 drop-shadow-xl-black-br hover:drop-shadow-md-black-br hover:translate-x-5px hover:translate-y-5px"
 	>

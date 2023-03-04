@@ -63,5 +63,7 @@ router.get("/", blogController.getPosts);
 router.get("/:id", blogController.getPost);
 router.post("/", temp_upload.single("index"), blogController.createPost);
 router.post("/publish/:id", blogController.publishPost);
+router.post("/deactivate/:id", blogController.deactivePost);
+router.delete("/:id", blogController.deletePost);
 
 export default router;

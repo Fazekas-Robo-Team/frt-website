@@ -18,7 +18,7 @@
 	<div class="flex flex-col md:flex-row mt-8">
 		<a
 			href="/aktiv_tagok"
-			class="text-center bg-green py-4 px-6 border-black border-2 drop-shadow-xl-black-br mx-5 my-5 md:my-0 font-semibold text-lg hover:drop-shadow-md-black-br hover:translate-x-5px hover:translate-y-5px"
+			class="text-center bg-pastel-green py-4 px-6 border-black border-2 drop-shadow-xl-black-br mx-5 my-5 md:my-0 font-semibold text-lg hover:drop-shadow-md-black-br hover:translate-x-5px hover:translate-y-5px"
 			>Aktív tagok</a
 		>
 		<a

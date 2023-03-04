@@ -6,7 +6,7 @@
 			description: string;
 			date: string;
 			author: string;
-			index_image_url: string;
+			index_image: string;
 		};
 	}
 </script>
@@ -14,7 +14,7 @@
 <script lang="ts">
 	export let article: any;
 	
-	const index_image_url = `/blog_images/${article.slug}/${article.index_image_url}`;
+	const index_image_url = `/blog_images/${article.slug}/${article.index_image}`;
 </script>
 
 <a class="mx-2 md:h-full xl:mx-8 mb-8 lg:mb-0" href="/blog/{article.slug}"

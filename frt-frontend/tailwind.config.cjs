@@ -28,7 +28,7 @@ module.exports = {
         'medium-purple': '#BDA1FF',
         'medium-orange': '#FFB177',
         'medium-blue': '#4FC0FF',
-        'green': '#A0FF27',
+        'pastel-green': '#A0FF27',
         'teal': '#1CFFD6',
         'yellow': '#FFE600',
         'black': '#000000',

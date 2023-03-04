@@ -1,0 +1,1 @@
+<div class="w-full flex justify-center items-center text-white">Coming soon</div>

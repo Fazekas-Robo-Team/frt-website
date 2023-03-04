@@ -11,7 +11,36 @@ class BlogController {
     public async getPosts(req: Request, res: Response): Promise<void> {
         try {
             const posts = await Post.findAll();
-            res.json({ success: true, data: posts });
+
+            // send title, user fullname, date and id
+            const postsData = await Promise.all(
+                posts.map(async (post) => {
+                    // get the user fullname
+                    const user = await User.findOne({ where: { id: post.userId } });
+
+                    // format the date in yyyy-mm-dd format
+                    const date = new Date(post.createdAt).toISOString().slice(0, 10);
+
+                    // state: published or draft, if published and index is true, then it's a featured post
+                    let state = "draft";
+                    if (post.published) {
+                        state = "published";
+                        if (post.index) {
+                            state = "published (featured)";
+                        }
+                    }
+
+                    return {
+                        title: post.title,
+                        author: user?.fullname,
+                        date: date,
+                        id: post.id,
+                        state: state,
+                    };
+                })
+            );
+
+            res.json({ success: true, data: postsData });
         } catch (error) {
             res.status(500).json({ success: false, message: "Failed to get posts :(" });
         }
@@ -67,12 +96,18 @@ class BlogController {
                 const date = new Date().toISOString().slice(0, 10);
                 const user = await User.findOne({ where: { id: req.userId } });
 
+                // find out the extension of the image
+
+                const image = fs.readdirSync(`uploads/posts_temp/${slug}`);
+                const image_extension = image[0].split(".")[1];
+
                 const md_content = `---
 title: ${title}
 description: ${description}
-date: ${date}
+date: "${date}"
 author: ${user?.fullname}
 category: ${category}
+index_image: index_image.${image_extension}
 ---\n\n${content}`;
 
                 // make sure the slug directory exists
@@ -87,27 +122,24 @@ category: ${category}
                 });
 
                 // copy index_image from uploads/posts_temp/slug to ../frt-frontend/static/blog_images/slug
-                // find out the extension of the image
 
-                const image = fs.readdirSync(`uploads/posts_temp/${slug}`);
-                const image_extension = image[0].split(".")[1];
+                // make sure the slug directory exists
+                fs.mkdirSync(`../frt-frontend/static/blog_images/${slug}`, { recursive: true });
 
-                fs.copyFile(
-                    `uploads/posts_temp/${slug}/index_image.${image_extension}`,
-                    `../frt-frontend/static/blog_images/${slug}/index_image.${image_extension}`,
-                    (err) => {
-                        if (err) {
-                            console.error(err);
-                            return;
-                        }
+                fs.copyFile(`uploads/posts_temp/${slug}/index_image.${image_extension}`, `../frt-frontend/static/blog_images/${slug}/index_image.${image_extension}`, (err) => {
+                    if (err) {
+                        console.error(err);
+                        return;
                     }
-                );
+                });
 
                 // build the frontend
-                buildFrontend();
-                
+                await buildFrontend();
+
                 post.published = true;
-                post.save();
+                await post.save();
+
+                logger.info(`${user?.fullname} published post ${title}!`);
                 res.status(200).json({ success: true });
             } else {
                 res.status(404).json({ success: false, message: "Post not found :(" });
@@ -124,11 +156,21 @@ category: ${category}
             const post = await Post.findOne({ where: { id } });
 
             if (post) {
-                post.published = false;
-                post.save();
-
                 // delete the post from the frontend
                 fs.rmdirSync(`../frt-frontend/posts/${post.slug}`, { recursive: true });
+
+                // delete the post image from the frontend
+                fs.rmdirSync(`../frt-frontend/static/blog_images/${post.slug}`, { recursive: true });
+
+                // build the frontend
+                await buildFrontend();
+
+                post.published = false;
+                await post.save();
+
+                const user = await User.findOne({ where: { id: req.userId } });
+
+                logger.info(`${user?.fullname} deactived post ${post.title}`)
 
                 res.status(200).json({ success: true });
             } else {
@@ -164,9 +206,6 @@ category: ${category}
                 post.category = category;
                 post.save();
 
-                // delete the post from the frontend
-                this.deactivePost(req, res);
-
                 res.status(200).json({ success: true });
             } else {
                 res.status(404).json({ success: false, message: "Post not found :(" });
@@ -174,6 +213,30 @@ category: ${category}
         } catch (error) {
             logger.error(error);
             res.status(500).json({ success: false, message: "Failed to edit post :(" });
+        }
+    }
+
+    public async deletePost(req: Request, res: Response): Promise<void> {
+        try {
+            const { id } = req.params;
+            const post = await Post.findOne({ where: { id } });
+
+            if (post) {
+                // delete the post from the frontend
+                if (post.published) {
+                    this.deactivePost(req, res);
+                }
+
+                // delete the post from the database
+                await post.destroy();
+
+                res.status(200).json({ success: true });
+            } else {
+                res.status(404).json({ success: false, message: "Post not found :(" });
+            }
+        } catch (error) {
+            logger.error(error);
+            res.status(500).json({ success: false, message: "Failed to delete post :(" });
         }
     }
 }

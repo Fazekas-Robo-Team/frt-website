@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from "svelte";
     import { writable } from "svelte/store";
-    import { cookie } from "../../routes/stores";
+    import { cookie } from "../../stores";
 
     let cookie_accepted: boolean = true, cookie_rejected: boolean = true;
 

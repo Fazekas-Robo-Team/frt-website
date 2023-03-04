@@ -49,14 +49,14 @@ export const logger = winston.createLogger({
     ],
 });
 
-logger.info("Server starting");
+logger.debug("Server starting");
 
 sequelize
     .sync()
     .then(() => {
-        logger.info("Connected to the database");
+        logger.debug("Connected to the database");
         app.listen(port, () => {
-            logger.info(`Server listening on port ${port}`);
+            logger.debug(`Server listening on port ${port}`);
         });
     })
     .catch((err) => {
@@ -82,7 +82,7 @@ app.use(
 app.use(cookieParser()); 
 app.use(cors(
     {
-        origin: ["http://localhost:5173", "http://localhost:3000"],
+        origin: ["http://localhost:5173", "http://localhost:5000"],
         credentials: true,
     }
 ));
@@ -102,7 +102,7 @@ app.post("/auth/check", (req, res) => {
 
 let frontend_process = runFrontend();
 
-export function runFrontend() {
+export async function runFrontend() {
     let frontend_process = exec("cd .. && cd frt-frontend && node server.js", (err, stdout, stderr) => {
         if (stderr) {
             return;
@@ -112,17 +112,20 @@ export function runFrontend() {
     return frontend_process;
 }
 
-export function buildFrontend() {
-    frontend_process.kill();
-    logger.debug("Frontend server killed")
-    let build_process = exec("cd .. && cd frt-frontend && npm run build", (err, stdout, stderr) => {
+export async function buildFrontend() {
+    (await frontend_process).kill();
+    logger.debug("Frontend server killed");
+  
+    return new Promise((resolve, reject) => {
+      exec("cd .. && cd frt-frontend && npm run build", (err, stdout, stderr) => {
         if (err) {
-            return;
+          reject(err);
+        } else {
+          logger.debug("Frontend server built");
+          frontend_process = runFrontend();
+          resolve(true);
         }
-        if (stderr) {
-            return;
-        }
-
-        frontend_process = runFrontend();
+      });
     });
-}
+  }
+  
