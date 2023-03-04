@@ -129,9 +129,10 @@
 	}
 </script>
 
-<!-- iter through the posts -->
+<!-- iter through the posts reverse -->
 
-{#each posts as post}
+
+{#each [...posts].reverse() as post}
 	<div class="bg-slate-50 p-2 rounded flex flex-row items-center justify-between my-8">
 		<div>
 			<h2 class="m-2 font-semibold">{post.title}</h2>
