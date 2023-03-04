@@ -1,5 +1,7 @@
 <script lang="ts">
     import { PUBLIC_BACKEND_URL } from "$env/static/public";
+    import MultipleImageUpload from '$lib/components/Multiple_image_upload.svelte';
+
     let title = '', content = '', description = '', category = '';
 
     function submit() {
@@ -49,6 +51,8 @@
     <label for="category" class="text-lg font-semibold text-white">Category</label>
 
     <input type="text" autocomplete="off" id="category" class="border-2 border-gray-300 p-2 rounded my-2" bind:value={category} />
+
+    <MultipleImageUpload />
 
     <!-- index image -->
 
