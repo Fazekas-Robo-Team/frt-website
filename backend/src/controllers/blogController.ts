@@ -66,8 +66,9 @@ class BlogController {
                 .replace(/ /g, "-")
                 .replace(/[^\w-]+/g, "");
 
-            // generate slug with category/title combo
-            const slug = `${category}_${slugTitle}`;
+            // generate slug with category/title/data combo
+            const date = new Date().toISOString().slice(0, 10);
+            const slug = `${category}_${slugTitle}_${date}`;
 
             const post = await Post.create({
                 title: title,
