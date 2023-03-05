@@ -138,6 +138,20 @@ index_image: index_image.${image_extension}
                     }
                 });
 
+                // copy the rest of the images from uploads/posts_temp/slug to ../frt-frontend/posts/slug
+                const images = fs.readdirSync(`uploads/posts_temp/${slug}`);
+
+                images.forEach((image) => {
+                    if (image !== `index_image.${image_extension}`) {
+                        fs.copyFile(`uploads/posts_temp/${slug}/${image}`, `../frt-frontend/posts/${slug}/${image}`, (err) => {
+                            if (err) {
+                                console.error(err);
+                                return;
+                            }
+                        });
+                    }
+                });
+
                 // build the frontend
                 await buildFrontend();
 
