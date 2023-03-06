@@ -3,6 +3,12 @@ module.exports = {
   content: ['./src/**/*.{html,js,svelte,ts}', './src/**/*.md'],
   theme: {
     extend: {
+      listStyleType: {
+        default: 'disc',
+      },
+      listStylePosition: {
+        default: 'inside',
+      },
       dropShadow: {
         'xl-purple-br': '10px 10px 0px #9461FF',
         'xl-black-br': '10px 10px 0px #000000',

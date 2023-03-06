@@ -28,13 +28,3 @@ body {
 	margin: 0;
 	font-family: 'JetBrains Mono', monospace;
 }
-
-ul {
-	list-style-type: disc !important;
-	list-style-position: inside !important;
-}
-
-ol {
-	list-style-type: decimal !important;
-	list-style-position: inside !important;
-}

@@ -73,7 +73,7 @@
 		<div class="flex items-center justify-center mb-8">
 			<h1 class="text-2xl font-bold text-white">FRT Admin</h1>
 		</div>
-		<ul class="space-y-1">
+		<ul class="space-y-1 list-none">
 			{#each menuItems as item}
 				<li class="py-2 font-medium text-white hover:text-slate-400">
 					<a href={item.link} on:click={menuClick}>{item.name}</a>

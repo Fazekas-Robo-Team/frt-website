@@ -4,9 +4,11 @@
 
     let title = '', content = '', description = '', category = '';
 
-    function submit() {
+    async function submit() {
         // get index-image from file input
         const fileInput = document.getElementById('index') as HTMLInputElement;
+        const fileInput2 = document.getElementById('multiple-images') as HTMLInputElement;
+
         const formData = new FormData();
 
         formData.append('title', title);
@@ -15,6 +17,10 @@
         formData.append('category', category);
 
         formData.append('index', fileInput.files![0]);
+
+        for (let i = 0; i < fileInput2.files!.length; i++) {
+            formData.append('images[]', fileInput2.files![i]);
+        }
 
         // send post request
         fetch(`${PUBLIC_BACKEND_URL}/blog/`, {
