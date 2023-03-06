@@ -8,6 +8,15 @@ import { logger } from "../app";
 dotenv.config();
 
 class BlogController {
+    constructor() {
+        this.getPosts = this.getPosts.bind(this);
+        this.getPost = this.getPost.bind(this);
+        this.createPost = this.createPost.bind(this);
+        this.publishPost = this.publishPost.bind(this);
+        this.unpublishPost = this.unpublishPost.bind(this);
+        this.deactivePost = this.deactivePost.bind(this);
+        this.deletePost = this.deletePost.bind(this);
+    }
     public async getPosts(req: Request, res: Response): Promise<void> {
         try {
             const posts = await Post.findAll();
@@ -71,7 +80,7 @@ class BlogController {
 
             // replace the dashes with underscores
             date = date.replace(/-/g, "_");
-            
+
             const slug = `${category}_${slugTitle}_${date}`;
 
             const post = await Post.create({
@@ -169,9 +178,8 @@ index_image: index_image.${image_extension}
         }
     }
 
-    public async deactivePost(req: Request, res: Response): Promise<void> {
+    public async unpublishPost(id: number, userId: number): Promise<void> {
         try {
-            const { id } = req.params;
             const post = await Post.findOne({ where: { id } });
 
             if (post) {
@@ -187,18 +195,24 @@ index_image: index_image.${image_extension}
                 post.published = false;
                 await post.save();
 
-                const user = await User.findOne({ where: { id: req.userId } });
+                const user = await User.findOne({ where: { id: userId } });
 
-                logger.info(`${user?.fullname} deactived post ${post.title}`)
-
-                res.status(200).json({ success: true });
-            } else {
-                res.status(404).json({ success: false, message: "Post not found :(" });
+                logger.info(`${user?.fullname} deactived post ${post.title}`);
             }
+
         } catch (error) {
             logger.error(error);
+        }
+    }
+
+    public async deactivePost(req: Request, res: Response): Promise<void> {
+        try {
+            await this.unpublishPost(parseInt(req.params.id), req.userId!);
+            res.status(200).json({ success: true });
+        } catch (error) {
             res.status(500).json({ success: false, message: "Failed to deactive post :(" });
         }
+
     }
 
     public async editPost(req: Request, res: Response): Promise<void> {
@@ -243,12 +257,11 @@ index_image: index_image.${image_extension}
             if (post) {
                 // delete the post from the frontend
                 if (post.published) {
-                    this.deactivePost(req, res);
+                    await this.unpublishPost(parseInt(req.params.id), req.userId!);
                 }
-
                 // delete the post from the database
                 await post.destroy();
-
+                
                 res.status(200).json({ success: true });
             } else {
                 res.status(404).json({ success: false, message: "Post not found :(" });
