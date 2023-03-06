@@ -9,49 +9,39 @@ dotenv.config();
 const secret = process.env.JWT_SECRET!;
 
 class UserController {
-    public async register(req: Request, res: Response): Promise<void> {
+    public async getById(req: Request, res: Response): Promise<void> {
         try {
-            const { username, email, password } = req.body;
-            const hashedPassword = await bcrypt.hash(password, 10);
-            const user = await User.create({
-                username,
-                email,
-                password: hashedPassword,
-            });
+            const user = await User.findByPk(req.params.id);
             res.json({ success: true, data: user });
         } catch (error) {
-            console.log(error);
-            res.status(500).json({ success: false, message: "Failed to register user :(" });
+            res.status(500).json({ success: false, message: "Failed to get user :(" });
         }
     }
 
-    public async login(req: Request, res: Response): Promise<void> {
+    public async update(req: Request, res: Response): Promise<void> {
         try {
-            const { username, password } = req.body;
-            const user = await User.findOne({ where: { username } });
-            if (!user) {
-                res.status(401).json({ success: false, error: "Incorrect email or password" });
-                return;
+            const user = await User.findByPk(req.params.id);
+            if (user) {
+                await user.update(req.body);
+                res.json({ success: true, data: user });
             }
-            const isPasswordCorrect = await bcrypt.compare(password, user.password);
-            if (!isPasswordCorrect) {
-                res.status(401).json({ success: false, error: "Incorrect email or password" });
-                return;
-            }
-
-            const token = jwt.sign({ userId: user.id }, secret, { expiresIn: '1d' });
-
-            const cookieOptions = {
-                expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-                httpOnly: false,
-            };
-            
-            res.cookie('token', token, cookieOptions);
-            res.json({ success: true});
         } catch (error) {
-            res.status(500).json({ success: false, error: "Failed to login user :(" });
+            res.status(500).json({ success: false, message: "Failed to update user :(" });
         }
     }
+
+    public async delete(req: Request, res: Response): Promise<void> {
+        try {
+            const user = await User.findByPk(req.params.id);
+            if (user) {
+                await user.destroy();
+                res.json({ success: true, data: user });
+            }
+        } catch (error) {
+            res.status(500).json({ success: false, message: "Failed to delete user :(" });
+        }
+    }
+    
 }
 
 export default new UserController();
