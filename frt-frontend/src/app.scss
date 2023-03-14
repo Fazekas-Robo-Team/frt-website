@@ -395,7 +395,7 @@ ol {
  /* Border around popup */
  .prism-previewer.prism-previewer:before,
  .prism-previewer-gradient.prism-previewer-gradient div {
-     border-color: hsl(0, 0, 95%);
+     border-color: hsl(0%, 0%, 95%);
  }
  
  /* Angle and time should remain as circles and are hence not included */
@@ -411,7 +411,7 @@ ol {
  }
  
  .prism-previewer-flipped.prism-previewer-flipped.after {
-     border-bottom-color: hsl(0, 0, 95%);
+     border-bottom-color: hsl(0%, 0%, 95%);
  }
  
  /* Background colour within the popup */

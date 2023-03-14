@@ -132,7 +132,7 @@
 <!-- iter through the posts reverse -->
 
 
-{#each [...posts].reverse() as post}
+{#each posts as post}
 	<div class="bg-slate-50 p-2 rounded flex flex-row items-center justify-between my-8">
 		<div>
 			<h2 class="m-2 font-semibold">{post.title}</h2>
@@ -147,9 +147,8 @@
 
 		<div class="flex flex-row">
 			<div class="m-2">
-				<button
-					on:click={() => activatePost(post.id)}
-					class="text-sm text-gray-500 bg-orange-400 px-2 py-1 text-white rounded hover:brightness-75 transition-all">Edit</button
+				<a
+					href="/admin/edit/{post.id}" class="text-sm text-gray-500 bg-orange-400 px-2 py-1 text-white rounded hover:brightness-75 transition-all">Edit</a
 				>
 			</div>
 			<div class="m-2">

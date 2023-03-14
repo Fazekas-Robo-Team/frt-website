@@ -59,7 +59,6 @@ const temp_upload = multer({
             cb(null, `uploads/posts_temp/${slug}`);
         },
         filename: (req, file, cb) => {
-
             // if the file is the index image, rename it to index_image
             if (file.fieldname === "index") {
                 // get the file extension
@@ -95,7 +94,20 @@ router.post(
     ]),
     blogController.createPost
 );
-router.post("/images/", blog_upload.array("images[]", 9999), blogController.createPost);
+router.put(
+    "/:id",
+    temp_upload.fields([
+        {
+            name: "index",
+            maxCount: 1,
+        },
+        {
+            name: "images[]",
+            maxCount: 9999,
+        },
+    ]),
+    blogController.editPost
+);
 router.post("/publish/:id", blogController.publishPost);
 router.post("/deactivate/:id", blogController.deactivePost);
 router.delete("/:id", blogController.deletePost);

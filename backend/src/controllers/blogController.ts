@@ -178,7 +178,7 @@ index_image: index_image.${image_extension}
         }
     }
 
-    public async unpublishPost(id: number, userId: number): Promise<void> {
+    public async unpublishPost(id: number, userId: number, rebuild: boolean = true): Promise<void> {
         try {
             const post = await Post.findOne({ where: { id } });
 
@@ -190,7 +190,9 @@ index_image: index_image.${image_extension}
                 fs.rmdirSync(`../frt-frontend/static/blog_images/${post.slug}`, { recursive: true });
 
                 // build the frontend
-                await buildFrontend();
+                if (rebuild) {
+                    await buildFrontend();
+                }
 
                 post.published = false;
                 await post.save();
@@ -199,7 +201,6 @@ index_image: index_image.${image_extension}
 
                 logger.info(`${user?.fullname} deactived post ${post.title}`);
             }
-
         } catch (error) {
             logger.error(error);
         }
@@ -212,32 +213,30 @@ index_image: index_image.${image_extension}
         } catch (error) {
             res.status(500).json({ success: false, message: "Failed to deactive post :(" });
         }
-
     }
 
     public async editPost(req: Request, res: Response): Promise<void> {
         try {
+            const { title, description, content, category } = req.body;
+
             const { id } = req.params;
+
             const post = await Post.findOne({ where: { id } });
 
+            const user = await User.findOne({ where: { id: req.userId } });
+
             if (post) {
-                const { title, description, content, category } = req.body;
+                if (post.published) {
+                    res.status(400).json({ success: false, message: "You can't edit a published post!" });
+                    return;
+                }
 
-                // modify the title to be slug friendly
-                const slugTitle = title
-                    .toLowerCase()
-                    .replace(/ /g, "-")
-                    .replace(/[^\w-]+/g, "");
-
-                // generate slug with category/title combo
-                const slug = `${category}_${slugTitle}`;
-
-                post.title = title;
                 post.description = description;
                 post.content = content;
-                post.slug = slug;
-                post.category = category;
+
                 post.save();
+
+                logger.info(`${user?.username} edited post ${title}!`);
 
                 res.status(200).json({ success: true });
             } else {
@@ -261,7 +260,7 @@ index_image: index_image.${image_extension}
                 }
                 // delete the post from the database
                 await post.destroy();
-                
+
                 res.status(200).json({ success: true });
             } else {
                 res.status(404).json({ success: false, message: "Post not found :(" });
