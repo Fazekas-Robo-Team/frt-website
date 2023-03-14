@@ -1,15 +1,6 @@
-<script>
-	import Navbar from '../lib/components/Navbar.svelte';
-	import '../app.scss';
+<script lang="ts">
 	import './styles.css';
-	import Footer from '../lib/components/Footer.svelte';
-	import CookiePopup from '$lib/components/Cookie_popup.svelte';
-
+	import '../app.scss';
 </script>
 
-<div class="app">
-	<Navbar />
-	<slot />
-	<CookiePopup />
-	<Footer />
-</div>
+<slot></slot>

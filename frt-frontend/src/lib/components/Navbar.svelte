@@ -10,7 +10,7 @@
 
 <!-- Desktop navbar -->
 <nav class="desktop hidden border-b-2 border-b-black md:block">
-	<ul>
+	<ul class="list-none">
 		<li class="float-left">
 			<a class="font-bold logo" href="/">Fazekas<span class="purple">RoboTeam</span></a>
 		</li>
@@ -37,7 +37,7 @@
 </nav>
 
 <div class="mobile menu {isMobileMenuOpen ? '' : 'closed'} bg-white">
-	<ul>
+	<ul class="list-none">
 		<li><a on:click={toggleMenu} href="/">Aktuális</a></li>
 		<li><a on:click={toggleMenu} href="/#blog">Blog</a></li>
 		<li><a on:click={toggleMenu} href="/#muhely">Műhely</a></li>
