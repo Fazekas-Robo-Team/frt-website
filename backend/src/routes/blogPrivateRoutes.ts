@@ -22,7 +22,7 @@ const temp_upload = multer({
             // replace the dashes with underscores
             date = date.replace(/-/g, "_");
 
-            const slug = `${category}/${slugTitle}/${date}`;
+            const slug = `${date}/${category}/${slugTitle}`;
 
             // create the directory if it doesn't exist
             fs.mkdirSync(`temp/${slug}`, { recursive: true });

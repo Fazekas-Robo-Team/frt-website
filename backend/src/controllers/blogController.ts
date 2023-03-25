@@ -72,7 +72,7 @@ class BlogController {
                         title: post.title,
                         author: user?.fullname,
                         date: date,
-                        id: post.id,
+                        slug: post.slug,
                     };
                 })
             );
