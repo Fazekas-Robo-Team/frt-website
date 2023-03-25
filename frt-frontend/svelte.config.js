@@ -16,7 +16,6 @@ const config = {
 
 	preprocess: [
 		vitePreprocess(),
-		mdsvex(mdsvexConfig),
 	],
 	
 };

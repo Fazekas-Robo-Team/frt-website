@@ -35,6 +35,7 @@
 		"express": "^4.18.2",
 		"mdsvex-relative-images": "^1.0.3",
 		"node-html-parser": "^6.1.4",
-		"sass": "^1.57.1"
+		"sass": "^1.57.1",
+		"svelte-markdown": "^0.2.3"
 	}
 }

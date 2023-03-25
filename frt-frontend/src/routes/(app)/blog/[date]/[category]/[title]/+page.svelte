@@ -1,17 +1,12 @@
 <script lang="ts">
-    import Date from '$lib/images/date.svg';
-	import Pfp from '$lib/images/pfp.svg';
-	import { onMount } from 'svelte';
-
-    interface Article {
-        title: string;
-        date: string;
-        description: string;
-        content: any;
-        author: string;
-    }
+    import SvelteMarkdown from 'svelte-markdown';
+    import heading from '$lib/markdown/heading.svelte';
 
     export let data: any;
+
+    const source = data.post.content;
+
+    console.log(source);
 </script>
 
 <svelte:head>
@@ -25,5 +20,9 @@
 		<p>{data.post.date}</p>
 		<p class="font-semibold">{data.post.author}</p>
 	</div>
-    <svelte:component this={data.component} />
+    <SvelteMarkdown {source} 
+        renderers={{
+            heading: heading
+        }}
+    />
 </article>
