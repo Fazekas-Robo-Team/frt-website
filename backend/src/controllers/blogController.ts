@@ -173,17 +173,6 @@ class BlogController {
             const post = await Post.findOne({ where: { id } });
 
             if (post) {
-                // delete the post from the frontend
-                fs.rmdirSync(`../frt-frontend/posts/${post.slug}`, { recursive: true });
-
-                // delete the post image from the frontend
-                fs.rmdirSync(`../frt-frontend/static/blog_images/${post.slug}`, { recursive: true });
-
-                // build the frontend
-                if (rebuild) {
-                    await buildFrontend();
-                }
-
                 post.published = false;
                 await post.save();
 
