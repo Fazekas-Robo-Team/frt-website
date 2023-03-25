@@ -2,8 +2,6 @@
 	import ArticleCard from '$lib/components/Article_card_blogpage.svelte';
 
 	export let data: any;
-
-	console.log(data);
 </script>
 
 <svelte:head>

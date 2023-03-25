@@ -4,7 +4,8 @@ import dotenv from "dotenv";
 import cors from "cors";
 import authRoutes from "./routes/authRoutes";
 import userRoutes from "./routes/userRoutes";
-import blogRoutes from "./routes/blogRoutes";
+import blogPublicRoutes from "./routes/blogPublicRoutes";
+import blogPrivateRoutes from "./routes/blogPrivateRoutes";
 import sequelize from "./config/sequelize";
 import authMiddleware from "./middleware/authMiddleware";
 import { exec } from "child_process";
@@ -88,19 +89,24 @@ app.use(cors(
 ));
 app.use(express.json());
 
-app.use("/auth", authRoutes);
+app.use(express.static("public"));
 
+app.use("/auth", authRoutes);
+app.use("/blog", blogPublicRoutes);
+
+// auth middleware
 app.use(authMiddleware);
 
+// below this line, all routes require authentication
 app.use("/users", userRoutes);
-app.use("/blog", blogRoutes);
+app.use("/blog_admin", blogPrivateRoutes);
 
 // auth check
 app.post("/auth/check", (req, res) => {
     res.status(200).json({ authorized: true });
 });
 
-let frontend_process = runFrontend();
+//let frontend_process = runFrontend();
 
 export async function runFrontend() {
     let frontend_process = exec("cd .. && cd frt-frontend && node server.js", (err, stdout, stderr) => {
@@ -113,7 +119,7 @@ export async function runFrontend() {
 }
 
 export async function buildFrontend() {
-    (await frontend_process).kill();
+    //(await frontend_process).kill();
     logger.debug("Frontend server killed");
   
     return new Promise((resolve, reject) => {
@@ -122,7 +128,7 @@ export async function buildFrontend() {
           reject(err);
         } else {
           logger.debug("Frontend server built");
-          frontend_process = runFrontend();
+          //frontend_process = runFrontend();
           resolve(true);
         }
       });

@@ -1,8 +1,8 @@
-import { posts } from '$lib/utils/posts'
+import { getPosts } from '$lib/utils/posts'
 
 // @ts-ignore
 export async function load() {
     return {
-        posts: posts
+        posts: getPosts()
     }
 }

@@ -5,7 +5,7 @@ export async function load() {
     let posts: any = [];
 
 	// fetch the posts from the backend (GET /blog)
-    await fetch(`${PUBLIC_BACKEND_URL}/blog`, {
+    await fetch(`${PUBLIC_BACKEND_URL}/blog_admin`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",

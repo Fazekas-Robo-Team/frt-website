@@ -10,7 +10,7 @@
 	export async function fetcher() {
 		let posts: any = [];
 		// fetch the posts from the backend (GET /blog)
-		await fetch(`${PUBLIC_BACKEND_URL}/blog`, {
+		await fetch(`${PUBLIC_BACKEND_URL}/blog_admin`, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json'
@@ -32,7 +32,7 @@
 		// call the api to activate the post
 		// if successful, show a modal
 
-		await fetch(`${PUBLIC_BACKEND_URL}/blog/publish/${id}`, {
+		await fetch(`${PUBLIC_BACKEND_URL}/blog_admin/publish/${id}`, {
 			method: 'POST',
 			credentials: 'include',
 			headers: {
@@ -64,7 +64,7 @@
 	async function deactivatePost(id: number) {
 		loading.set(true);
 
-		await fetch(`${PUBLIC_BACKEND_URL}/blog/deactivate/${id}`, {
+		await fetch(`${PUBLIC_BACKEND_URL}/blog_admin/deactivate/${id}`, {
 			method: 'POST',
 			credentials: 'include',
 			headers: {
@@ -98,7 +98,7 @@
 	async function deletePost(id: number) {
 		loading.set(true);
 
-		await fetch(`${PUBLIC_BACKEND_URL}/blog/${id}`, {
+		await fetch(`${PUBLIC_BACKEND_URL}/blog_admin/${id}`, {
 			method: 'DELETE',
 			credentials: 'include',
 			headers: {

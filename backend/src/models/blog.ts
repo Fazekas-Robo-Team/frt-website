@@ -16,6 +16,7 @@ class Post extends Model {
     public published!: boolean;
     public userId!: number;
     public index!: boolean;
+    public index_image!: string;
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
 }
@@ -67,6 +68,10 @@ Post.init(
         index: {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
+            allowNull: false,
+        },
+        index_image: {
+            type: DataTypes.STRING,
             allowNull: false,
         },
     },
