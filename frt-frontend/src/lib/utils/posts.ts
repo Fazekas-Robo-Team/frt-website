@@ -12,7 +12,6 @@ export async function getPosts() {
   const res = await fetch(`${PUBLIC_BACKEND_URL}/blog`);
   const res_json = await res.json();
   const posts = res_json.data;
-  console.log(posts);
   posts.sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
   return posts;
 }

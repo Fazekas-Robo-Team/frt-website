@@ -21,7 +21,7 @@ class BlogController {
         try {
             const posts = await Post.findAll();
 
-            // send title, user fullname, date and id
+            // send title, user fullname, date, id and state, then sort by date
             const postsData = await Promise.all(
                 posts.map(async (post) => {
                     // get the user fullname
@@ -49,6 +49,9 @@ class BlogController {
                 })
             );
 
+            // sort by id reversed
+            postsData.sort((a: any, b: any) => a.id - b.id);
+
             res.json({ success: true, data: postsData });
         } catch (error) {
             res.status(500).json({ success: false, message: "Failed to get posts :(" });
@@ -70,9 +73,12 @@ class BlogController {
 
                     return {
                         title: post.title,
+                        description: post.description,
+                        content: post.content,
                         author: user?.fullname,
                         date: date,
                         slug: post.slug,
+                        index_image: post.index_image,
                     };
                 })
             );
