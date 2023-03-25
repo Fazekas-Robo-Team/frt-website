@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import User from "../models/user";
 import { buildFrontend } from "../app";
 import { logger } from "../app";
+import path from "path";
 dotenv.config();
 
 class BlogController {
@@ -152,6 +153,22 @@ class BlogController {
             if (post) {
                 const { title, description, content, category, slug } = post;
 
+                // copy the temp/slug to the public/slug
+                const tempPath = path.join(__dirname, `../../temp/${slug}`);
+
+                // create the public folder if it doesn't exist
+                fs.mkdirSync(path.join(__dirname, "../../public"), { recursive: true });
+                
+                // create the public/slug folder if it doesn't exist
+                fs.mkdirSync(path.join(__dirname, `../../public/${slug}`), { recursive: true });
+
+                // copy every image from temp/slug to public/slug
+                fs.readdirSync(tempPath).forEach((file) => {
+                    fs.copyFile(tempPath + "/" + file, path.join(__dirname, `../../public/${slug}/${file}`), (err) => {
+                        if (err) throw err;
+                    });
+                });
+
                 const user = await User.findOne({ where: { id: req.userId } });
 
                 post.published = true;
@@ -168,11 +185,16 @@ class BlogController {
         }
     }
 
-    public async unpublishPost(id: number, userId: number, rebuild: boolean = true): Promise<void> {
+    public async unpublishPost(id: number, userId: number): Promise<void> {
         try {
             const post = await Post.findOne({ where: { id } });
 
             if (post) {
+                // delete the public/slug folder
+                const publicPath = path.join(__dirname, `../../public/${post.slug}`);
+
+                fs.rmdirSync(publicPath, { recursive: true });
+
                 post.published = false;
                 await post.save();
 
@@ -205,11 +227,6 @@ class BlogController {
             const user = await User.findOne({ where: { id: req.userId } });
 
             if (post) {
-                if (post.published) {
-                    res.status(400).json({ success: false, message: "You can't edit a published post!" });
-                    return;
-                }
-
                 post.description = description;
                 post.content = content;
 
