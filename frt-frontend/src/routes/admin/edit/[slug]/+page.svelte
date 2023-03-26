@@ -29,7 +29,7 @@
             formData.append('images[]', fileInput2.files![i]);
         }
 
-        fetch(`${PUBLIC_BACKEND_URL}/blog/${data.slug}`, {
+        fetch(`${PUBLIC_BACKEND_URL}/blog_admin/${data.slug}`, {
             method: 'PUT',
             credentials: 'include',
             body: formData

@@ -4,6 +4,7 @@ import User from '../models/user';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import { logger } from '../app';
 dotenv.config();
 
 const secret = process.env.JWT_SECRET!;
@@ -20,7 +21,7 @@ class AuthController {
             });
             res.json({ success: true, data: user });
         } catch (error) {
-            console.log(error);
+            logger.error(error);
             res.status(500).json({ success: false, message: "Failed to register user :(" });
         }
     }
