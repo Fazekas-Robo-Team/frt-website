@@ -7,7 +7,7 @@ export async function load({ params }) {
 
     let postData: any = {};
     
-    await fetch(`${PUBLIC_BACKEND_URL}/blog_admin/${slug}`, {
+    await fetch(`${PUBLIC_BACKEND_URL}/blog/${slug}`, {
         method: 'GET',
         credentials: 'include',
         headers: {

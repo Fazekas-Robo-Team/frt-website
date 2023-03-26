@@ -1,6 +1,14 @@
 <script lang="ts">
     import SvelteMarkdown from 'svelte-markdown';
-    import heading from '$lib/markdown/heading.svelte';
+    import Heading from '$lib/markdown/heading.svelte';
+	import Link from '$lib/markdown/link.svelte';
+	import Blockquote from '$lib/markdown/blockquote.svelte';
+	import Codespan from '$lib/markdown/codespan.svelte';
+	import Code from '$lib/markdown/code.svelte';
+	import Table from '$lib/markdown/table.svelte';
+	import Thead from '$lib/markdown/thead.svelte';
+	import Tablecell from '$lib/markdown/tablecell.svelte';
+	import Image from '$lib/markdown/image.svelte';
 
     export let data: any;
 
@@ -22,7 +30,15 @@
 	</div>
     <SvelteMarkdown {source} 
         renderers={{
-            heading: heading
+            heading: Heading,
+            link: Link,
+            blockquote: Blockquote,
+            codespan: Codespan,
+            code: Code,
+            table: Table,
+            tablehead: Thead,
+            tablecell: Tablecell,
+            image: Image
         }}
     />
 </article>

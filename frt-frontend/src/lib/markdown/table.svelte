@@ -1,0 +1,1 @@
+<table class="table-auto mb-4"><slot></slot></table>
