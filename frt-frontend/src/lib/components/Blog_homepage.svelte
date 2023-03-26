@@ -2,9 +2,6 @@
 	import ArticleCard from './Article_card.svelte';
 
 	export let data: any;
-
-	// cut the last 3 articles from the array
-	data.posts = data.posts.slice(0, 3);
 </script>
 
 <div class="w-screen h-fit lg:h-screen bg-light-green border-y-2 border-black flex flex-col justify-center items-center px-3 md:px-4 xl:px-20 2xl:px-36 py-24 mb-64" id="blog">

@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import User from "../models/user";
 import { buildFrontend } from "../app";
 import { logger } from "../app";
+import path from "path";
 dotenv.config();
 
 class BlogController {
@@ -21,7 +22,7 @@ class BlogController {
         try {
             const posts = await Post.findAll();
 
-            // send title, user fullname, date and id
+            // send title, user fullname, date, id and state, then sort by date
             const postsData = await Promise.all(
                 posts.map(async (post) => {
                     // get the user fullname
@@ -49,6 +50,40 @@ class BlogController {
                 })
             );
 
+            // sort by id reversed
+            postsData.sort((a: any, b: any) => a.id - b.id);
+
+            res.json({ success: true, data: postsData });
+        } catch (error) {
+            res.status(500).json({ success: false, message: "Failed to get posts :(" });
+        }
+    }
+
+    public async getPublicPosts(req: Request, res: Response): Promise<void> {
+        try {
+            const posts = await Post.findAll({ where: { published: true } });
+
+            // send title, user fullname, date and id
+            const postsData = await Promise.all(
+                posts.map(async (post) => {
+                    // get the user fullname
+                    const user = await User.findOne({ where: { id: post.userId } });
+
+                    // format the date in yyyy-mm-dd format
+                    const date = new Date(post.createdAt).toISOString().slice(0, 10);
+
+                    return {
+                        title: post.title,
+                        description: post.description,
+                        content: post.content,
+                        author: user?.fullname,
+                        date: date,
+                        slug: post.slug,
+                        index_image: post.index_image,
+                    };
+                })
+            );
+
             res.json({ success: true, data: postsData });
         } catch (error) {
             res.status(500).json({ success: false, message: "Failed to get posts :(" });
@@ -58,6 +93,7 @@ class BlogController {
     public async getPost(req: Request, res: Response): Promise<void> {
         try {
             const { id } = req.params;
+            
             const post = await Post.findOne({ where: { id } });
             res.json({ success: true, data: post });
         } catch (error) {
@@ -81,7 +117,16 @@ class BlogController {
             // replace the dashes with underscores
             date = date.replace(/-/g, "_");
 
-            const slug = `${category}_${slugTitle}_${date}`;
+            const slug = `${date}/${category}/${slugTitle}`;
+
+            let index_image: string | undefined;
+
+            if ("index" in req.files!) {
+                index_image = req.files!["index"][0].filename;
+            } else {
+                res.status(500).json({ success: false, message: "No index image :(" });
+                return;
+            }
 
             const post = await Post.create({
                 title: title,
@@ -90,6 +135,7 @@ class BlogController {
                 slug: slug,
                 category: category,
                 userId: req.userId,
+                index_image: index_image,
             });
 
             res.json({ success: true, data: post });
@@ -107,62 +153,23 @@ class BlogController {
             if (post) {
                 const { title, description, content, category, slug } = post;
 
-                const date = new Date().toISOString().slice(0, 10);
+                // copy the temp/slug to the public/slug
+                const tempPath = path.join(__dirname, `../../temp/${slug}`);
+
+                // create the public folder if it doesn't exist
+                fs.mkdirSync(path.join(__dirname, "../../public"), { recursive: true });
+                
+                // create the public/slug folder if it doesn't exist
+                fs.mkdirSync(path.join(__dirname, `../../public/${slug}`), { recursive: true });
+
+                // copy every image from temp/slug to public/slug
+                fs.readdirSync(tempPath).forEach((file) => {
+                    fs.copyFile(tempPath + "/" + file, path.join(__dirname, `../../public/${slug}/${file}`), (err) => {
+                        if (err) throw err;
+                    });
+                });
+
                 const user = await User.findOne({ where: { id: req.userId } });
-
-                // find out the extension of the image
-
-                const image = fs.readdirSync(`uploads/posts_temp/${slug}`);
-                const image_extension = image[0].split(".")[1];
-
-                const md_content = `---
-title: ${title}
-description: ${description}
-date: "${date}"
-author: ${user?.fullname}
-category: ${category}
-index_image: index_image.${image_extension}
----\n\n${content}`;
-
-                // make sure the slug directory exists
-                fs.mkdirSync(`../frt-frontend/posts/${slug}`, { recursive: true });
-
-                // create .md file in ../frt-frontend/posts/slug directory with content
-                fs.writeFile(`../frt-frontend/posts/${slug}/index.md`, md_content, (err) => {
-                    if (err) {
-                        console.error(err);
-                        return;
-                    }
-                });
-
-                // copy index_image from uploads/posts_temp/slug to ../frt-frontend/static/blog_images/slug
-
-                // make sure the slug directory exists
-                fs.mkdirSync(`../frt-frontend/static/blog_images/${slug}`, { recursive: true });
-
-                fs.copyFile(`uploads/posts_temp/${slug}/index_image.${image_extension}`, `../frt-frontend/static/blog_images/${slug}/index_image.${image_extension}`, (err) => {
-                    if (err) {
-                        console.error(err);
-                        return;
-                    }
-                });
-
-                // copy the rest of the images from uploads/posts_temp/slug to ../frt-frontend/posts/slug
-                const images = fs.readdirSync(`uploads/posts_temp/${slug}`);
-
-                images.forEach((image) => {
-                    if (image !== `index_image.${image_extension}`) {
-                        fs.copyFile(`uploads/posts_temp/${slug}/${image}`, `../frt-frontend/posts/${slug}/${image}`, (err) => {
-                            if (err) {
-                                console.error(err);
-                                return;
-                            }
-                        });
-                    }
-                });
-
-                // build the frontend
-                await buildFrontend();
 
                 post.published = true;
                 await post.save();
@@ -178,21 +185,15 @@ index_image: index_image.${image_extension}
         }
     }
 
-    public async unpublishPost(id: number, userId: number, rebuild: boolean = true): Promise<void> {
+    public async unpublishPost(id: number, userId: number): Promise<void> {
         try {
             const post = await Post.findOne({ where: { id } });
 
             if (post) {
-                // delete the post from the frontend
-                fs.rmdirSync(`../frt-frontend/posts/${post.slug}`, { recursive: true });
+                // delete the public/slug folder
+                const publicPath = path.join(__dirname, `../../public/${post.slug}`);
 
-                // delete the post image from the frontend
-                fs.rmdirSync(`../frt-frontend/static/blog_images/${post.slug}`, { recursive: true });
-
-                // build the frontend
-                if (rebuild) {
-                    await buildFrontend();
-                }
+                fs.rmdirSync(publicPath, { recursive: true });
 
                 post.published = false;
                 await post.save();
@@ -226,11 +227,6 @@ index_image: index_image.${image_extension}
             const user = await User.findOne({ where: { id: req.userId } });
 
             if (post) {
-                if (post.published) {
-                    res.status(400).json({ success: false, message: "You can't edit a published post!" });
-                    return;
-                }
-
                 post.description = description;
                 post.content = content;
 

@@ -23,7 +23,7 @@
         }
 
         // send post request
-        fetch(`${PUBLIC_BACKEND_URL}/blog/`, {
+        fetch(`${PUBLIC_BACKEND_URL}/blog_admin/`, {
             method: 'POST',
             credentials: 'include',
             body: formData
