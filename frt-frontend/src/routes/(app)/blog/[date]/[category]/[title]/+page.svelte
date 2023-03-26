@@ -13,8 +13,6 @@
     export let data: any;
 
     const source = data.post.content;
-
-    console.log(source);
 </script>
 
 <svelte:head>

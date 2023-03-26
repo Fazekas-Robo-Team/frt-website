@@ -39,9 +39,7 @@
         .then(data => {
             if (data.error) {
                 error = data.error;
-            } else {
-                console.log("Logged in successfully");
-				
+            } else {				
 				window.location.href = '/admin';
             }
         })

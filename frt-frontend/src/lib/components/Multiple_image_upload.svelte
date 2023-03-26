@@ -4,7 +4,6 @@
 
 	function handleFileInput(event: Event) {
 		const files = (event.target as HTMLInputElement).files;
-		console.log(files);
 
 		if (files) {
 			images = Array.from(files);

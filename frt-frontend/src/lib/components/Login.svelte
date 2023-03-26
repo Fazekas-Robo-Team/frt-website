@@ -3,10 +3,6 @@
 	import { PUBLIC_BACKEND_URL } from '$env/static/public';
 	import { get, writable } from 'svelte/store';
 
-	onMount(() => {
-		console.log('Login component mounted');
-	});
-
 	let username: string;
 	let password: string;
 
@@ -21,10 +17,6 @@
 				password
 			})
 		})
-			.then((res) => res.status)
-			.then((data) => {
-				console.log(data);
-			});
 	}
 </script>
 
