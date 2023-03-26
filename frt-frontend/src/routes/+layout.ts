@@ -1,4 +1,4 @@
-export const prerender = true;
+export const prerender = false;
 
 import { PUBLIC_BACKEND_URL } from '$env/static/public';
 
