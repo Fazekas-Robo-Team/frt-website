@@ -84,6 +84,7 @@ app.use(cookieParser());
 app.use(cors(
     {
         origin: ["http://localhost:5173", "http://localhost:5000", "http://vargaking.me:5173", "http://vargaking.me:5000"],
+        credentials: true,
     }
 ));
 app.use(express.json());
