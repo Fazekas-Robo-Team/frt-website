@@ -8,8 +8,9 @@ class User extends Model {
     public username!: string;
     public email!: string;
     public password!: string;
-    public roles!: string;
+    public roles!: string[];
     public fullname!: string;
+    public description!: string;
 }
 
 User.init(
@@ -38,6 +39,10 @@ User.init(
             allowNull: true,
         },
         fullname: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        description: {
             type: DataTypes.STRING,
             allowNull: true,
         },

@@ -20,9 +20,18 @@ class UserController {
 
     public async update(req: Request, res: Response): Promise<void> {
         try {
-            const user = await User.findByPk(req.params.id);
+            const user = await User.findByPk(req.userId);
             if (user) {
-                await user.update(req.body);
+                const { username, email, password, description, fullname } = req.body;
+
+                if (username) user.username = username;
+                if (email) user.email = email;
+                if (password) user.password = await bcrypt.hash(password, 10);
+                if (description) user.description = description;
+                if (fullname) user.fullname = fullname;
+
+                await user.save();
+
                 res.json({ success: true, data: user });
             }
         } catch (error) {
@@ -39,6 +48,15 @@ class UserController {
             }
         } catch (error) {
             res.status(500).json({ success: false, message: "Failed to delete user :(" });
+        }
+    }
+
+    public async getSelfData(req: Request, res: Response): Promise<void> {
+        try {
+            const user = await User.findByPk(req.userId);
+            res.json({ success: true, data: user });
+        } catch (error) {
+            res.status(500).json({ success: false, message: "Failed to get user :(" });
         }
     }
     
