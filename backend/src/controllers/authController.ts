@@ -18,6 +18,7 @@ class AuthController {
                 username,
                 email,
                 password: hashedPassword,
+                roles: ['Műhelytag'],
             });
             res.json({ success: true, data: user });
         } catch (error) {

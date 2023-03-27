@@ -93,12 +93,12 @@ app.use(express.static("public"));
 
 app.use("/auth", authRoutes);
 app.use("/blog", blogPublicRoutes);
+app.use("/users", userRoutes);
 
 // auth middleware
 app.use(authMiddleware);
 
 // below this line, all routes require authentication
-app.use("/users", userRoutes);
 app.use("/blog_admin", blogPrivateRoutes);
 
 // auth check
