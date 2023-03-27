@@ -20,7 +20,7 @@
 
 /* scroll-behavior */
 
-html {
+html.smoothscroll {
 	scroll-behavior: smooth;
 }
 
