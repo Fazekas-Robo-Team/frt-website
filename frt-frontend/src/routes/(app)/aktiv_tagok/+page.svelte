@@ -13,7 +13,7 @@
 	<meta name="description" content="FRT Blog" />
 </svelte:head>
 
-<div class="min-h-screen mt-24 mx-4 lg:mx-20 xl:mx-44 px-3">
+<div class="min-h-screen mt-24 mx-auto lg:w-3/4 xl:w-2/3 2xl:w-3/5 px-3">
     <h1 class="text-center font-semibold text-3xl underline">Aktív tagok</h1>
     
     {#each userData as user}

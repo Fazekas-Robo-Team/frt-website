@@ -3,6 +3,7 @@ import session from 'express-session';
 import User from '../models/user';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import sharp from 'sharp';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -85,7 +86,26 @@ class UserController {
             res.status(500).json({ success: false, message: "Failed to get users :(" });
         }
     }
-    
+ 
+    public async updatePfp(req: Request, res: Response): Promise<void> {
+        try {
+            const id = req.userId;
+
+            // @ts-ignore
+            const { buffer } = req.file;
+
+            const webpPath = `public/user/${id}/pfp.webp`;
+
+            // save the image as webp in resolution 512x512
+            await sharp(buffer).resize(512, 512).webp().toFile(webpPath);
+
+            res.json({ success: true });
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ success: false, message: "Failed to update pfp :(" });
+        }
+
+    }
 }
 
 export default new UserController();

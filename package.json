@@ -19,7 +19,8 @@
   },
   "homepage": "https://github.com/Fazekas-Robo-Team/frt-website#readme",
   "dependencies": {
-    "prismjs": "^1.29.0"
+    "prismjs": "^1.29.0",
+    "sharp": "^0.32.0"
   },
   "devDependencies": {
     "@types/prismjs": "^1.26.0"
