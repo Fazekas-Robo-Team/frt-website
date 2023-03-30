@@ -7,7 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "backend": "cd backend && npm run dev",
     "frontend": "cd frt-frontend && npm run dev",
-    "dev": "npm run backend & npm run frontend"
+    "dev": "npm run backend & npm run frontend",
+    "build": "cd frt-frontend && npm run build",
+    "run": "cd backend && npm run start && cd .. && cd frt-frontend && node server.js"
   },
   "repository": {
     "type": "git",
