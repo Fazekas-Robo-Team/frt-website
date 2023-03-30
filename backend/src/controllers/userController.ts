@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import sharp from 'sharp';
 import dotenv from 'dotenv';
+import fs from 'fs';
 dotenv.config();
 
 const secret = process.env.JWT_SECRET!;
@@ -95,6 +96,11 @@ class UserController {
             const { buffer } = req.file;
 
             const webpPath = `public/user/${id}/pfp.webp`;
+
+            // create the directory if it doesn't exist
+            if (!fs.existsSync(`public/user/${id}`)) {
+                fs.mkdirSync(`public/user/${id}`);
+            }
 
             // save the image as webp in resolution 512x512
             await sharp(buffer).resize(512, 512).webp().toFile(webpPath);

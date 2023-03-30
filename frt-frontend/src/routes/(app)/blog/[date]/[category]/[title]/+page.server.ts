@@ -1,6 +1,4 @@
 import { getPosts } from '$lib/utils/posts'
-import { compile, mdsvex } from 'mdsvex';
-import relativeImages from 'mdsvex-relative-images';
 
 // @ts-ignore
 export async function load({ params } : { params: { date: string, category: string, title: string } }) {

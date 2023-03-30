@@ -6,6 +6,7 @@ import User from "../models/user";
 import { buildFrontend } from "../app";
 import { logger } from "../app";
 import path from "path";
+import sharp from "sharp";
 dotenv.config();
 
 class BlogController {
@@ -73,13 +74,13 @@ class BlogController {
                     const date = new Date(post.createdAt).toISOString().slice(0, 10);
 
                     return {
+                        id: post.id,
                         title: post.title,
                         description: post.description,
                         content: post.content,
                         author: user?.fullname,
                         date: date,
                         slug: post.slug,
-                        index_image: post.index_image,
                     };
                 })
             );
@@ -119,15 +120,6 @@ class BlogController {
 
             const slug = `${date}/${category}/${slugTitle}`;
 
-            let index_image: string | undefined;
-
-            if ("index" in req.files!) {
-                index_image = req.files!["index"][0].filename;
-            } else {
-                res.status(500).json({ success: false, message: "No index image :(" });
-                return;
-            }
-
             const post = await Post.create({
                 title: title,
                 description: description,
@@ -135,9 +127,67 @@ class BlogController {
                 slug: slug,
                 category: category,
                 userId: req.userId,
-                index_image: index_image,
             });
 
+            // find the image tags in the markdown content and replace the names with their index
+            // the format of the image tag is ![alt](img name)
+            const regex = /!\[.*\]\(.*\)/g;
+            const image_tags = content.match(regex);
+
+            let new_content = content;
+
+            // if there are image tags, replace the names with their index
+            if (image_tags) {
+                let replace_content = new_content;
+                for (let i = 0; i < image_tags.length; i++) {
+                    const tag = image_tags[i];
+
+                    // get the name of the image without the extension
+                    const name = tag.match(/\(.*\)/g)?.[0].slice(1, -1).split(".")[0];
+
+                    // replace the img with {post id}/{original name}.webp
+
+                    const new_tag = tag.replace(/\(.*\)/g, `(${post.id}/${name}.webp)`);
+
+                    replace_content = replace_content.replace(tag, new_tag);
+                }
+
+                // replace the content with the new content
+                new_content = replace_content;
+            }
+
+            post.content = new_content;
+
+            await post.save();
+
+            // get buffer from req files with the name index
+            // @ts-ignore
+            const index = req.files?.index[0].buffer;
+
+            // create the folder if it doesn't exist
+            if (!fs.existsSync(`temp/${post.id}`)) {
+                fs.mkdirSync(`temp/${post.id}`);
+            }
+
+            await sharp(index).resize(800, 600).webp().toFile(`temp/${post.id}/index.webp`);
+
+            // get buffer from req files with the name images[]
+            // @ts-ignore
+            const images = req.files["images[]"];
+
+            if (images) {
+                // loop through the images and save them
+                for (let i = 0; i < images.length; i++) {
+                    const image_name = images[i].originalname;
+
+                    // get the name without the extension
+                    const name = image_name.split(".")[0];
+
+                    const image = images[i].buffer;
+                    await sharp(image).resize(1600, 1200).webp().toFile(`temp/${post.id}/${name}.webp`);
+                }
+            }
+            
             res.json({ success: true, data: post });
         } catch (error) {
             logger.error(error);
@@ -151,20 +201,20 @@ class BlogController {
             const post = await Post.findOne({ where: { id } });
 
             if (post) {
-                const { title, description, content, category, slug } = post;
+                const { title } = post;
 
                 // copy the temp/slug to the public/slug
-                const tempPath = path.join(__dirname, `../../temp/${slug}`);
+                const tempPath = path.join(__dirname, `../../temp/${id}`);
 
                 // create the public folder if it doesn't exist
                 fs.mkdirSync(path.join(__dirname, "../../public"), { recursive: true });
                 
                 // create the public/slug folder if it doesn't exist
-                fs.mkdirSync(path.join(__dirname, `../../public/${slug}`), { recursive: true });
+                fs.mkdirSync(path.join(__dirname, `../../public/${id}`), { recursive: true });
 
                 // copy every image from temp/slug to public/slug
                 fs.readdirSync(tempPath).forEach((file) => {
-                    fs.copyFile(tempPath + "/" + file, path.join(__dirname, `../../public/${slug}/${file}`), (err) => {
+                    fs.copyFile(tempPath + "/" + file, path.join(__dirname, `../../public/${id}/${file}`), (err) => {
                         if (err) throw err;
                     });
                 });
