@@ -1,9 +1,6 @@
 <script lang="ts">
-	import Card from './Card.svelte';
-	import Logo from '$lib/images/logo.jpg';
-
 	//TODO: replace with better image
-	import Muhely from '$lib/images/muhely.png';
+	import Muhely from '$lib/images/muhely.webp';
 </script>
 
 <div class="w-screen h-fit md:h-screen bg-light-orange border-black border-y-2 flex flex-col items-center px-4 py-24 mb-64" id="muhely">

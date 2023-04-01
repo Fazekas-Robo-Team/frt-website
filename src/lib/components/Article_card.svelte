@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PUBLIC_BACKEND_URL } from "$env/static/public";
+	import { PUBLIC_IMAGE_URL } from "$env/static/public";
 
 	export let article: any;
 </script>
@@ -9,7 +9,7 @@
 		class="bg-white w-full h-full p-8 flex flex-col justify-between border-black border-2 drop-shadow-xl-black-br hover:drop-shadow-md-black-br hover:translate-x-5px hover:translate-y-5px"
 	>
 		<div class="h-fit lg:h-4/5">
-			<img class="w-full h-64 lg:h-1/2 object-cover object-center border-black border-2" src="{PUBLIC_BACKEND_URL}/{article.id}/index.webp" alt="article" />
+			<img class="w-full h-64 lg:h-1/2 object-cover object-center border-black border-2" src="{PUBLIC_IMAGE_URL}/{article.id}/index.webp" alt="article" />
 			<h1 class="font-semibold text-2xl my-2">{article.title}</h1>
 			<p class="text-md">{article.description}</p>
 		</div>

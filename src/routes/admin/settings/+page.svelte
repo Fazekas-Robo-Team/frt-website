@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PUBLIC_BACKEND_URL } from '$env/static/public';
+	import { PUBLIC_BACKEND_URL, PUBLIC_IMAGE_URL } from '$env/static/public';
 	import { load } from '../../+layout';
 	import { loading, modal } from '../../../stores';
 

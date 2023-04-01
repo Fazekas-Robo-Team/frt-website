@@ -13,4 +13,5 @@ vite.config.ts.timestamp-*
 /src/routes/blog/*.md
 posts
 blog_images
+.vercel
 convert.js
