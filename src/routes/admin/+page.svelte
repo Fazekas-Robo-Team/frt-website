@@ -27,6 +27,40 @@
 		return posts;
 	}
 
+	async function featurePost(id: number) {
+		loading.set(true);
+		// call the api to feature the post
+		// if successful, show a modal
+
+		await fetch(`${PUBLIC_BACKEND_URL}/blog_admin/make_featured/${id}`, {
+			method: 'POST',
+			credentials: 'include',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+			.then((res) => res.json())
+			.then((res) => {
+				loading.set(false);
+				if (res.success) {
+					// show a modal
+					modal.set({
+						shown: true,
+						title: 'Success',
+						content: 'Post featured'
+					});
+				} else {
+					// show a modal
+					modal.set({
+						shown: true,
+						title: 'Error',
+						content: 'Post could not be featured'
+					});
+				}
+			});
+		posts = await fetcher();
+	}
+
 	async function activatePost(id: number) {
 		loading.set(true);
 		// call the api to activate the post
@@ -146,6 +180,11 @@
 		</div>
 
 		<div class="flex flex-row">
+			<div class="m-2">
+				<button
+					on:click={() => featurePost(post.id)} class="text-sm text-gray-500 bg-blue-500 px-2 py-1 text-white rounded hover:brightness-75 transition-all">Feature</button
+				>
+			</div>
 			<div class="m-2">
 				<a
 					href="/admin/edit/{post.id}" class="text-sm text-gray-500 bg-orange-400 px-2 py-1 text-white rounded hover:brightness-75 transition-all">Edit</a
