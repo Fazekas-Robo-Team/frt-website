@@ -5,7 +5,8 @@ import { PUBLIC_BACKEND_URL } from '$env/static/public';
 export async function load() {
 	return await fetch(`${PUBLIC_BACKEND_URL}/auth/check/`, {
 		method: 'POST',
-		credentials: 'include'
+		credentials: 'include',
+		mode: 'cors',
 	})
 		.then((res) => res.json())
 		.then((res) => {
