@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Card from './Card.svelte';
-	import Logo from '$lib/images/logo.jpg';
+	import Logo from '$lib/images/logo.webp';
 
 	//TODO: replace with better image
 	import Muhely from '$lib/images/muhely.png';
