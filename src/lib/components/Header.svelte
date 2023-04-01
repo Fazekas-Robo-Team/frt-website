@@ -5,7 +5,7 @@
 	export let featured: any;
 </script>
 
-<header class="w-screen h-screen border-b-black border-b-2 bg-light-blue flex flex-col md:flex-row justify-center md:justify-between items-center px-20 mb-64">
+<header id="home" class="w-screen h-screen border-b-black border-b-2 bg-light-blue flex flex-col md:flex-row justify-center md:justify-between items-center px-20 mb-64">
 	<div class="text-gray h-fit w-full md:w-4/5 lg:w-2/5 text-xl md:text-2xl lg:text-3xl font-medium mt-12 md:mt-0 mb-32 md:mb-0 mx-4">
 		<h3 class="leading-8 md:leading-10">
 			A <span class="bg-white border-2 border-black drop-shadow-md-purple-tr text-black font-bold px-1">Fazekas RoboTeam</span> egy 2003-ban indult robotika szakkör <strong>a Fazekas Mihály Gimnáziumban.</strong>
