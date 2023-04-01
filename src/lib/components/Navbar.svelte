@@ -12,19 +12,19 @@
 <nav class="desktop hidden border-b-2 border-b-black md:block">
 	<ul class="list-none">
 		<li class="float-left">
-			<a class="font-bold logo" href="/">Fazekas<span class="purple">RoboTeam</span></a>
+			<a class="font-bold logo" href="/#">Fazekas<span class="purple">RoboTeam</span></a>
 		</li>
 		<li class="float-right"><a href="/#rolunk">Rólunk</a></li>
 		<li class="float-right"><a href="/#muhely">Műhely</a></li>
 		<li class="float-right"><a href="/#blog">Blog</a></li>
-		<li class="float-right"><a href="/">Aktuális</a></li>
+		<li class="float-right"><a href="/#">Aktuális</a></li>
 	</ul>
 </nav>
 
 <!-- Mobile navbar -->
 <nav class="mobile md:hidden p-4 flex flex-row justify-between items-center border-b-2 border-b-black">
 	<div class="float-left w-1/2">
-		<a class="font-bold logo" href="/">Fazekas<span class="purple">RoboTeam</span></a>
+		<a class="font-bold logo" href="/#">Fazekas<span class="purple">RoboTeam</span></a>
 	</div>
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<div class="float-right h-full hamburger-wrapper {isMobileMenuOpen ? 'close' : 'open'}" on:click={toggleMenu}>
@@ -38,7 +38,7 @@
 
 <div class="mobile menu {isMobileMenuOpen ? '' : 'closed'} bg-white">
 	<ul class="list-none">
-		<li><a on:click={toggleMenu} href="/">Aktuális</a></li>
+		<li><a on:click={toggleMenu} href="/#">Aktuális</a></li>
 		<li><a on:click={toggleMenu} href="/#blog">Blog</a></li>
 		<li><a on:click={toggleMenu} href="/#muhely">Műhely</a></li>
 		<li><a on:click={toggleMenu} href="/#rolunk">Rólunk</a></li>
