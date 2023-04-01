@@ -13,7 +13,7 @@
 	<title>Fazekas RoboTeam</title>
 	<meta name="description" content="Fazekas RoboTeam" />
 </svelte:head>
-<Header />
+<Header featured={data.featured} />
 <BlogHomepage data={data}/>
 <Muhely />
 <About />
