@@ -26,6 +26,7 @@
 
         fetch(PUBLIC_BACKEND_URL + '/auth/login', {
             method: 'POST',
+			mode: 'no-cors',
 			credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'

@@ -5,6 +5,7 @@ export async function load() {
 
 	await fetch(`${PUBLIC_BACKEND_URL}/users`, {
 		method: 'GET',
+		mode: 'no-cors',
         credentials: 'include',
 		headers: {
 			'Content-Type': 'application/json',

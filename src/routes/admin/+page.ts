@@ -7,6 +7,7 @@ export async function load() {
 	// fetch the posts from the backend (GET /blog)
     await fetch(`${PUBLIC_BACKEND_URL}/blog_admin`, {
         method: "GET",
+        mode: 'no-cors',
         headers: {
             "Content-Type": "application/json",
         },

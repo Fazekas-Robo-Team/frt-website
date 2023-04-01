@@ -19,6 +19,7 @@
 	async function submit() {
 		const res = await fetch(`${PUBLIC_BACKEND_URL}/users`, {
 			method: 'PUT',
+			mode: 'no-cors',
 			credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json'
@@ -53,6 +54,7 @@
 
 		const res = await fetch(`${PUBLIC_BACKEND_URL}/users/pfp`, {
 			method: 'POST',
+			mode: 'no-cors',
 			credentials: 'include',
 			body: formData
 		})
