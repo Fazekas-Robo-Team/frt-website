@@ -31,7 +31,6 @@
 
         fetch(`${PUBLIC_BACKEND_URL}/blog_admin/${data.slug}`, {
             method: 'PUT',
-            mode: 'no-cors',
             credentials: 'include',
             body: formData
         })

@@ -12,7 +12,6 @@
 		// fetch the posts from the backend (GET /blog)
 		await fetch(`${PUBLIC_BACKEND_URL}/blog_admin`, {
 			method: 'GET',
-			mode: 'no-cors',
 			headers: {
 				'Content-Type': 'application/json'
 			},
@@ -35,7 +34,6 @@
 
 		await fetch(`${PUBLIC_BACKEND_URL}/blog_admin/publish/${id}`, {
 			method: 'POST',
-			mode: 'no-cors',
 			credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json'
@@ -68,7 +66,6 @@
 
 		await fetch(`${PUBLIC_BACKEND_URL}/blog_admin/deactivate/${id}`, {
 			method: 'POST',
-			mode: 'no-cors',
 			credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json'
@@ -103,7 +100,6 @@
 
 		await fetch(`${PUBLIC_BACKEND_URL}/blog_admin/${id}`, {
 			method: 'DELETE',
-			mode: 'no-cors',
 			credentials: 'include',
 			headers: {
 				'Content-Type': 'application/json'

@@ -25,7 +25,6 @@
         // send post request
         fetch(`${PUBLIC_BACKEND_URL}/blog_admin/`, {
             method: 'POST',
-            mode: 'no-cors',
             credentials: 'include',
             body: formData
         })

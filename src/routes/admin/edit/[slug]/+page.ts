@@ -9,7 +9,6 @@ export async function load({ params }) {
     
     await fetch(`${PUBLIC_BACKEND_URL}/blog/${slug}`, {
         method: 'GET',
-        mode: 'no-cors',
         credentials: 'include',
         headers: {
             'Content-Type': 'application/json',

@@ -9,16 +9,9 @@ if (browser) {
 // fetch GET ${PUBLIC_BACLEND_URL}/blog and return the posts sorted by date
 
 export async function getPosts() {
-	const res = await fetch(`${PUBLIC_BACKEND_URL}/blog`, {
-		method: 'GET',
-		mode: 'no-cors',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		credentials: 'include'
-	});
-	const res_json = await res.json();
-	const posts = res_json.data;
-	posts.sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
-	return posts;
+  const res = await fetch(`${PUBLIC_BACKEND_URL}/blog`);
+  const res_json = await res.json();
+  const posts = res_json.data;
+  posts.sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  return posts;
 }
