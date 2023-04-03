@@ -9,6 +9,7 @@
 	import Thead from '$lib/markdown/thead.svelte';
 	import Tablecell from '$lib/markdown/tablecell.svelte';
 	import Image from '$lib/markdown/image.svelte';
+	import Paragraph from '$lib/markdown/paragraph.svelte';
 
     export let data: any;
 
@@ -36,7 +37,8 @@
             table: Table,
             tablehead: Thead,
             tablecell: Tablecell,
-            image: Image
+            image: Image,
+            paragraph: Paragraph
         }}
     />
 </article>

@@ -6,13 +6,14 @@ import type Social from './About.svelte';
 		fullname: 'Kovács Bence',
 		roles: ['muhelytag'],
 		description: '',
-		id: 1
+		id: 1,
+		pfpVersion: 1
 	};
 </script>
 
 <div class="w-full h-fit flex flex-col md:flex-row my-8 bg-white border-black border-2 drop-shadow-xl-black-br">
 	<div class="md:w-1/3 md:mb-4 flex flex-col justify-center items-center">
-		<img class="w-2/5 md:w-4/5 xl:w-3/5 mt-4 border-black border-2" src="{PUBLIC_IMAGE_URL}/users/{user.id}/pfp.webp" alt={user.fullname}/>
+		<img class="w-2/5 md:w-4/5 xl:w-3/5 mt-4 border-black border-2" src="{PUBLIC_IMAGE_URL}/users/{user.id}/pfp_%3Fv{user.pfpVersion}.webp" alt={user.fullname}/>
 		<div class="flex flex-col items-center justify-center m-2">
 			<p class="font-semibold text-2xl mb-2">{user.fullname}</p>
 			<h4>

@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { PUBLIC_BACKEND_URL, PUBLIC_IMAGE_URL } from '$env/static/public';
-	import { load } from '../../+layout';
 	import { loading, modal } from '../../../stores';
 
 	export let data: any;
@@ -108,7 +107,7 @@
 		</form>
 
 		<div class="w-1/4 mx-auto mt-3">
-			<img src="{PUBLIC_IMAGE_URL}/users/{id}/pfp.webp" alt="pfp" />
+			<img src="{PUBLIC_IMAGE_URL}/users/{id}/pfp_%3Fv{userData.pfpVersion}.webp" alt="pfp" />
 			<!-- file upload for new pfp -->
 
 			<label for="pfp" class="bg-blue-500 text-white p-2 w-fit mt-2 rounded mx-auto block hover:brightness-75 transition-all">Upload photo</label>
