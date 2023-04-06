@@ -125,8 +125,7 @@
 				}
 			});
 
-	    posts = await fetcher();
-    
+		posts = await fetcher();
 	}
 
 	async function deletePost(id: number) {
@@ -158,13 +157,12 @@
 					});
 				}
 			});
-        
-        posts = await fetcher();
+
+		posts = await fetcher();
 	}
 </script>
 
 <!-- iter through the posts reverse -->
-
 
 {#each [...posts].reverse() as post}
 	<div class="bg-slate-50 p-2 rounded flex flex-row items-center justify-between my-8">
@@ -182,12 +180,13 @@
 		<div class="flex flex-row">
 			<div class="m-2">
 				<button
-					on:click={() => featurePost(post.id)} class="text-sm text-gray-500 bg-blue-500 px-2 py-1 text-white rounded hover:brightness-75 transition-all">Feature</button
+					on:click={() => featurePost(post.id)}
+					class="text-sm text-gray-500 bg-blue-500 px-2 py-1 text-white rounded hover:brightness-75 transition-all">Feature</button
 				>
 			</div>
 			<div class="m-2">
-				<a
-					href="/admin/edit/{post.id}" class="text-sm text-gray-500 bg-orange-400 px-2 py-1 text-white rounded hover:brightness-75 transition-all">Edit</a
+				<a href="/admin/edit/{post.id}" class="text-sm text-gray-500 bg-orange-400 px-2 py-1 text-white rounded hover:brightness-75 transition-all"
+					>Edit</a
 				>
 			</div>
 			<div class="m-2">

@@ -24,9 +24,10 @@
 		// /analytics -> analytics
 		// /settings -> settings
 
-		if (url.includes('/new')) activeMenu = 'New Post';
+		if (url.includes('/new')) activeMenu = 'Article Editor';
 		if (url.includes('/analytics')) activeMenu = 'Analytics';
 		if (url.includes('/settings')) activeMenu = 'Settings';
+		if (url.includes('/edit')) activeMenu = 'Article Editor';
 	});
 
 	function menuClick(event: Event) {
