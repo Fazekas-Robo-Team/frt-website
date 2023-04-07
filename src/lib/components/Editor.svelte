@@ -1,7 +1,4 @@
 <script lang="ts">
-	import { index } from './../../../.svelte-kit/output/server/nodes/3.js';
-	import MultipleImageUpload from './Multiple_image_upload.svelte';
-
 	import type monaco from 'monaco-editor';
 	import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
 	import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker';
