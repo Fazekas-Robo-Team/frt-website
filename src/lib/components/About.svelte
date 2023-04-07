@@ -7,7 +7,7 @@
 </script>
 
 <div class="w-screen h-fit md:h-screen bg-light-purple border-t-2 border-black flex flex-col items-center px-4 py-24" id="rolunk">
-	<div class="bg-medium-purple px-3 pb-4 h-2 mt-4 mb-8 ml-4"><h1 class="text-black text-4xl font-semibold -mt-6 -ml-2">Rólunk</h1></div>
+	<div class="bg-medium-purple px-3 pb-4 h-2 mt-4 mb-8 ml-4"><h2 class="text-black text-4xl font-semibold -mt-6 -ml-2">Rólunk</h2></div>
 	<div class="w-full h-full flex flex-col lg:flex-row justify-center items-center md:px-20 mx-10 lg:mx-15">
 		<p class="w-4/5 lg:w-1/3 text-2xl font-semibold">
 			A Fazekas RoboTeam egy 2003-ban indult robotika szakkör a Fazekas Mihály Gimnáziumban. A szakkörökön elsősorban legórobotokkal és a REV Robotics
