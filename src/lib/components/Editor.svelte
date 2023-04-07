@@ -21,11 +21,13 @@
 	import Tablecell from '$lib/markdown/tablecell.svelte';
 	import Image from '$lib/markdown/image.svelte';
 	import Paragraph from '$lib/markdown/paragraph.svelte';
+	import { PUBLIC_BACKEND_URL, PUBLIC_IMAGE_URL } from '$env/static/public';
+	import { loading } from '../../stores.js';
 
 	// @ts-ignore
 	let divElement: HTMLElement = null;
 	let editor: monaco.editor.IStandaloneCodeEditor;
-	let Monaco;
+	let Monaco: { editor: any; Range: any; default?: any; Emitter?: typeof monaco.Emitter; MarkerTag?: typeof monaco.MarkerTag; MarkerSeverity?: typeof monaco.MarkerSeverity; CancellationTokenSource?: typeof monaco.CancellationTokenSource; Uri?: typeof monaco.Uri; KeyCode?: typeof monaco.KeyCode; KeyMod?: typeof monaco.KeyMod; Position?: typeof monaco.Position; Selection?: typeof monaco.Selection; SelectionDirection?: typeof monaco.SelectionDirection; Token?: typeof monaco.Token; languages?: typeof monaco.languages; };
 
 	onMount(async () => {
 		// @ts-ignore
@@ -60,6 +62,60 @@
 		});
 	});
 
+	function handleImageUpload(event: Event) {
+		loading.set(true);
+
+		submit();
+
+		const file = (event.target as HTMLInputElement)?.files?.[0];
+		if (file) {
+			// send file to server upload_image endpoint
+			const formData = new FormData();
+			formData.append('image', file);
+
+			fetch(`${PUBLIC_BACKEND_URL}/blog_admin/upload_image/${postId}`, {
+				method: 'POST',
+				credentials: 'include',
+				body: formData
+			})
+				.then((res) => res.json())
+				.then((data) => {
+					if (data.success) {
+						loading.set(false);
+
+						// insert image to editor
+						let cursorPosition = editor.getPosition()!;
+						
+						if (!cursorPosition) {
+							// position should be at the end of the document
+							const lastLine = editor.getModel()?.getLineCount();
+							if (lastLine) {
+								editor.setPosition({ lineNumber: lastLine, column: 1 });
+								cursorPosition = editor.getPosition()!;
+							}
+						}
+
+						const range = new Monaco.Range(cursorPosition.lineNumber, cursorPosition.column, cursorPosition.lineNumber, cursorPosition.column);
+						editor.executeEdits('my-source', [
+							{
+								range,
+								text: `![${data.filename}](${data.filename})`
+							}
+						]);
+
+						// add a new line after the image
+						const newLineRange = new Monaco.Range(cursorPosition.lineNumber + 1, 1, cursorPosition.lineNumber + 1, 1);
+						editor.executeEdits('my-source', [
+							{
+								range: newLineRange,
+								text: '\n'
+							}
+						]);
+					}
+				})
+		}
+	}
+
 	// create date with format yyyy-mm-dd
 	const date = new Date();
 	const year = date.getFullYear();
@@ -67,12 +123,14 @@
 	const day = date.getDate();
 	const today = `${year}-${month < 10 ? `0${month}` : `${month}`}-${day < 10 ? `0${day}` : `${day}`}`;
 
-	export let title: string, source: any, description: string, category: string, submit: any, showSaved: boolean = false, indexDisabled: boolean = false;
+
+	export let title: string, source: any, description: string, category: string, submit: any, showSaved: boolean = false, indexDisabled: boolean = false, postId: number|null = null;
 </script>
 
 <div class="w-full bg-slate-700 h-fit p-2">
-	<button class="bg-indigo-400 text-white font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-indigo-500">Insert Image</button>
-	<button class="bg-green-600 text-white font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-green-700" on:click={submit}>Save Draft</button>
+	<label for="fileInput" class="text-white bg-indigo-500 font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-indigo-600 leading-4">Upload Images</label>
+	<input type="file" id="fileInput" accept="image/*" hidden on:change={handleImageUpload}/>
+	<button class="bg-green-600 text-white font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-green-700 leading-5" on:click={submit}>Save Draft</button>
 	{#if showSaved}
 	<span class="text-white mx-4">Saved</span>
 	{/if}
@@ -122,8 +180,6 @@
 			<label for="index" class="text-lg font-semibold text-white">Index Image</label>
 
 			<input disabled={indexDisabled ? true : false} type="file" id="index" class="border-2 border-white bg-white p-2 rounded my-2" />
-
-			<button class="bg-blue-500 text-white text-lg font-bold py-2 rounded mt-4 hover:bg-blue-600">Media Manager</button>
 		</form>
 	</div>
 </div>

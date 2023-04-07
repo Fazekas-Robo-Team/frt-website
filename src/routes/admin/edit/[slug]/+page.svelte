@@ -63,4 +63,4 @@
     }
 </script>
 
-<Editor bind:title={title} bind:source={content} bind:description={description} bind:category={category} bind:showSaved={showSaved} indexDisabled={true} submit={submit} />
+<Editor bind:title={title} bind:source={content} bind:description={description} bind:category={category} bind:showSaved={showSaved} postId={postData.id} indexDisabled={true} submit={submit} />
