@@ -21,8 +21,12 @@ export async function load({ params }) {
         }
     });
 
+    let imageUrls: string[] = [], imageNames: string[] = [];
+
     return {
         postData,
-        slug
+        slug,
+        imageNames,
+        imageUrls
     };
 }

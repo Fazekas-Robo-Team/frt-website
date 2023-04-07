@@ -24,13 +24,21 @@
 		// /analytics -> analytics
 		// /settings -> settings
 
-		if (url.includes('/new')) activeMenu = 'New Post';
+		if (url.includes('/new')) activeMenu = 'Article Editor';
 		if (url.includes('/analytics')) activeMenu = 'Analytics';
 		if (url.includes('/settings')) activeMenu = 'Settings';
+		if (url.includes('/edit')) activeMenu = 'Article Editor';
 	});
 
 	function menuClick(event: Event) {
 		activeMenu = (event.target as HTMLElement).innerText;
+	}
+
+	function logout() {
+		// delete all cookies
+		document.cookie.split(';').forEach((c) => {
+			document.cookie = c.replace(/^ +/, '').replace(/=.*/, `=;expires=${new Date().toUTCString()};path=/`);
+		});
 	}
 
 	// modal
@@ -57,6 +65,10 @@
 	export let data: any;
 </script>
 
+<svelte:head>
+	<title>Admin | FRT</title>
+</svelte:head>
+
 {#if modalData.shown}
 	<AdminModal modalTitle={modalData.title} modalText={modalData.content} />
 {/if}
@@ -79,6 +91,9 @@
 					<a href={item.link} on:click={menuClick}>{item.name}</a>
 				</li>
 			{/each}
+			<li class="py-2 font-medium text-white hover:text-slate-400">
+				<a href="/login" on:click={logout}>Logout</a>
+			</li>
 		</ul>
 	</nav>
 
