@@ -11,7 +11,7 @@
 
 <svelte:head>
 	<title>Fazekas RoboTeam</title>
-	<meta name="description" content="Fazekas RoboTeam" />
+	<meta name="description" content="A Fazekas RoboTeam egy 2003-ban indult robotika szakkör a Fazekas Mihály Gimnáziumban." />
 </svelte:head>
 <Header featured={data.featured} />
 <BlogHomepage data={data}/>
