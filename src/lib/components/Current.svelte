@@ -1,5 +1,5 @@
 <div class="fullscreen flex flex-center column" id="aktualis">
-	<h1>Aktuális</h1>
+	<h2>Aktuális</h2>
 	<div class="card-wrapper">
 		<div class="card">
 			<div class="content align-left">

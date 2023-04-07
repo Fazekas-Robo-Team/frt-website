@@ -10,7 +10,7 @@
 	>
 		<div class="h-fit lg:h-4/5">
 			<img class="w-full h-64 lg:h-1/2 object-cover object-center border-black border-2" src="{PUBLIC_IMAGE_URL}/{article.id}/index.webp" alt="article" />
-			<h1 class="font-semibold text-2xl my-2">{article.title}</h1>
+			<h3 class="font-semibold text-2xl my-2">{article.title}</h3>
 			<p class="text-md">{article.description}</p>
 		</div>
 		<div class="bg-medium-green pb-3 h-2 w-fit -ml-1 mt-12">
