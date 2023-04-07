@@ -23,19 +23,6 @@ export async function load({ params }) {
 
     let imageUrls: string[] = [], imageNames: string[] = [];
 
-    if (postData.content) {
-        // extract the image names from the content
-        imageUrls = postData.content.match(/(?<=\!\[.*\]\()(.+?)(?=\))/g);
-
-        // replace the image paths with the image names
-        postData.content = postData.content.replace(/(?<=\!\[.*\]\()(.+?)(?=\))/g, (match: any) => {
-            return match.split('/').pop();
-        });
-
-        // extract the image names from the content
-        imageNames = postData.content.match(/(?<=\!\[.*\]\()(.+?)(?=\))/g);
-    }
-
     return {
         postData,
         slug,
