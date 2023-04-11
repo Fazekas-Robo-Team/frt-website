@@ -1,1 +1,1 @@
-<p class="mb-4"><slot></slot></p>
+<p class="mb-2"><slot></slot></p>
