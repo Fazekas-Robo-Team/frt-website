@@ -4,7 +4,7 @@
 
 <svelte:head>
 	<title>FRT Eredmények</title>
-	<meta name="description" content="FRT Blog" />
+	<meta name="description" content="FRT Eredmények" />
 </svelte:head>
 
 <div class="min-h-screen mt-24 mx-4 lg:mx-20 xl:mx-44 px-3">
