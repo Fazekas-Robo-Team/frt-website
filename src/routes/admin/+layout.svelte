@@ -14,8 +14,6 @@
 	];
 
 	onMount(() => {
-		if (!data.authorized) window.location.href = '/login';
-
 		// get the active menu item from the url
 		const url = window.location.href;
 
@@ -103,3 +101,4 @@
 		<slot />
 	</div>
 </div>
+<slot></slot>
