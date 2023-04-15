@@ -121,7 +121,7 @@
 	const today = `${year}-${month < 10 ? `0${month}` : `${month}`}-${day < 10 ? `0${day}` : `${day}`}`;
 
 
-	export let title: string, source: any, description: string, category: string, submit: any, showSaved: boolean = false, indexDisabled: boolean = false, postId: number|null = null;
+	export let title: string, source: any, author: string, description: string, category: string, submit: any, showSaved: boolean = false, indexDisabled: boolean = false, postId: number|null = null;
 </script>
 
 <div class="w-full bg-slate-700 h-fit p-2">
@@ -139,7 +139,7 @@
 			<h1 class="font-semibold text-3xl mb-2">{title}</h1>
 			<div class="flex align-center flex-col mb-8">
 				<p>{today}</p>
-				<p class="font-semibold">Gergely Dániel</p>
+				<p class="font-semibold">{author}</p>
 			</div>
 			{#key source}
 				<SvelteMarkdown

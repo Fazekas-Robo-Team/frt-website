@@ -10,8 +10,6 @@ export const load = (async ({ locals: { supabase, getSession }}) => {
 
     const session = await getSession();
 
-    
-
     if (!session) {
         return fail(500, "You must be logged in to create a new article");
     }
@@ -28,8 +26,6 @@ export const load = (async ({ locals: { supabase, getSession }}) => {
     if (error) {
         return fail(500, error);
     }
-
-    console.log(article, "article");
 
     throw redirect(303, `/admin/edit/${article?.[0].id}`);
 
