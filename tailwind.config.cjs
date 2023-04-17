@@ -3,6 +3,11 @@ module.exports = {
   content: ['./src/**/*.{html,js,svelte,ts}', './src/**/*.md'],
   theme: {
     extend: {
+      aspectRatio: {
+        '16/9': '16 / 9',
+        '4/3': '4 / 3',
+        '1/1': '1 / 1',
+      },
       listStyleType: {
         default: 'disc',
       },
