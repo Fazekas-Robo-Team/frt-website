@@ -51,4 +51,3 @@
 </script>
 
 <!-- new post form -->
-<Editor bind:title={title} bind:source={content} bind:description={description} bind:category={category} bind:showSaved={showSaved} submit={submit} />

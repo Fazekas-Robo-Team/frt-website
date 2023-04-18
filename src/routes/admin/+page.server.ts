@@ -37,7 +37,7 @@ export const actions = {
 		const { data: featured } = await supabase.from('articles').select('featured').eq('id', id);
 
 		if (featured?.[0].featured) {
-			return fail(500, "Post must be unfeatured before it can be unpublished");
+			return fail(500, "Post must be unfeatured before it can be unpublished" as unknown as Record<string, unknown>);
 		}
 
 		const { data: post, error } = await supabase.from('articles').update({ published: false }).eq('id', id);
@@ -59,7 +59,7 @@ export const actions = {
 		const { data: published } = await supabase.from('articles').select('published').eq('id', id);
 
 		if (!published?.[0].published) {
-			return fail(500, "Post must be published before it can be featured");
+			return fail(500, "Post must be published before it can be featured" as unknown as Record<string, unknown>);
 		}
 
 		// set all other posts to false
@@ -85,7 +85,7 @@ export const actions = {
 		const { data: featured } = await supabase.from('articles').select('featured').eq('id', id);
 
 		if (featured?.[0].featured) {
-			return fail(500, "Post must be unfeatured before it can be deleted");
+			return fail(500, "Post must be unfeatured before it can be deleted" as unknown as Record<string, unknown>);
 		}
 
 		const { data: post, error } = await supabase.from('articles').delete().eq('id', id);

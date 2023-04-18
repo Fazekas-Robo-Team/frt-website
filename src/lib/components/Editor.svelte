@@ -19,12 +19,40 @@
 	import Image from '$lib/markdown/image.svelte';
 	import Paragraph from '$lib/markdown/paragraph.svelte';
 	import { PUBLIC_BACKEND_URL, PUBLIC_IMAGE_URL } from '$env/static/public';
-	import { loading } from '../../stores.js';
+	import { loading, modal } from '../../stores.js';
+	import { enhance, type SubmitFunction } from '$app/forms';
+
+	export let title: string,
+		source: any,
+		author: string,
+		description: string,
+		category: string,
+		showSaved: boolean = false,
+		indexDisabled: boolean = false,
+		postId: number | null = null;
+
+	let img_form: HTMLFormElement;
 
 	// @ts-ignore
 	let divElement: HTMLElement = null;
 	let editor: monaco.editor.IStandaloneCodeEditor;
-	let Monaco: { editor: any; Range: any; default?: any; Emitter?: typeof monaco.Emitter; MarkerTag?: typeof monaco.MarkerTag; MarkerSeverity?: typeof monaco.MarkerSeverity; CancellationTokenSource?: typeof monaco.CancellationTokenSource; Uri?: typeof monaco.Uri; KeyCode?: typeof monaco.KeyCode; KeyMod?: typeof monaco.KeyMod; Position?: typeof monaco.Position; Selection?: typeof monaco.Selection; SelectionDirection?: typeof monaco.SelectionDirection; Token?: typeof monaco.Token; languages?: typeof monaco.languages; };
+	let Monaco: {
+		editor: any;
+		Range: any;
+		default?: any;
+		Emitter?: typeof monaco.Emitter;
+		MarkerTag?: typeof monaco.MarkerTag;
+		MarkerSeverity?: typeof monaco.MarkerSeverity;
+		CancellationTokenSource?: typeof monaco.CancellationTokenSource;
+		Uri?: typeof monaco.Uri;
+		KeyCode?: typeof monaco.KeyCode;
+		KeyMod?: typeof monaco.KeyMod;
+		Position?: typeof monaco.Position;
+		Selection?: typeof monaco.Selection;
+		SelectionDirection?: typeof monaco.SelectionDirection;
+		Token?: typeof monaco.Token;
+		languages?: typeof monaco.languages;
+	};
 
 	onMount(async () => {
 		// @ts-ignore
@@ -62,7 +90,7 @@
 	function handleImageUpload(event: Event) {
 		loading.set(true);
 
-		submit();
+		//submit();
 
 		const file = (event.target as HTMLInputElement)?.files?.[0];
 		if (file) {
@@ -82,7 +110,7 @@
 
 						// insert image to editor
 						let cursorPosition = editor.getPosition()!;
-						
+
 						if (!cursorPosition) {
 							// position should be at the end of the document
 							const lastLine = editor.getModel()?.getLineCount();
@@ -109,9 +137,62 @@
 							}
 						]);
 					}
-				})
+				});
 		}
 	}
+
+	const imgUpload: SubmitFunction = () => {
+		console.log('submit');
+
+		return async ({ result }) => {
+			if (!('data' in result)) {
+				return;
+			}
+
+			const { message, error } = result.data as { message: string; error: string };
+
+			if (error) {
+				modal.set({ shown: true, title: 'Image Upload', content: message });
+				console.log(error);
+				return;
+			}
+
+			const { fileName, imageUrl } = result.data as { fileName: string; imageUrl: string };
+
+			// show message
+			modal.set({ shown: true, title: 'Image Upload', content: message });
+
+			// insert image to editor
+			let cursorPosition = editor.getPosition()!;
+
+			if (!cursorPosition) {
+				// position should be at the end of the document
+				const lastLine = editor.getModel()?.getLineCount();
+				if (lastLine) {
+					editor.setPosition({ lineNumber: lastLine, column: 1 });
+					cursorPosition = editor.getPosition()!;
+				}
+			}
+
+			const range = new Monaco.Range(cursorPosition.lineNumber, cursorPosition.column, cursorPosition.lineNumber, cursorPosition.column);
+			editor.executeEdits('my-source', [
+				{
+					range,
+					text: `![${fileName}](${imageUrl})`
+				}
+			]);
+
+			// add a new line after the image
+			const newLineRange = new Monaco.Range(cursorPosition.lineNumber + 1, 1, cursorPosition.lineNumber + 1, 1);
+
+			editor.executeEdits('my-source', [
+				{
+					range: newLineRange,
+					text: '\n'
+				}
+			]);
+		};
+	};
 
 	// create date with format yyyy-mm-dd
 	const date = new Date();
@@ -119,17 +200,17 @@
 	const month = date.getMonth() + 1;
 	const day = date.getDate();
 	const today = `${year}-${month < 10 ? `0${month}` : `${month}`}-${day < 10 ? `0${day}` : `${day}`}`;
-
-
-	export let title: string, source: any, author: string, description: string, category: string, submit: any, showSaved: boolean = false, indexDisabled: boolean = false, postId: number|null = null;
 </script>
 
 <div class="w-full bg-slate-700 h-fit p-2">
-	<label for="fileInput" class="text-white bg-indigo-500 font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-indigo-600 leading-4">Upload Images</label>
-	<input type="file" id="fileInput" accept="image/*" hidden on:change={handleImageUpload}/>
-	<button class="bg-green-600 text-white font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-green-700 leading-5" on:click={submit}>Save Draft</button>
+	<form class="inline-block" method="post" action="?/imageUpload" enctype="multipart/form-data" bind:this={img_form} use:enhance={imgUpload}>
+		<label for="file" class="text-white bg-indigo-500 font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-indigo-600 leading-4">Upload Images</label
+		>
+		<input type="file" id="file" name="file" accept="image/*" hidden on:change={() => img_form.requestSubmit()} />
+	</form>
+	<button class="bg-green-600 text-white font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-green-700 leading-5">Save Draft</button>
 	{#if showSaved}
-	<span class="text-white mx-4">Saved</span>
+		<span class="text-white mx-4">Saved</span>
 	{/if}
 </div>
 <div class="flex flex-row h-5/6">
@@ -168,7 +249,14 @@
 
 			<label for="description" class="text-lg font-semibold text-white">Description (max 155 characters)</label>
 
-			<textarea required maxlength="155" autocomplete="off" id="description" class="border-2 border-gray-300 p-2 rounded my-2 h-32" bind:value={description} />
+			<textarea
+				required
+				maxlength="155"
+				autocomplete="off"
+				id="description"
+				class="border-2 border-gray-300 p-2 rounded my-2 h-32"
+				bind:value={description}
+			/>
 
 			<label for="category" class="text-lg font-semibold text-white">Category</label>
 

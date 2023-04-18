@@ -23,48 +23,6 @@
 		document.title = `Editing: ${title}`;
 	});
 
-	async function submit() {
-		loading.set(true);
-
-		// get index-image from file input
-		const fileInput = document.getElementById('index') as HTMLInputElement;
-		//const fileInput2 = document.getElementById('multiple-images') as HTMLInputElement;
-
-		const formData = new FormData();
-
-		formData.append('title', title);
-		formData.append('content', content);
-		formData.append('description', description);
-		formData.append('category', category);
-
-		formData.append('index', fileInput.files![0]);
-
-		/*for (let i = 0; i < fileInput2.files!.length; i++) {
-            formData.append('images[]', fileInput2.files![i]);
-        }*/
-
-		fetch(`${PUBLIC_BACKEND_URL}/blog_admin/${data.slug}`, {
-			method: 'PUT',
-			credentials: 'include',
-			body: formData
-		})
-			.then((res) => res.json())
-			.then((data) => {
-				loading.set(false);
-				if (data.success) {
-					showSaved = true;
-					setTimeout(() => {
-						showSaved = false;
-					}, 4000);
-				} else {
-					modal.set({
-						shown: true,
-						title: 'Error',
-						content: data.message
-					});
-				}
-			});
-	}
 </script>
 
-<Editor bind:title bind:source={content} bind:description bind:category bind:showSaved postId={id} author={author} indexDisabled={true} {submit} />
+<Editor bind:title bind:source={content} bind:description bind:category bind:showSaved postId={id} author={author} indexDisabled={true} />
