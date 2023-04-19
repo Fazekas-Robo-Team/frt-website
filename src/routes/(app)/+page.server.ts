@@ -1,14 +1,18 @@
-import { getPosts } from '$lib/utils/posts'
+import { fail } from "@sveltejs/kit";
+import type { PageServerLoad } from "./$types";
 
-export async function load() {
+export const load = (async ({ locals: { supabase } }) => {
+    const { data: articles, error } = await supabase.from('articles').select('*, profiles(full_name)').order('created_at', { ascending: true });
 
-    let posts = await getPosts()
+    // get featured post
+    const { data: featured } = await supabase.from('articles').select('*').eq('featured', true);
 
-    // find the one with featured: true
-    let featured = posts.find((post: { featured: any }) => post.featured)
+    if (error) {
+        return fail(500, error);
+    }
 
     return {
-        featured,
-        posts: posts.slice(0, 3)
+        articles,
+        featured: featured?.[0]
     };
-}
+}) satisfies PageServerLoad;

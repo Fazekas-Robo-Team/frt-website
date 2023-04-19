@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { PUBLIC_IMAGE_URL } from "$env/static/public";
 
-
 	export let featured: any;
 </script>
 
