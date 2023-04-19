@@ -31,7 +31,7 @@
 		indexDisabled: boolean = false,
 		postId: number | null = null;
 
-	let img_form: HTMLFormElement;
+	let imgForm: HTMLFormElement, indexForm: HTMLFormElement;
 
 	// @ts-ignore
 	let divElement: HTMLElement = null;
@@ -150,10 +150,10 @@
 
 <form class="w-full h-full" method="post" action="?/submit">
 	<div class="w-full bg-slate-700 h-fit p-2">
-		<form class="inline-block" method="post" action="?/imageUpload" enctype="multipart/form-data" bind:this={img_form} use:enhance={imgUpload}>
+		<form class="inline-block" method="post" action="?/imageUpload" enctype="multipart/form-data" bind:this={imgForm} use:enhance={imgUpload}>
 			<label for="file" class="text-white bg-indigo-500 font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-indigo-600 leading-4">Upload Images</label
 			>
-			<input type="file" id="file" name="file" accept="image/*" hidden on:change={() => img_form.requestSubmit()} />
+			<input type="file" id="file" name="file" accept="image/*" hidden on:change={() => imgForm.requestSubmit()} />
 		</form>
 		<input type="submit" class="bg-green-600 text-white font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-green-700 leading-5" value="Save draft">
 		{#if showSaved}
@@ -211,9 +211,10 @@
 
 				<input type="text" autocomplete="off" id="category" name="category" class="border-2 border-gray-300 p-2 rounded my-2" bind:value={category} />
 
-				<label for="index" class="text-lg font-semibold text-white">Index Image</label>
-
-				<input type="file" id="index" class="border-2 border-white bg-white p-2 rounded my-2" />
+				<form  method="post" action="?/updateIndex" enctype="multipart/form-data" bind:this={indexForm} class="w-full">
+					<label for="index" class="text-lg font-semibold text-white">Index Image</label>
+					<input type="file" on:change={() => indexForm.requestSubmit()} id="index" name="file" class="w-full border-2 border-white bg-white p-2 rounded my-2" />
+				</form>
 			</div>
 		</div>
 	</div>
