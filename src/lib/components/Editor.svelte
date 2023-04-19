@@ -87,60 +87,6 @@
 		});
 	});
 
-	function handleImageUpload(event: Event) {
-		loading.set(true);
-
-		//submit();
-
-		const file = (event.target as HTMLInputElement)?.files?.[0];
-		if (file) {
-			// send file to server upload_image endpoint
-			const formData = new FormData();
-			formData.append('image', file);
-
-			fetch(`${PUBLIC_BACKEND_URL}/blog_admin/upload_image/${postId}`, {
-				method: 'POST',
-				credentials: 'include',
-				body: formData
-			})
-				.then((res) => res.json())
-				.then((data) => {
-					if (data.success) {
-						loading.set(false);
-
-						// insert image to editor
-						let cursorPosition = editor.getPosition()!;
-
-						if (!cursorPosition) {
-							// position should be at the end of the document
-							const lastLine = editor.getModel()?.getLineCount();
-							if (lastLine) {
-								editor.setPosition({ lineNumber: lastLine, column: 1 });
-								cursorPosition = editor.getPosition()!;
-							}
-						}
-
-						const range = new Monaco.Range(cursorPosition.lineNumber, cursorPosition.column, cursorPosition.lineNumber, cursorPosition.column);
-						editor.executeEdits('my-source', [
-							{
-								range,
-								text: `![${data.filename}](${data.filename})`
-							}
-						]);
-
-						// add a new line after the image
-						const newLineRange = new Monaco.Range(cursorPosition.lineNumber + 1, 1, cursorPosition.lineNumber + 1, 1);
-						editor.executeEdits('my-source', [
-							{
-								range: newLineRange,
-								text: '\n'
-							}
-						]);
-					}
-				});
-		}
-	}
-
 	const imgUpload: SubmitFunction = () => {
 		console.log('submit');
 
@@ -202,69 +148,73 @@
 	const today = `${year}-${month < 10 ? `0${month}` : `${month}`}-${day < 10 ? `0${day}` : `${day}`}`;
 </script>
 
-<div class="w-full bg-slate-700 h-fit p-2">
-	<form class="inline-block" method="post" action="?/imageUpload" enctype="multipart/form-data" bind:this={img_form} use:enhance={imgUpload}>
-		<label for="file" class="text-white bg-indigo-500 font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-indigo-600 leading-4">Upload Images</label
-		>
-		<input type="file" id="file" name="file" accept="image/*" hidden on:change={() => img_form.requestSubmit()} />
-	</form>
-	<button class="bg-green-600 text-white font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-green-700 leading-5">Save Draft</button>
-	{#if showSaved}
-		<span class="text-white mx-4">Saved</span>
-	{/if}
-</div>
-<div class="flex flex-row h-5/6">
-	<div bind:this={divElement} class="h-full w-2/5" />
-	<div class="h-full w-2/5 bg-white">
-		<article class="mx-4 pt-4 max-h-full leading-8 overflow-auto">
-			<h1 class="font-semibold text-3xl mb-2">{title}</h1>
-			<div class="flex align-center flex-col mb-8">
-				<p>{today}</p>
-				<p class="font-semibold">{author}</p>
-			</div>
-			{#key source}
-				<SvelteMarkdown
-					{source}
-					renderers={{
-						heading: Heading,
-						link: Link,
-						blockquote: Blockquote,
-						codespan: Codespan,
-						code: Code,
-						table: Table,
-						tablehead: Thead,
-						tablecell: Tablecell,
-						image: Image,
-						paragraph: Paragraph
-					}}
-				/>
-			{/key}
-		</article>
-	</div>
-	<div class="min-h-full w-1/5 bg-slate-800">
-		<form id="form" class="flex flex-col w-full p-4">
-			<label for="title" class="text-lg font-semibold text-white">Title</label>
-
-			<input required type="text" autocomplete="off" id="title" class="border-2 border-gray-300 p-2 rounded my-2" bind:value={title} />
-
-			<label for="description" class="text-lg font-semibold text-white">Description (max 155 characters)</label>
-
-			<textarea
-				required
-				maxlength="155"
-				autocomplete="off"
-				id="description"
-				class="border-2 border-gray-300 p-2 rounded my-2 h-32"
-				bind:value={description}
-			/>
-
-			<label for="category" class="text-lg font-semibold text-white">Category</label>
-
-			<input required type="text" autocomplete="off" id="category" class="border-2 border-gray-300 p-2 rounded my-2" bind:value={category} />
-
-			<label for="index" class="text-lg font-semibold text-white">Index Image</label>
-
-			<input disabled={indexDisabled ? true : false} type="file" id="index" class="border-2 border-white bg-white p-2 rounded my-2" />
+<form class="w-full h-full" method="post" action="?/submit">
+	<div class="w-full bg-slate-700 h-fit p-2">
+		<form class="inline-block" method="post" action="?/imageUpload" enctype="multipart/form-data" bind:this={img_form} use:enhance={imgUpload}>
+			<label for="file" class="text-white bg-indigo-500 font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-indigo-600 leading-4">Upload Images</label
+			>
+			<input type="file" id="file" name="file" accept="image/*" hidden on:change={() => img_form.requestSubmit()} />
 		</form>
+		<input type="submit" class="bg-green-600 text-white font-semibold px-4 py-2 rounded-lg shadow-md hover:bg-green-700 leading-5" value="Save draft">
+		{#if showSaved}
+			<span class="text-white mx-4">Saved</span>
+		{/if}
 	</div>
-</div>
+	<div class="flex flex-row h-5/6">
+		<div bind:this={divElement} class="h-full w-2/5" />
+		<div class="h-full w-2/5 bg-white">
+			<article class="mx-4 pt-4 max-h-full leading-8 overflow-auto">
+				<h1 class="font-semibold text-3xl mb-2">{title}</h1>
+				<div class="flex align-center flex-col mb-8">
+					<p>{today}</p>
+					<p class="font-semibold">{author}</p>
+				</div>
+				{#key source}
+					<SvelteMarkdown
+						{source}
+						renderers={{
+							heading: Heading,
+							link: Link,
+							blockquote: Blockquote,
+							codespan: Codespan,
+							code: Code,
+							table: Table,
+							tablehead: Thead,
+							tablecell: Tablecell,
+							image: Image,
+							paragraph: Paragraph
+						}}
+					/>
+				{/key}
+			</article>
+		</div>
+		<div class="min-h-full w-1/5 bg-slate-800">
+			<div class="flex flex-col w-full p-4">
+				<input type="hidden" name="content" bind:value={source} />
+
+				<label for="title" class="text-lg font-semibold text-white">Title</label>
+
+				<input required type="text" autocomplete="off" id="title" name="title" class="border-2 border-gray-300 p-2 rounded my-2" bind:value={title} />
+
+				<label for="description" class="text-lg font-semibold text-white">Description (max 155 characters)</label>
+
+				<textarea
+					maxlength="155"
+					autocomplete="off"
+					id="description"
+					name="description"
+					class="border-2 border-gray-300 p-2 rounded my-2 h-32"
+					bind:value={description}
+				/>
+
+				<label for="category" class="text-lg font-semibold text-white">Category</label>
+
+				<input type="text" autocomplete="off" id="category" name="category" class="border-2 border-gray-300 p-2 rounded my-2" bind:value={category} />
+
+				<label for="index" class="text-lg font-semibold text-white">Index Image</label>
+
+				<input type="file" id="index" class="border-2 border-white bg-white p-2 rounded my-2" />
+			</div>
+		</div>
+	</div>
+</form>

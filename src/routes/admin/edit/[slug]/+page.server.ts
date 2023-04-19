@@ -62,5 +62,48 @@ export const actions = {
             "fileName": fileName,
             "imageUrl": imageUrl.publicUrl
         }
+    },
+
+    submit: async ({ params, request, locals: { supabase } }) => {
+        const { slug } = params;
+
+        const formData = await request.formData();
+
+        const { data: article, error } = await supabase.from('articles').select('*, profiles(full_name)').eq('id', slug);
+
+        if (error) {
+            return {
+                "message": "Article not found",
+                "error": error
+            }
+        }
+
+        // get the values from the form
+        const title = formData.get('title') as string;
+        const description = formData.get('description') as string;
+        const content = formData.get('content') as string;
+        const category = formData.get('category') as string;
+
+        console.log(title, description, content, category)
+
+        const { error: updateError } = await supabase.from('articles').update({
+            title: title,
+            description: description,
+            content: content,
+            category: category,
+        }).eq('id', slug);
+
+        if (updateError) {
+            return {
+                "message": "Article update failed",
+                "error": updateError
+            }
+        }
+
+        console.log("halo");
+
+        return {
+            "message": "Article updated successfully",
+        }
     }
 } satisfies Actions;
