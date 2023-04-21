@@ -16,9 +16,19 @@ export const load = (async ({ locals: { supabase } }) => {
 export const actions = {
 	publish: async ({ request, locals: { supabase } }) => {
 		const formData = await request.formData();
+		// get id, title, and category from form data
 		const id = formData.get('id');
 
-		const { data: post, error } = await supabase.from('articles').update({ published: true }).eq('id', id);
+		// get post from database
+		const { data: article } = await supabase.from('articles').select('title, category').eq('id', id);
+
+		// generate date string
+		const date = new Date().toISOString().split('T')[0];
+
+		// generate a slug with this format: yyyy_mm_dd(current date)/category/title (replace accented characters with non-accented characters and spaces with underscores)
+		const slug = `${date.replace(/-/g, '_')}/${article?.[0].category}/${article?.[0].title}`
+
+		const { data: post, error } = await supabase.from('articles').update({ published: true, slug: slug, date: date }).eq('id', id);
 
 		if (error) {
 			return fail(500, error);
@@ -26,7 +36,7 @@ export const actions = {
 
 		return {
 			post
-		}
+		};
 	},
 
 	unpublish: async ({ request, locals: { supabase } }) => {
@@ -37,7 +47,7 @@ export const actions = {
 		const { data: featured } = await supabase.from('articles').select('featured').eq('id', id);
 
 		if (featured?.[0].featured) {
-			return fail(500, "Post must be unfeatured before it can be unpublished" as unknown as Record<string, unknown>);
+			return fail(500, 'Post must be unfeatured before it can be unpublished' as unknown as Record<string, unknown>);
 		}
 
 		const { data: post, error } = await supabase.from('articles').update({ published: false }).eq('id', id);
@@ -48,7 +58,7 @@ export const actions = {
 
 		return {
 			post
-		}
+		};
 	},
 
 	feature: async ({ request, locals: { supabase } }) => {
@@ -59,7 +69,7 @@ export const actions = {
 		const { data: published } = await supabase.from('articles').select('published').eq('id', id);
 
 		if (!published?.[0].published) {
-			return fail(500, "Post must be published before it can be featured" as unknown as Record<string, unknown>);
+			return fail(500, 'Post must be published before it can be featured' as unknown as Record<string, unknown>);
 		}
 
 		// set all other posts to false
@@ -74,7 +84,7 @@ export const actions = {
 
 		return {
 			post
-		}
+		};
 	},
 
 	delete: async ({ request, locals: { supabase } }) => {
@@ -85,7 +95,7 @@ export const actions = {
 		const { data: featured } = await supabase.from('articles').select('featured').eq('id', id);
 
 		if (featured?.[0].featured) {
-			return fail(500, "Post must be unfeatured before it can be deleted" as unknown as Record<string, unknown>);
+			return fail(500, 'Post must be unfeatured before it can be deleted' as unknown as Record<string, unknown>);
 		}
 
 		const { data: post, error } = await supabase.from('articles').delete().eq('id', id);
@@ -96,6 +106,6 @@ export const actions = {
 
 		return {
 			post
-		}
-	}	
+		};
+	}
 } satisfies Actions;
