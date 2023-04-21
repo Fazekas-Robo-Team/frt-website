@@ -5,8 +5,6 @@
 	import Muhely from '$lib/components/Muhely.svelte';
 
 	export let data: any;
-
-	console.log(data.featured, 'data');
 </script>
 
 <svelte:head>

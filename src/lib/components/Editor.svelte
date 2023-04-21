@@ -88,8 +88,6 @@
 	});
 
 	const imgUpload: SubmitFunction = () => {
-		console.log('submit');
-
 		return async ({ result }) => {
 			if (!('data' in result)) {
 				return;
@@ -99,7 +97,6 @@
 
 			if (error) {
 				modal.set({ shown: true, title: 'Image Upload', content: message });
-				console.log(error);
 				return;
 			}
 

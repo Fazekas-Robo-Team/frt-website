@@ -2,7 +2,7 @@ import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load = (async ({ locals: { supabase } }) => {
-	const { data: articles, error } = await supabase.from('articles').select('*, profiles(full_name)').order('created_at', { ascending: true });
+	const { data: articles, error } = await supabase.from('articles').select('*, profiles(full_name)').order('created_at', { ascending: false });
 
 	if (error) {
 		return fail(500, error);

@@ -10,7 +10,7 @@
 </svelte:head>
 
 <div class="px-8 mt-24 mb-8 w-screen grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-	{#each data.posts as article}
+	{#each data.articles as article}
 	<ArticleCard {article} />
 	{/each}
 </div>
