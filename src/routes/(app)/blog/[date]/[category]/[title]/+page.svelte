@@ -20,6 +20,9 @@
 <svelte:head>
     <title>{article.title} - FRT Blog</title>
     <meta name="description" content={article.description} />
+    <meta property="og:title" content={article.title} />
+    <meta property="og:description" content={article.description} />
+    <meta property="og:image" content={article.index_url} />
 </svelte:head>
 
 <article class="mt-24 mx-4 md:w-2/3 lg:w-1/2 md:mx-auto min-h-screen leading-8">
