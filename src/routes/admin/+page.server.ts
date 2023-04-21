@@ -26,7 +26,7 @@ export const actions = {
 		const date = new Date().toISOString().split('T')[0];
 
 		// generate a slug with this format: yyyy_mm_dd(current date)/category/title (replace accented characters with non-accented characters and spaces with underscores)
-		const slug = `${date.replace(/-/g, '_')}/${article?.[0].category}/${article?.[0].title}`
+		const slug = `${date.replace(/-/g, '_')}/${article?.[0].category}/${article?.[0].title.replace(/\s/g, "_").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()}`
 
 		const { data: post, error } = await supabase.from('articles').update({ published: true, slug: slug, date: date }).eq('id', id);
 
