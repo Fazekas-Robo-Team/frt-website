@@ -90,7 +90,7 @@
 				</li>
 			{/each}
 			<li class="py-2 font-medium text-white hover:text-slate-400">
-				<a href="/login" on:click={logout}>Logout</a>
+				<a href="/logout">Logout</a>
 			</li>
 		</ul>
 	</nav>
