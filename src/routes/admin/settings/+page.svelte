@@ -13,62 +13,7 @@
 	description = userData.description;
 	roles = userData.roles;
 
-	async function submitUserSettings() {
-		const res = await fetch(`${PUBLIC_BACKEND_URL}/users`, {
-			method: 'PUT',
-			credentials: 'include',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				username,
-				fullname,
-				email,
-				description,
-				password
-			})
-		});
-
-		const json = await res.json();
-
-		if (!res.ok) {
-			throw Error(json.message);
-		}
-	}
-
-    async function uploadPfp(e: Event) {
-		const file = (e.target as HTMLInputElement).files![0];
-
-		if (!file) {
-			return;
-		}
-
-		const formData = new FormData();
-		formData.append('pfp', file);
-
-		loading.set(true);
-
-		const res = await fetch(`${PUBLIC_BACKEND_URL}/users/pfp`, {
-			method: 'POST',
-			credentials: 'include',
-			body: formData
-		})
-		.then(res => res.json())
-		.then(data => {
-			if (data.success) {
-				loading.set(false);
-
-				modal.set({
-					shown: true,
-					title: 'Success',
-					content: 'Profile picture updated'
-				});
-
-				// reload the page
-				location.reload();
-			}
-		})
-	}
+	let pfpForm: HTMLFormElement;
 </script>
 <div class="flex-column w-2/3 mx-auto">
 	<h2 class="text-2xl font-bold text-white text-left mb-4">User settings</h2>
@@ -105,11 +50,13 @@
 		</form>
 
 		<div class="w-1/4 mx-auto mt-3">
-			<img src="{PUBLIC_IMAGE_URL}/users/{id}/pfp_%3Fv{userData.pfpVersion}.webp" alt="pfp" />
+			<img src="{userData.pfp_url}" alt="pfp" />
 			<!-- file upload for new pfp -->
 
-			<label for="pfp" class="bg-blue-500 text-white p-2 w-fit mt-2 rounded mx-auto block hover:brightness-75 transition-all">Upload photo</label>
-			<input type="file" id="pfp" class="hidden" on:change={uploadPfp} />
+			<form method="post" action="?/updatePfp" bind:this={pfpForm} enctype="multipart/form-data">
+				<label for="pfp" class="bg-blue-500 text-white p-2 w-fit mt-2 rounded mx-auto block hover:brightness-75 transition-all">Upload photo</label>
+				<input type="file" id="pfp" name="pfp" class="hidden" on:change={() => pfpForm.requestSubmit()} />
+			</form>
 		</div>
 	</div>
 </div>

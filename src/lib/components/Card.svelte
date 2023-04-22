@@ -3,6 +3,7 @@
 		full_name: string;
 		roles: string[];
 		description: string;
+		pfp_url: string;
 	}
 </script>
 
@@ -12,7 +13,7 @@
 
 <div class="w-full h-fit flex flex-col md:flex-row my-8 bg-white border-black border-2 drop-shadow-xl-black-br">
 	<div class="md:w-1/3 md:mb-4 flex flex-col justify-center items-center">
-		<img class="w-2/5 md:w-4/5 xl:w-3/5 mt-4 border-black border-2" src="" alt={user.full_name}/>
+		<img class="w-2/5 md:w-4/5 xl:w-3/5 mt-4 border-black border-2" src="{user.pfp_url}" alt={user.full_name}/>
 		<div class="flex flex-col items-center justify-center m-2">
 			<p class="font-semibold text-2xl mb-2">{user.full_name}</p>
 			<h4>

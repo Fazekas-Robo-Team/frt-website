@@ -1,12 +1,13 @@
 import { fail, type Actions, redirect } from "@sveltejs/kit";
 import type { PageServerLoad } from "../$types";
+import sharp from "sharp";
 
 export const load = (async ({ locals: { supabase, getSession } }) => {
 	// get session
 	const session = await getSession();
 
 	// get user data
-	const { data: user, error } = await supabase.from('profiles').select('full_name, username, description, roles').eq('id', session?.user.id).single();
+	const { data: user, error } = await supabase.from('profiles').select('full_name, username, description, roles, pfp_url').eq('id', session?.user.id).single();
 
 	if (error) {
 		return fail(500, error);
@@ -71,5 +72,65 @@ export const actions = {
 			"message": "User updated",
 			"user": user,
 		};
-	}
+	},
+
+	updatePfp: async ({ request, locals: { supabase, getSession } }) => {
+		const session = await getSession();
+
+		const formData = await request.formData();
+		const pfp = formData.get('pfp') as File;
+
+		console.log(pfp);
+
+		if (!pfp) return fail(500, 'No file uploaded' as unknown as Record<string, unknown>)
+
+		// create a fileName const with .webp extension
+		
+		const fileName = `${pfp.name.split('.')[0]}.webp`;
+
+		const buffer = await pfp.arrayBuffer();
+
+		const webpBuffer = await sharp(buffer).resize({width:800, height:800, fit:"contain"}).webp().toBuffer();
+		
+		// create a webp file
+		const webp = new File([webpBuffer], fileName, { type: 'image/webp' });
+
+		const { data: image, error } = await supabase.storage.from('user_images').upload(`${session?.user.id}/${fileName}`, webp, {upsert: true});
+
+		console.log(image, error);
+
+		// get the image url
+		const { data: imageUrl } = await supabase.storage.from('user_images').getPublicUrl(`${session?.user.id}/${fileName}`);
+
+		if (error) {
+			if ('statusCode' in error) {
+				if (error.statusCode == 409) {
+					// image already exists
+					return {
+						"message": "Image already uploaded",
+						"fileName": fileName,
+						"imageUrl": imageUrl.publicUrl
+					}
+				}
+			}
+			return {
+				"message": "Image upload failed",
+				"error": error
+			}
+		}
+
+		// update user data
+		const { data: user, error: error2 } = await supabase.from('profiles').update({ pfp_url: imageUrl.publicUrl }).eq('id', session?.user.id);
+
+		if (error2) {
+			return fail(500, error2 as unknown as Record<string, unknown>);
+		}
+
+		return {
+			"message": "Image uploaded",
+			"fileName": fileName,
+			"imageUrl": imageUrl.publicUrl,
+			"user": user
+		};
+	}		
 } satisfies Actions;
