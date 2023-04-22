@@ -1,16 +1,19 @@
-import { getPosts } from '$lib/utils/posts'
+import { fail } from "@sveltejs/kit";
+import type { PageServerLoad } from "./$types";
 
-// @ts-ignore
-export async function load({ params } : { params: { date: string, category: string, title: string } }) {
+export const load = (async ({ params, locals: { supabase } }) => {
     const { date, category, title } = params;
 
     const slug = `${date}/${category}/${title}`;
 
-    const posts = await getPosts()
+    // select the article with the slug
+    const { data: article, error } = await supabase.from('articles').select('*, profiles(full_name)').eq('slug', slug);
 
-    const post = posts.find(post => post.slug === slug)
+    if (error) {
+        return fail(500, error);
+    }
 
     return {
-        post: post,
-    }
-}
+        article: article?.[0]
+    };
+}) satisfies PageServerLoad;

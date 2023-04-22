@@ -1,7 +1,6 @@
 <script lang="ts">
 	import AdminModal from '$lib/components/Admin_modal.svelte';
 	import { onMount } from 'svelte';
-	import { load } from '../+layout';
 	import { modal, loading } from '../../stores';
 
 	let activeMenu = 'Posts';
@@ -14,8 +13,6 @@
 	];
 
 	onMount(() => {
-		if (!data.authorized) window.location.href = '/login';
-
 		// get the active menu item from the url
 		const url = window.location.href;
 
@@ -32,13 +29,6 @@
 
 	function menuClick(event: Event) {
 		activeMenu = (event.target as HTMLElement).innerText;
-	}
-
-	function logout() {
-		// delete all cookies
-		document.cookie.split(';').forEach((c) => {
-			document.cookie = c.replace(/^ +/, '').replace(/=.*/, `=;expires=${new Date().toUTCString()};path=/`);
-		});
 	}
 
 	// modal
@@ -92,7 +82,7 @@
 				</li>
 			{/each}
 			<li class="py-2 font-medium text-white hover:text-slate-400">
-				<a href="/login" on:click={logout}>Logout</a>
+				<a href="/logout">Logout</a>
 			</li>
 		</ul>
 	</nav>
@@ -103,3 +93,4 @@
 		<slot />
 	</div>
 </div>
+<slot></slot>

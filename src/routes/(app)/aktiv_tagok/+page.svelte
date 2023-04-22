@@ -3,7 +3,7 @@
 
     export let data: any;
 
-    let userData = data.userData;
+    let userData = data.users;
 </script>
 
 <svelte:head>

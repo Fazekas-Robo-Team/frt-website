@@ -3,6 +3,6 @@
     export let title = '';
 </script>
 
-<a {href} {title} class="text-blue-500 hover:text-blue-700">
+<a target="_blank" rel="noreferrer" {href} {title} class="text-blue-500 hover:text-blue-700">
     <slot />
 </a>

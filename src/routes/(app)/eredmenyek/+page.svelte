@@ -20,8 +20,6 @@
 		<ul class="list-disc mx-8 child:mb-2">
 			<li><strong>WRO Nemzeti Döntő - RoboMission Senior <Highlight>FRT Vakolólapát</Highlight>:</strong> 6. hely</li>
 			<li><strong>WRO Nemzeti Döntő - RoboMission Senior <Highlight>FRT btw I use arch</Highlight>:</strong> 10. hely</li>
-			<li><strong>WRO Regionális forduló - RoboMission Senior <Highlight>FRT Vakolólapát</Highlight>:</strong> 1. hely</li>
-			<li><strong>WRO Regionális forduló - RoboMission Senior <Highlight>FRT btw I use arch</Highlight>:</strong> 3. hely</li>
 		</ul>
 	</div>
 	<div class="mb-4">
