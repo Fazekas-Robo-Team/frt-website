@@ -13,19 +13,23 @@
 
     export let data: any;
 
-    const source = data.post.content;
+    const article = data.article;
+    const source = article.content;
 </script>
 
 <svelte:head>
-    <title>{data.post.title} - FRT Blog</title>
-    <meta name="description" content={data.post.description} />
+    <title>{article.title} - FRT Blog</title>
+    <meta name="description" content={article.description} />
+    <meta property="og:title" content={article.title} />
+    <meta property="og:description" content={article.description} />
+    <meta property="og:image" content={article.index_url} />
 </svelte:head>
 
 <article class="mt-24 mx-4 md:w-2/3 lg:w-1/2 md:mx-auto min-h-screen leading-8">
-    <h1 class="font-semibold text-4xl mb-2">{data.post.title}</h1>
+    <h1 class="font-semibold text-4xl mb-2">{article.title}</h1>
     <div class="flex align-center flex-col mb-8">
-		<p>{data.post.date}</p>
-		<p class="font-semibold">{data.post.author}</p>
+		<p>{article.date}</p>
+		<p class="font-semibold">{article.profiles.full_name}</p>
 	</div>
     <SvelteMarkdown {source} 
         renderers={{

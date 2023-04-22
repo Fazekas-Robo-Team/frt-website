@@ -1,117 +1,61 @@
 <script lang="ts">
-	import { PUBLIC_BACKEND_URL, PUBLIC_IMAGE_URL } from '$env/static/public';
 	import { loading, modal } from '../../../stores';
 
 	export let data: any;
 
 	let id: number, username: string, fullname: string, email: string, description: string, roles: string, password: string;
-
-	let userData = data.userData;
-
+	let userData = data.user;
 	id = userData.id;
 	username = userData.username;
-	fullname = userData.fullname;
-	email = userData.email;
+	fullname = userData.full_name;
+	email = data.email;
 	description = userData.description;
 	roles = userData.roles;
 
-	async function submitUserSettings() {
-		const res = await fetch(`${PUBLIC_BACKEND_URL}/users`, {
-			method: 'PUT',
-			credentials: 'include',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				username,
-				fullname,
-				email,
-				description,
-				password
-			})
-		});
-
-		const json = await res.json();
-
-		if (!res.ok) {
-			throw Error(json.message);
-		}
-	}
-
-    async function uploadPfp(e: Event) {
-		const file = (e.target as HTMLInputElement).files![0];
-
-		if (!file) {
-			return;
-		}
-
-		const formData = new FormData();
-		formData.append('pfp', file);
-
-		loading.set(true);
-
-		const res = await fetch(`${PUBLIC_BACKEND_URL}/users/pfp`, {
-			method: 'POST',
-			credentials: 'include',
-			body: formData
-		})
-		.then(res => res.json())
-		.then(data => {
-			if (data.success) {
-				loading.set(false);
-
-				modal.set({
-					shown: true,
-					title: 'Success',
-					content: 'Profile picture updated'
-				});
-
-				// reload the page
-				location.reload();
-			}
-		})
-	}
+	let pfpForm: HTMLFormElement;
 </script>
 <div class="flex-column w-2/3 mx-auto">
 	<h2 class="text-2xl font-bold text-white text-left mb-4">User settings</h2>
 	<hr class="text-white">
 	<div class="flex flex-row w-full mx-auto my-8">
-		<form class="w-2/3" on:submit|preventDefault={submitUserSettings}>
+		<form class="w-2/3" method="post" action="?/update">
 			<div class="flex flex-col">
-				<label for="title" class="text-lg font-semibold text-white">Name</label>
+				<label for="full_name" class="text-lg font-semibold text-white">Name</label>
 	
-				<input type="text" autocomplete="off" id="title" class="border-2 border-gray-300 p-2 rounded my-2" bind:value={fullname} />
+				<input type="text" autocomplete="off" id="full_name" name="full_name" class="border-2 border-gray-300 p-2 rounded my-2" bind:value={fullname} />
 	
-				<label for="description" class="text-lg font-semibold text-white">Username</label>
+				<label for="username" class="text-lg font-semibold text-white">Username</label>
 	
-				<input type="text" autocomplete="off" id="description" class="border-2 border-gray-300 p-2 rounded my-2" bind:value={username} />
+				<input type="text" autocomplete="off" id="username" name="username" class="border-2 border-gray-300 p-2 rounded my-2" bind:value={username} />
 	
-				<label for="content" class="text-lg font-semibold text-white">Email</label>
+				<label for="email" class="text-lg font-semibold text-white">Email</label>
 	
-				<input type="text" autocomplete="off" id="content" class="border-2 border-gray-300 p-2 rounded my-2" bind:value={email} />
+				<input type="text" autocomplete="off" id="email" name="email" class="border-2 border-gray-300 p-2 rounded my-2" bind:value={email} />
 	
-				<label for="category" class="text-lg font-semibold text-white">Description</label>
+				<label for="description" class="text-lg font-semibold text-white">Description</label>
 	
-				<textarea autocomplete="off" id="category" class="border-2 border-gray-300 p-2 rounded my-2" bind:value={description} />
+				<textarea autocomplete="off" id="description" name="description" class="border-2 border-gray-300 p-2 rounded my-2" bind:value={description} />
 	
-				<label for="category" class="text-lg font-semibold text-white">Roles</label>
+				<label for="roles" class="text-lg font-semibold text-white">Roles</label>
 	
-				<input disabled type="text" autocomplete="off" id="category" class="border-2 border-gray-300 p-2 rounded my-2" bind:value={roles} />
+				<input disabled type="text" autocomplete="off" id="roles" class="border-2 border-gray-300 p-2 rounded my-2" bind:value={roles} />
 	
-				<label for="category" class="text-lg font-semibold text-white">Password</label>
+				<label for="password" class="text-lg font-semibold text-white">Password</label>
 	
-				<input type="text" autocomplete="off" id="category" class="border-2 border-gray-300 p-2 rounded my-2" bind:value={password} />
+				<input type="password" autocomplete="off" id="password" name="password" class="border-2 border-gray-300 p-2 rounded my-2" bind:value={password} />
 	
 				<button type="submit" class="bg-blue-500 w-fit text-white p-2 px-8 rounded my-2">Save</button>
 			</div>
 		</form>
 
 		<div class="w-1/4 mx-auto mt-3">
-			<img src="{PUBLIC_IMAGE_URL}/users/{id}/pfp_%3Fv{userData.pfpVersion}.webp" alt="pfp" />
+			<img src="{userData.pfp_url}" alt="pfp" />
 			<!-- file upload for new pfp -->
 
-			<label for="pfp" class="bg-blue-500 text-white p-2 w-fit mt-2 rounded mx-auto block hover:brightness-75 transition-all">Upload photo</label>
-			<input type="file" id="pfp" class="hidden" on:change={uploadPfp} />
+			<form method="post" action="?/updatePfp" bind:this={pfpForm} enctype="multipart/form-data">
+				<label for="pfp" class="bg-blue-500 text-white p-2 w-fit mt-2 rounded mx-auto block hover:brightness-75 transition-all">Upload photo</label>
+				<input type="file" id="pfp" name="pfp" class="hidden" on:change={() => pfpForm.requestSubmit()} />
+			</form>
 		</div>
 	</div>
 </div>

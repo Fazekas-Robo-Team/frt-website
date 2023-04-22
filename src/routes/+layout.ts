@@ -1,28 +1,27 @@
 export const prerender = false;
 export const ssr = true;
 
-import { PUBLIC_BACKEND_URL } from '$env/static/public';
+import { invalidate } from '$app/navigation';
+import {
+  PUBLIC_SUPABASE_ANON_KEY,
+  PUBLIC_SUPABASE_URL
+} from '$env/static/public';
+import { createSupabaseLoadClient } from '@supabase/auth-helpers-sveltekit';
+import type { LayoutLoad } from './$types';
 
-export async function load() {
-	return await fetch(`${PUBLIC_BACKEND_URL}/auth/check`, {
-		method: 'POST',
-		credentials: 'include',
-	})
-		.then((res) => res.json())
-		.then((res) => {
-			if (res.authorized) {
-				return {
-					authorized: true
-				};
-			} else {
-				return {
-					authorized: false
-				};
-			}
-		})
-		.catch((error) => {
-			return {
-				authorized: false
-			};
-		});
-}
+export const load: LayoutLoad = async ({ fetch, data, depends }) => {
+  depends('supabase:auth');
+
+  const supabase = createSupabaseLoadClient({
+    supabaseUrl: PUBLIC_SUPABASE_URL,
+    supabaseKey: PUBLIC_SUPABASE_ANON_KEY,
+    event: { fetch },
+    serverSession: data.session
+  });
+
+  const {
+    data: { session }
+  } = await supabase.auth.getSession();
+
+  return { supabase, session };
+};
