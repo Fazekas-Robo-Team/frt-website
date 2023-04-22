@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { PUBLIC_BACKEND_URL, PUBLIC_IMAGE_URL } from '$env/static/public';
 	import { onMount } from 'svelte';
 	import { loading, modal } from '../../../../stores';
 	import Editor from '$lib/components/Editor.svelte';

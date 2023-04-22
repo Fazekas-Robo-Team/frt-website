@@ -18,7 +18,6 @@
 	import Tablecell from '$lib/markdown/tablecell.svelte';
 	import Image from '$lib/markdown/image.svelte';
 	import Paragraph from '$lib/markdown/paragraph.svelte';
-	import { PUBLIC_BACKEND_URL, PUBLIC_IMAGE_URL } from '$env/static/public';
 	import { loading, modal } from '../../stores.js';
 	import { enhance, type SubmitFunction } from '$app/forms';
 

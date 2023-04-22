@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { PUBLIC_BACKEND_URL } from "$env/static/public";
 	import Editor from "$lib/components/Editor.svelte";
     import MultipleImageUpload from '$lib/components/Multiple_image_upload.svelte';
 	import { modal } from "../../../stores";
@@ -34,19 +33,7 @@
             formData.append('images[]', fileInput2.files![i]);
         }*/
 
-        // send post request
-        fetch(`${PUBLIC_BACKEND_URL}/blog_admin/`, {
-            method: 'POST',
-            credentials: 'include',
-            body: formData
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                // redirect to edit page
-                window.location.href = `/admin/edit/${data.data.id}`;
-            }
-        })
+
     }
 </script>
 
