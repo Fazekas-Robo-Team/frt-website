@@ -80,8 +80,6 @@ export const actions = {
 		const formData = await request.formData();
 		const pfp = formData.get('pfp') as File;
 
-		console.log(pfp);
-
 		if (!pfp) return fail(500, 'No file uploaded' as unknown as Record<string, unknown>)
 
 		// create a fileName const with .webp extension
@@ -96,8 +94,6 @@ export const actions = {
 		const webp = new File([webpBuffer], fileName, { type: 'image/webp' });
 
 		const { data: image, error } = await supabase.storage.from('user_images').upload(`${session?.user.id}/${fileName}`, webp, {upsert: true});
-
-		console.log(image, error);
 
 		// get the image url
 		const { data: imageUrl } = await supabase.storage.from('user_images').getPublicUrl(`${session?.user.id}/${fileName}`);
