@@ -1,7 +1,6 @@
 <script lang="ts">
 	import AdminModal from '$lib/components/Admin_modal.svelte';
 	import { onMount } from 'svelte';
-	import { load } from '../+layout';
 	import { modal, loading } from '../../stores';
 
 	let activeMenu = 'Posts';
@@ -30,13 +29,6 @@
 
 	function menuClick(event: Event) {
 		activeMenu = (event.target as HTMLElement).innerText;
-	}
-
-	function logout() {
-		// delete all cookies
-		document.cookie.split(';').forEach((c) => {
-			document.cookie = c.replace(/^ +/, '').replace(/=.*/, `=;expires=${new Date().toUTCString()};path=/`);
-		});
 	}
 
 	// modal

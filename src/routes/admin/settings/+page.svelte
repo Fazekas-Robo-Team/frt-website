@@ -5,13 +5,11 @@
 	export let data: any;
 
 	let id: number, username: string, fullname: string, email: string, description: string, roles: string, password: string;
-
-	let userData = data.userData;
-
+	let userData = data.user;
 	id = userData.id;
 	username = userData.username;
-	fullname = userData.fullname;
-	email = userData.email;
+	fullname = userData.full_name;
+	email = data.email;
 	description = userData.description;
 	roles = userData.roles;
 
@@ -76,31 +74,31 @@
 	<h2 class="text-2xl font-bold text-white text-left mb-4">User settings</h2>
 	<hr class="text-white">
 	<div class="flex flex-row w-full mx-auto my-8">
-		<form class="w-2/3" on:submit|preventDefault={submitUserSettings}>
+		<form class="w-2/3" method="post" action="?/update">
 			<div class="flex flex-col">
-				<label for="title" class="text-lg font-semibold text-white">Name</label>
+				<label for="full_name" class="text-lg font-semibold text-white">Name</label>
 	
-				<input type="text" autocomplete="off" id="title" class="border-2 border-gray-300 p-2 rounded my-2" bind:value={fullname} />
+				<input type="text" autocomplete="off" id="full_name" name="full_name" class="border-2 border-gray-300 p-2 rounded my-2" bind:value={fullname} />
 	
-				<label for="description" class="text-lg font-semibold text-white">Username</label>
+				<label for="username" class="text-lg font-semibold text-white">Username</label>
 	
-				<input type="text" autocomplete="off" id="description" class="border-2 border-gray-300 p-2 rounded my-2" bind:value={username} />
+				<input type="text" autocomplete="off" id="username" name="username" class="border-2 border-gray-300 p-2 rounded my-2" bind:value={username} />
 	
-				<label for="content" class="text-lg font-semibold text-white">Email</label>
+				<label for="email" class="text-lg font-semibold text-white">Email</label>
 	
-				<input type="text" autocomplete="off" id="content" class="border-2 border-gray-300 p-2 rounded my-2" bind:value={email} />
+				<input type="text" autocomplete="off" id="email" name="email" class="border-2 border-gray-300 p-2 rounded my-2" bind:value={email} />
 	
-				<label for="category" class="text-lg font-semibold text-white">Description</label>
+				<label for="description" class="text-lg font-semibold text-white">Description</label>
 	
-				<textarea autocomplete="off" id="category" class="border-2 border-gray-300 p-2 rounded my-2" bind:value={description} />
+				<textarea autocomplete="off" id="description" name="description" class="border-2 border-gray-300 p-2 rounded my-2" bind:value={description} />
 	
-				<label for="category" class="text-lg font-semibold text-white">Roles</label>
+				<label for="roles" class="text-lg font-semibold text-white">Roles</label>
 	
-				<input disabled type="text" autocomplete="off" id="category" class="border-2 border-gray-300 p-2 rounded my-2" bind:value={roles} />
+				<input disabled type="text" autocomplete="off" id="roles" class="border-2 border-gray-300 p-2 rounded my-2" bind:value={roles} />
 	
-				<label for="category" class="text-lg font-semibold text-white">Password</label>
+				<label for="password" class="text-lg font-semibold text-white">Password</label>
 	
-				<input type="text" autocomplete="off" id="category" class="border-2 border-gray-300 p-2 rounded my-2" bind:value={password} />
+				<input type="password" autocomplete="off" id="password" name="password" class="border-2 border-gray-300 p-2 rounded my-2" bind:value={password} />
 	
 				<button type="submit" class="bg-blue-500 w-fit text-white p-2 px-8 rounded my-2">Save</button>
 			</div>

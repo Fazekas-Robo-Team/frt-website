@@ -1,7 +1,7 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
-export const load = (async ({ locals: { supabase, getSession }}) => {
+export const load = (async ({ locals: { supabase, getSession } }) => {
     // create a new article with title: "Draft by {user}"
 
     // redirect to the edit page for the new article
