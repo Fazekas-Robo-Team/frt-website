@@ -9,7 +9,7 @@
 </script>
 
 <!-- Desktop navbar -->
-<nav class="desktop hidden border-b-2 border-b-black md:block">
+<nav class="desktop hidden border-b-2 border-b-black lg:block">
 	<ul class="list-none">
 		<li class="float-left">
 			<a class="font-bold logo" href="/#">Fazekas<span class="purple">RoboTeam</span></a>
@@ -22,7 +22,7 @@
 </nav>
 
 <!-- Mobile navbar -->
-<nav class="mobile md:hidden p-4 flex flex-row justify-between items-center border-b-2 border-b-black">
+<nav class="mobile lg:hidden p-4 flex flex-row justify-between items-center border-b-2 border-b-black">
 	<div class="float-left w-1/2">
 		<a class="font-bold logo" href="/#">Fazekas<span class="purple">RoboTeam</span></a>
 	</div>
