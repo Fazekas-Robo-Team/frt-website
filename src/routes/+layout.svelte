@@ -3,21 +3,26 @@
 	import '../app.scss';
 	import { onMount } from 'svelte';
 	import { afterNavigate, beforeNavigate, invalidate } from '$app/navigation';
-	import type { LayoutData } from './$types'
-	
-	export let data: LayoutData
+	import type { LayoutData } from './$types';
 
-	$: ({ supabase, session } = data)
+	import { dev } from '$app/environment';
+	import { inject } from '@vercel/analytics';
+
+	inject({ mode: dev ? 'development' : 'production' });
+
+	export let data: LayoutData;
+
+	$: ({ supabase, session } = data);
 
 	onMount(() => {
 		const { data } = supabase.auth.onAuthStateChange((event, _session) => {
 			if (_session?.expires_at !== session?.expires_at) {
-				invalidate('supabase:auth')
+				invalidate('supabase:auth');
 			}
-		})
+		});
 
-		return () => data.subscription.unsubscribe()
-	})
+		return () => data.subscription.unsubscribe();
+	});
 </script>
 
-<slot></slot>
+<slot />
