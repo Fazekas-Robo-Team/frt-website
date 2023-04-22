@@ -1,31 +1,34 @@
 <!-- src/routes/+page.svelte -->
 <script lang="ts">
+	import { enhance, type SubmitFunction } from '$app/forms';
 	import { redirect } from '@sveltejs/kit';
 	import type { PageData } from './$types';
 	import { goto } from '$app/navigation';
 
-    let email = '', password = '', error = '';
+    let username = '', password = '', error = '';
 
-    async function handleSubmit(){
-        if (!email) {
-            error = 'Please enter a valid email';
-            return;
-        }
-        if (!password) {
-            error = 'Please enter a password';
-            return;
-        }
+    const handleSubmit: SubmitFunction = () => {
+		return async ({ result }) => {
+			if (result.status !== 200) {
+				error = "Invalid username or password.";
+			} else {
+				if (!('data' in result)) {
+					return;
+				}
+				const { email } = result.data as { email: string };
 
-        const { error: signInError } = await data.supabase.auth.signInWithPassword({
-            email: email,
-            password
-        });
+				const { error: signInError } = await data.supabase.auth.signInWithPassword({
+					email: email,
+					password
+				});
 
-        if (signInError) {
-            error = signInError.message;
-        } else {
-			goto('/admin');
-		}
+				if (signInError) {
+					error = signInError.message;
+				} else {
+					goto('/admin');
+				}
+			}
+		};
     };
 
 	export let data: PageData;
@@ -37,19 +40,20 @@
 
 <div class="w-screen h-screen flex justify-center items-center bg-purple-800">
 	<!-- Login form -->
-	<form on:submit|preventDefault={handleSubmit} class="w-full max-w-sm mx-auto bg-white rounded-lg p-8 font-sans">
+	<form method="post" action="?/getEmailByUsername" use:enhance={handleSubmit} class="w-full max-w-sm mx-auto bg-white rounded-lg p-8 font-sans">
 		<!-- Title -->
 		<h2 class="text-2xl font-bold text-center mb-4">Sign in</h2>
 
-		<!-- email input -->
+		<!-- username input -->
 		<div class="mb-4">
-			<label class="block text-gray-700 font-bold mb-2" for="email"> Email </label>
+			<label class="block text-gray-700 font-bold mb-2" for="username"> Username </label>
 			<input
-				id="email"
-				type="email"
+				id="username"
+				type="username"
+				name="username"
 				class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-				autocomplete="email"
-				bind:value={email}
+				autocomplete="username"
+				bind:value={username}
 			/>
 		</div>
 

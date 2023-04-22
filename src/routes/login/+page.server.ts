@@ -12,3 +12,24 @@ export const load: PageServerLoad = async ({ url, locals: { getSession } }) => {
 
 	return { url: url.origin };
 };
+
+export const actions = {
+	getEmailByUsername: async ({ request, locals: { supabase }}) => {
+		const formData = await request.formData();
+		const username = formData.get('username') as string;
+
+		const { data: user, error } = await supabase.from('profiles').select('*').eq('username', username).single();
+
+		if (error) {
+			return {
+				status: 500,
+				body: error
+			};
+		}
+
+		return {
+			status: 200,
+			email: user?.email
+		};
+	}
+};
