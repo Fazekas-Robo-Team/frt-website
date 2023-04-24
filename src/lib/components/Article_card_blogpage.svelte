@@ -11,9 +11,11 @@
 			<h3 class="font-semibold text-2xl my-2">{article.title}</h3>
 			<p class="text-md">{article.description}</p>
 		</div>
-		<div class="bg-medium-green pb-3 h-2 w-fit -ml-1 mt-12">
-			<p class="font-semibold text-lg -mt-10 ml-1">{article.profiles.full_name}</p>
-			<p class="font-semibold text-lg ml-1">{article.date}</p>
+		<div class="flex flex-col">
+			<p class="font-semibold text-lg ml-1 mb-2">{article.profiles.full_name}</p>
+			<div class="bg-medium-green h-2 w-fit pb-3 pr-2">
+				<p class="font-semibold text-lg ml-1 -mt-3">{article.date}</p>
+			</div>
 		</div>
 	</div></a
 >
