@@ -1,23 +1,6 @@
 @import '@fontsource/fira-mono';
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
 
-/* scrollbar */
-::-webkit-scrollbar {
-	width: 0px;
-}
-
-::-webkit-scrollbar-track {
-	background: #f1f1f1;
-}
-
-::-webkit-scrollbar-thumb {
-	background: #888;
-}
-
-::-webkit-scrollbar-thumb:hover {
-	background: #555;
-}
-
 /* scroll-behavior */
 
 html.smoothscroll {
