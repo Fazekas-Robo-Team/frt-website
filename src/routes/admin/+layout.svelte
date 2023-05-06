@@ -93,4 +93,3 @@
 		<slot />
 	</div>
 </div>
-<slot></slot>
