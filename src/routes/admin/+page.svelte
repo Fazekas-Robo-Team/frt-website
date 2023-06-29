@@ -1,5 +1,7 @@
 <script lang="ts">
+	import { invalidate } from '$app/navigation';
 	import { enhance } from "$app/forms";
+	import { modal } from "../../stores";
 	import type { ActionData, PageData, SubmitFunction } from "./$types";
 
 	export let data: PageData;
@@ -10,8 +12,29 @@
 		
 	}
 
-	function deletePost(id: string) {
-		
+	const deletePost: SubmitFunction = ({ cancel }) => {
+		// create a popup to confirm the delete
+		if (confirm("Are you sure you want to perform this action?")) {
+			return async ({ result }) => {
+				if (result.status !== 200) {
+					modal.set({
+						shown: true,
+						title: "Error",
+						content: "There was an error modifying the post.",
+					});
+				} else {
+					modal.set({
+						shown: true,
+						title: "Success",
+						content: "The post was modified successfully.",
+					});
+				}
+				
+				articles = result.data.articles;
+			};
+		} else {
+			cancel();
+		}
 	}
 </script>
 
@@ -19,7 +42,7 @@
 
 {#if articles}
 {#each articles as article}
-	<form method="post">
+	<form method="post" use:enhance={deletePost}>
 		<input type="hidden" name="id" value="{article.id}">
 		<div class="bg-slate-50 p-2 rounded flex flex-row items-center justify-between my-8">
 			<div>

@@ -104,8 +104,11 @@ export const actions = {
 			return fail(500, error);
 		}
 
+		// get all posts
+		const { data: articles } = await supabase.from('articles').select('*, profiles(full_name)').order('created_at', { ascending: false });
+
 		return {
-			post
+			articles
 		};
 	}
 } satisfies Actions;
