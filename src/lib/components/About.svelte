@@ -10,7 +10,7 @@
 			szakkör zajlik, az idősebbek önállóan, illetve egymás mentorálásával készülnek fel a megmérettetésekre. A műhely aktív közössége jelenleg 12
 			diákból áll.
 		</p>
-		<img class="w-3/5 lg:w-1/3 border-black border-2 drop-shadow-xl-black-br mt-8 mx-10 lg:mx-15" src={Logo} alt="Fazekas RoboTeam" />
+		<img class="w-3/5 md:w-64 lg:w-80 border-black border-2 drop-shadow-xl-black-br mt-8 mx-10 lg:mx-15" src={Logo} alt="Fazekas RoboTeam" />
 	</div>
 	<div class="flex flex-col md:flex-row mt-8">
 		<a
