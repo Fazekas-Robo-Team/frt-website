@@ -12,6 +12,10 @@
 	<div class="mb-4">
 		<h3 class="text-2xl font-semibold italic">2023</h3>
 		<ul class="list-disc mx-8 child:mb-2">
+			<li><strong>WRO Nemzeti Döntő - Open Senior <Highlight>FRT Letét Zseláht</Highlight>:</strong> 3. hely</li>
+			<li><strong>WRO Nemzeti Döntő - Robosports <Highlight>FRT Négyjegyű Függvénytábla</Highlight>:</strong> 5. hely</li>
+			<li><strong>WRO Nemzeti Döntő - RoboMission Senior <Highlight>FRT Kompresszorkezelő</Highlight>:</strong> 12. hely</li>
+			<li><strong>WRO Nemzeti Döntő - RoboMission Junior <Highlight>FRT Fényes Rendőr Tűzcsapata</Highlight>:</strong> 9. hely</li>
 			<li><strong>Neumann Nemzetközi Programtermék Verseny <Highlight>Fazekas RoboTeam</Highlight>:</strong> 4. hely</li>
 		</ul>
 	</div>
