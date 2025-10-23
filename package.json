@@ -31,9 +31,6 @@
 		"vite": "^5.0.0"
 	},
 	"type": "module",
-	"engines": {
-		"node": ">=20"
-	},
 	"dependencies": {
 		"@supabase/auth-helpers-sveltekit": "^0.13.0",
 		"@supabase/auth-ui-shared": "^0.1.3",
