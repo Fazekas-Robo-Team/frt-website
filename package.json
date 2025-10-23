@@ -3,6 +3,7 @@
 	"version": "1.0.1",
 	"scripts": {
 		"dev": "vite dev",
+		"start": "node server.js",
 		"build": "vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -32,6 +33,9 @@
 		"vite": "^4.0.0"
 	},
 	"type": "module",
+	"engines": {
+		"node": ">=20"
+	},
 	"dependencies": {
 		"@supabase/auth-helpers-sveltekit": "^0.9.3",
 		"@supabase/auth-ui-shared": "^0.1.3",
