@@ -6,5 +6,5 @@ export const load = (async ({ locals: { supabase } }) => {
     await supabase.auth.signOut();
 
     // redirect to login page
-    throw redirect(303, "/login");
+    redirect(303, "/login");
 }) satisfies PageServerLoad;

@@ -64,7 +64,7 @@ export const actions = {
 			// log user out
 			await supabase.auth.signOut();
 
-			throw redirect(303, '/login');
+			redirect(303, '/login');
 
 		}
 		

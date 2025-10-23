@@ -27,6 +27,6 @@ export const load = (async ({ locals: { supabase, getSession } }) => {
         return fail(500, error);
     }
 
-    throw redirect(303, `/admin/edit/${article?.[0].id}`);
+    redirect(303, `/admin/edit/${article?.[0].id}`);
 
 }) satisfies PageServerLoad;
